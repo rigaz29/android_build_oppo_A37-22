@@ -57,10 +57,32 @@
   <project name="android_frameworks_native" path="frameworks/native"
            remote="ulh" revision="lineage-22.2" groups="pdk" />
 
-  <remove-project name="LineageOS/android_frameworks_base" />
-  <project name="android_frameworks_base" path="frameworks/base"
-           remote="ulh" revision="lineage-22.2"
-           groups="pdk-cw-fs,pdk-fs,sysui-studio" />
+  <!-- frameworks/base SENGAJA TIDAK DITIMPA. Entri LineageOS resmi dipakai.
+       Keputusan 15 Agustus 2026, setelah EMPAT kegagalan build berturut-turut
+       yang semuanya satu kelas: fork ULH lineage-22.2 tidak sepadan dengan
+       repo LineageOS resmi yang di-sync bersamanya.
+
+         11%  frameworks/opt/telephony butuh R.integer.auto_data_switch_
+              availability_switchback_* yang tidak ada di fork
+         11%  ServiceState.setOutOfService 2 argumen vs 1 di pemanggil resmi
+         12%  IUserSwitchObserver.onBeforeUserSwitching(int) vs
+              (int, IRemoteCallback) yang dipakai lineage-sdk resmi, plus
+              'oneway' yang dicabut hulu dari empat metode
+
+       Terukur: fork ULH tertinggal 295 commit dari resmi (302 berkas,
+       8420+/1997-) sambil hanya membawa 7 commit sendiri. Dua di antaranya
+       (revert telephony) sudah dicabut karena berpasangan dengan fork
+       frameworks_opt_telephony yang ULH tidak sediakan di 22.2. Lima sisanya
+       adalah PERSIS patch yang proyek LOS 21 terapkan di atas frameworks/base
+       RESMI, dan tersedia di android_build_oppo_A37-21/patches/ul21/
+       frameworks_base/ sebagai 0004, 0005, 0006, 0008, 0009.
+
+       Jadi memakai resmi + lima patch itu bukan penyimpangan: itu justru
+       mengembalikan struktur yang sudah terbukti build dan boot di LOS 21.
+       Diterapkan oleh apply-fase3.sh.
+
+       CATATAN: frameworks/native TETAP memakai fork ULH, karena di sanalah
+       RenderEngine GLES berada, dan itu tidak terpengaruh keputusan ini. -->
 
   <remove-project name="LineageOS/android_system_core" />
   <project name="android_system_core" path="system/core"

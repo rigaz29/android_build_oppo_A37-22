@@ -1,0 +1,38 @@
+From c83e9e04fa7665c1a6241790b249a84c80994b7e Mon Sep 17 00:00:00 2001
+From: html6405 <peter.schelchshorn@mhs-solutions.at>
+Date: Wed, 27 Dec 2023 18:18:57 +0100
+Subject: [PATCH 08/23] Revert "Revert "Treat process group creation failure
+ due to a dead process as non-fatal""
+
+This reverts commit b910c590fac4a323043bf1ad12df881ac3fce7cf.
+---
+ core/jni/com_android_internal_os_Zygote.cpp | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/core/jni/com_android_internal_os_Zygote.cpp b/core/jni/com_android_internal_os_Zygote.cpp
+index 3ed9f49ede26..25db17577b1e 100644
+--- a/core/jni/com_android_internal_os_Zygote.cpp
++++ b/core/jni/com_android_internal_os_Zygote.cpp
+@@ -1968,10 +1968,15 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids,
+     if (getuid() == 0) {
+         const int rc = createProcessGroup(uid, getpid());
+         if (rc != 0) {
+-            fail_fn(rc == -EROFS ? CREATE_ERROR("createProcessGroup failed, kernel missing "
+-                                                "CONFIG_CGROUP_CPUACCT?")
+-                                 : CREATE_ERROR("createProcessGroup(%d, %d) failed: %s", uid,
+-                                                /* pid= */ 0, strerror(-rc)));
++            if (rc == -ESRCH) {
++                // If process is dead, treat this as a non-fatal error
++                ALOGE("createProcessGroup(%d, %d) failed: %s", uid, /* pid= */ 0, strerror(-rc));
++            } else {
++                fail_fn(rc == -EROFS ? CREATE_ERROR("createProcessGroup failed, kernel missing "
++                                                    "CONFIG_CGROUP_CPUACCT?")
++                                     : CREATE_ERROR("createProcessGroup(%d, %d) failed: %s", uid,
++                                                    /* pid= */ 0, strerror(-rc)));
++            }
+         }
+     }
+ 
+-- 
+2.43.0
+
