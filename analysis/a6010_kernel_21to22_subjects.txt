@@ -1,0 +1,309 @@
+a6010: net: switch to westwood+ and fq_codel
+a6010: report 4.19 kernel version to netbpfload and bpfloader
+Kconfig: Fix ARM and BPF JIT
+bpf, arm32: correct check_imm24
+BACKPORT: bpf: fix unconnected udp hooks
+BACKPORT: bpf: Hooks for sys_sendmsg
+BACKPORT: bpf: Hooks for sys_connect
+UPSTREAM: net: bpf: Make bpf_ktime_get_ns() available to non GPL programs
+BACKPORT: bpf: Hooks for sys_bind
+BACKPORT: bpf: add skb_load_bytes_relative helper
+a6010: report 4.14 kernel version to netbpfload and bpfloader
+utsname: separated kernel version for bpf loaders
+BACKPORT: bpf: add bpf_skb_adjust_room helper
+BACKPORT: bpf, net: add skb_mac_header_len helper
+BACKPORT: bpf: Allow cgroup sock filters to use get_current_uid_gid helper
+bpf: Use char in prog and map name
+BACKPORT: bpf: Add map_name to bpf_map_info
+BACKPORT: bpf: Add name, load_time, uid and map_ids to bpf_prog_info
+bpf: Add strict alignment flag for BPF_PROG_LOAD.
+bpf/verifier: increase complexity limit to 128k
+BACKPORT: bpf: add bpf_ktime_get_boot_ns()
+time: backport ktime_get_boot_fast_ns()
+ANDROID: net: bpf: Allow TC programs to call BPF_FUNC_skb_change_head
+BACKPORT: bpf: port bpf_skb_change_head from "bpf: BPF for lightweight tunnel infrastructure"
+BACKPORT: bpf: add devmap, a map for storing net device references
+cls_bpf: drop INIT_LIST_HEAD_RCU backport
+bpf: cgroup skb progs cannot access ld_abs/ind
+BACKPORT: bpf: Add BPF_OBJ_GET_INFO_BY_FD
+BACKPORT: bpf: Add BPF_MAP_GET_FD_BY_ID
+BACKPORT: bpf: Add BPF_PROG_GET_FD_BY_ID
+BACKPORT: bpf: Add BPF_(PROG|MAP)_GET_NEXT_ID command
+BACKPORT: bpf: Introduce bpf_map ID
+BACKPORT: bpf: Introduce bpf_prog ID
+BACKPORT: bpf: make jited programs visible in traces
+rbtree: Implement generic latch_tree
+locking/seqcount: Re-fix raw_read_seqcount_latch()
+seqlock: fix raw_read_seqcount_latch()
+BACKPORT: seqlock: Introduce raw_read_seqcount_latch()
+rcu: Make list_splice_init_rcu() account for RCU readers
+BACKPORT: perf, bpf: Add BPF support to all perf_event types
+bpf: lru: Lower the PERCPU_NR_SCANS from 16 to 4
+bpf: reference may_access_skb() from __bpf_prog_run()
+BACKPORT: bpf: Add hash of maps support
+BACKPORT: bpf: Add array of maps support
+bpf: add get_next_key callback to LPM map
+bpf, lpm: fix overflows in trie_alloc checks
+bpf: enable verifier to add 0 to packet ptr
+bpf, lpm: fix kfree of im_node in trie_update_elem
+bpf: add a longest prefix match trie map implementation
+bpf: do not use KMALLOC_SHIFT_MAX
+bpf: Make unnecessarily global functions static
+bpf: Remove unused but set variable in __bpf_lru_list_shrink_inactive()
+bpf: rename ARG_PTR_TO_STACK
+bpf: allow helpers access to variable memory
+bpf: allow adjusted map element values to spill
+bpf: allow helpers access to map element values
+bpf: split check_mem_access logic for map values
+bpf: Fix compilation warning in __bpf_lru_list_rotate_inactive
+bpf: Add BPF_MAP_TYPE_LRU_PERCPU_HASH
+kernel/bpf/bpf_lru_list.h needs <linux/cache.h>
+BACKPORT: bpf: Add BPF_MAP_TYPE_LRU_HASH
+bpf: Refactor codes handling percpu map
+bpf: Add percpu LRU list
+bpf: LRU List
+bpf: add helper for retrieving current numa node id
+bfq: backport v8r3 to 3.10
+BUGFIX: remove incorrect group-related BUG_ON
+BUGFIX: Replace max wrongly used for modulo numbers
+Better tune weight-raising for slow flash-based devices
+Fix bug causing occasional loss of weight raising
+Let soft-rt wr start also while interactive wr is still in place
+Fix recovery of lost service for soft rt
+Guarantee that wr is not lost for a spurious temporary merge
+Force one-request-at-a-time service scheme with strict_guarantees
+BFQ v8r3
+Fix switch from soft rt to interactive
+BFQ v8r2
+BFQ v8r1
+Privilege soft rt apps against interactive
+BFQ v8
+BFQ v8-rc6
+Further code cleanup
+Remove stale field
+Add missing comment
+BFQ v8-rc5
+Improve code
+BFQ v8-rc4
+Tell whether cgroups support is enabled at boot
+BUGFIX: fix typo in constant definition
+BFQ v8-rc3
+BUGFIX: Extend rcu locking in bfq_bic_update_cgroup
+Drop unnecessary synchronize_rcu
+Port commit d93a11f1cd890d4ea72f7cef75fac56801b099b3
+Use just queue_lock in bfq_check_ioprio_change
+Port commit 563180a44b7d7978f44e9776eedfbbc550c2398d
+Port commit bce6133b09013f70d41a678d262a12147ed43889
+Port commit 95e5d6f62693f27d9011ec307eb32c6126314ea3
+Port commit 4ebc1c61d6185604c97fd0b0355ab668052044ab
+Announce as v8-rc2
+Fix computation of queue weight as a function of ioprio
+Improve some comments
+Replace time_is_XXX_jiffies when appropriate
+Replace max with more efficient max_t
+BUGFIX: fix wrong Kconfig.iosched dependency for BFQ_GROUP_IOSCHED
+Add strict-guarantees tunable
+Change default group weight
+Improve time handling to reduce wraparound issues
+Add extra logging
+BUGFIX: fix service-tree selection for non-leaf entities
+Improve weight-raising mechanism
+Improve peak-rate estimation and rate-based autotuning
+Port CFQ commits 3dde36ddea3 and e9ce335df51ff
+Squash me
+Improve EQM
+Improve handling of bursts of queue activations
+Introduce preemption-based, idleless service guarantees
+Improve use of async_charge_factor
+Turn next-in-service check into a WARNING, and improve comments on next_in_service
+Add group logging and more BUG_ONs for groups
+Improve logging functions
+Serve also async queues based only on budget consumption
+Remove apparently useless check on bfq_class_idle from dispatch_requests
+BUGFIX: expire bfqq if needed in bfq_bfqq_move
+Reverse include order between blk.h and bfq.h
+Remove useless includes from bfq.h
+a6010: update defconfig (scripted)
+bfq: backport v7r11 to 3.10
+block, bfq: add Early Queue Merge (EQM) to BFQ-v7r11 for 4.5.0
+block: introduce the BFQ-v7r11 I/O sched for 4.5.0
+block: cgroups, kconfig, build bits for BFQ-v7r11-4.5.0
+block/blk-cgroup.c: free per-blkcg data when freeing the blkcg
+cfq-iosched: fix other locations where blkcg_to_cfqgd() can return NULL
+cfq-iosched: fix sysfs oops when attempting to read unconfigured weights
+block, cgroup: implement policy-specific per-blkcg data
+taskstats: fix data-race
+cgroup: move cgroup files under kernel/cgroup/
+cgroup: reorder css_set fields
+cgroup: remove cgroup_pid_fry() and friends
+cgroup: reimplement reading "cgroup.procs" on cgroup v2
+BACKPORT: cgroup: make per-cgroup pressure stall tracking configurable
+sched: allow most critical tasks (prio > 90) to be SCHED_FIFO
+sched/core: Use SCHED_RR in place of SCHED_FIFO for all users
+Revert "ARM: dts: wt86528: Schedule mmcqd on idle CPU"
+Revert "sched: psi: set RT priority 98 to psimon thread"
+sched: boost cpu frequency on iowait
+BACKPORT: cpufreq: schedutil: Reduce frequencies slower
+BACKPORT: sched/cpufreq: Optimize cpufreq update kicker to avoid update multiple times
+a6010: enable UCLAMP
+sched/fair: Make prefer_idle tunable uclamp aware
+ANDROID: sched: Introduce uclamp latency wrapper
+sched/uclamp: set default sched_uclamp_util_min to 0
+ANDROID: sched/core: Add a latency-sensitive flag to uclamp
+UPSTREAM: sched/uclamp: Fix initialization of struct uclamp_rq
+sched/core: Fix reset-on-fork from RT with uclamp
+sched/core: Fix size of rq::uclamp initialization
+sched/uclamp: Reject negative values in cpu_uclamp_write()
+BACKPORT: sched/core: Fix uclamp ABI bug, clean up and robustify sched_read_attr() ABI logic and code
+UPSTREAM: sched/uclamp: Use TG's clamps to restrict TASK's clamps
+UPSTREAM: sched/uclamp: Propagate system defaults to the root group
+UPSTREAM: sched/uclamp: Propagate parent clamps
+UPSTREAM: sched/uclamp: Extend CPU's cgroup controller
+cpufreq: schedutil: switch to uclamp_util_with
+sched/uclamp: Add uclamp_util_with()
+sched/cpufreq, sched/uclamp: Add clamps for FAIR and RT tasks
+sched/uclamp: Set default clamps for RT tasks
+sched/uclamp: Reset uclamp values on RESET_ON_FORK
+BACKPORT: sched/uclamp: Extend sched_setattr() to support utilization clamping
+sched/core: Allow sched_setattr() to use the current policy
+BACKPORT: sched/uclamp: Add system default clamps
+BACKPORT: sched/uclamp: Enforce last task's UCLAMP_MAX
+sched/uclamp: Add bucket local max tracking
+BACKPORT: sched/uclamp: Add CPU's clamp buckets refcounting
+BACKPORT: cgroup: add cgroup_parse_float()
+Revert "ARM: dts: wt86528: sdcard on a6010 is non-removable"
+sched: psi: set RT priority 98 to psimon thread
+sisleyr: update defconfig (scripted)
+a6010: update defconfig (scripted)
+a6000: update defconfig (scripted)
+schedutil: enforce realtime priority
+lib: Import LZ4KD compression algorithm from HUAWEI
+ARM: dts: wt86528: sdcard on a6010 is non-removable
+ARM: dts: wt86528: Schedule mmcqd on idle CPU
+qcom: msm8916: overclock the bus frequencies
+arm: dts: Lower cpr voltage step to 5000uV
+[SQUASHED] msm8916: apply overclock to 1.6 GHz
+a6010: update defconfig (scripted)
+a6010: remove localversion
+Revert "sched/core: Use SCHED_RR in place of SCHED_FIFO for all users"
+mm, vmstat: Remove spurious WARN() during zoneinfo print
+BACKPORT: mm, vmstat: print node-based stats in zoneinfo file
+a6010: update defconfig
+BACKPORT: net: af_unix: implement splice for stream af_unix sockets
+BACKPORT: net: make skb_splice_bits more configureable
+net: af_unix: implement stream sendpage support
+net: skbuff: add skb_append_pagefrags and use it
+drivers: net: Remove iocb argument from sendmsg and recvmsg
+BACKPORT: net: Remove iocb argument from sendmsg and recvmsg
+BACKPORT: net: remove sock_iocb
+splice: reinstate SIGPIPE/EPIPE handling
+BACKPORT: splice: lift pipe_lock out of splice_to_pipe()
+splice_to_pipe(): don't open-code wakeup_pipe_readers()
+Revert "splice_to_pipe(): don't open-code wakeup_pipe_readers()"
+mms200: port keydisabler from ft5x06_ts
+ft5x06_t: correct keydisabler symlink name
+mms200: disable mms_force_update
+a6010: update defconfig (scripted)
+a6000: update defconfig (scripted)
+sisleyr: update defconfig (scripted)
+wireguard: compat: include generated timeconst.h
+time: Move timeconst.h into include/generated
+update_defconfig: take an argument with device name to update
+a6010: enable LLCON
+sisleyr: update defconfig
+installer: unify boot partition path and add sisleyr to supported devices
+sisleyr: enable LLCON
+[sisleyr] camera_v2: add changes from Lenovo for S90-A
+[sisleyr] camera_v2: reset headers to LA.BR.1.1.2-02510-8x16.0
+[sisleyr] camera_v2: reset driver to LA.BR.1.1.2-02510-8x16.0
+[sisleyr] sound: msm: changes from Lenovo for S90-A
+[sisleyr] bma2x2: bring up accelerometer
+[sisleyr] ARM: boot: gzip zImage-dtb again for sisleyr's bootloader
+[sisleyr] ARM: add Lenovo dts changes for sisleyr
+[sisleyr] ARM: add sisleyr defconfig
+[sisleyr] input: add sensors drivers from Lenovo
+[sisleyr] leds: add sn3191 and sn3193 drivers
+[sisleyr] power: add max17058 fuelgauge driver with Lenovo changes
+[sisleyr] power: add bq24296 charger driver with additional changes from Lenovo
+[sisleyr] usb: msm: Lenovo usb changes for 24296 charger
+[sisleyr] mms200: unbreak driver
+[sisleyr] Import touchscreen drivers
+[sisleyr] mdss: Lenovo changes for S90-A
+[sisleyr] sisleyr: add Lenovo S90-A Lenovo model
+usb: unbreak build with !CONFIG_WAKE_GESTURES
+video: Low level console for output kmsg to display (LLCON)
+BACKPORT: usb: gadget: f_fs: Fix use-after-free
+BACKPORT: usb: gadget: f_fs: Fix use after free issue as part of queue failure
+!fixup: BACKPORT: mm/mremap: add MREMAP_DONTUNMAP to mremap()
+mm: Don't offset memmap for flatmem
+mm: print more details for bad_page()
+mm/madvise.c: fix freeing of locked page with MADV_FREE
+tracefs: Set all files to the same group ownership as the mount option
+tracefs: Have new files inherit the ownership of their parent
+tracefs: Have tracefs directories not set OTH permission bits by default
+tracefs: Fix refcount imbalance in start_creating()
+tracing: Add trace_seq_buffer_ptr() helper function
+tracing: Have mkdir and rmdir be part of tracefs
+tracefs: Add directory /sys/kernel/tracing
+tracing: Automatically mount tracefs on debugfs/tracing
+BACKPORT: tracing: Convert the tracing facility over to use tracefs
+tracing: Remove unnecessary null test before debugfs_remove()
+ftrace: Allow for function tracing instance to filter functions
+ftrace: Pass in global_ops for use with filtering files
+ftrace: Allow instances to use function tracing
+ftrace: Copy ops private to global_ops private
+ftrace: Add private data to ftrace_ops
+tracing: Pass trace_array to flag_changed callback
+tracing: Pass trace_array to set_flag callback
+tracefs: Add new tracefs file system
+tracing: Create cmdline tracer options on tracing fs init
+tracing: Convert tracer->enabled to counter
+tracing: Disable tracers before deletion of instance
+tracing: Set up infrastructure to allow tracers for instances
+tracing: Make tracing_cpumask available for all instances
+tracing: Kill trace_array->waiter
+tracing: Disable tracing on warning
+Revert "panic: add cpu/pid to warn_slowpath_common in WARNING printk()s"
+tracing: Only create tracer options files if directory exists
+tracing: Only let top level have option files
+tracing: Separate out initializing top level dir from instances
+tracing: Make tracing_init_dentry_tr() static
+trace: Use 64-bit timekeeping
+tracing: Add __field_struct macro for TRACE_EVENT()
+tracing: Add __get_dynamic_array_len() macro for trace events
+tracing: Add array printing helper
+tracing: Add __bitmask() macro to trace events to cpumasks and other bitmasks
+tracing: Remove newline from trace_printk warning banner
+kernel: trace: fix printk message
+tracing: Print nasty banner when trace_printk() is in use
+BACKPORT: debugfs: Provide a file creation function that also takes an initial size
+new primitive: debugfs_create_automount()
+debugfs: split end_creating() into success and failure cases
+debugfs: take mode-dependent parts of debugfs_get_inode() into callers
+fold debugfs_mknod() into callers
+fold debugfs_create() into caller
+fold debugfs_mkdir() into caller
+debugfs_mknod(): get rid useless arguments
+fold debugfs_link() into caller
+debugfs: kill __create_file()
+debugfs: split the beginning and the end of __create_file() off
+debugfs_{mkdir,create,link}(): get rid of redundant argument
+tracing: Use IS_ERR() check for return value of tracing_init_dentry()
+tracing: Remove unneeded includes of debugfs.h and fs.h
+HACK: sched: avoid BUG_ON() in dec_nr_big_small_task
+Prima: move wext hadler initilization
+prima: Avoid OOB read in dot11f_unpack_assoc_response
+wlan: Correcting the TSInfo structure size according to the Spec
+sched: reduce softirq conflicts with RT
+BACKPORT: FROMLIST: mm/oom_kill: allow process_mrelease to run under  mmap_lock protection
+UPSTREAM: mm/oom_kill.c: prevent a race between process_mrelease and exit_mmap
+mm/compaction.c: fix zoneindex in kcompactd()
+mm: wake kcompactd before kswapd's short sleep
+BACKPORT: mm, kswapd: replace kswapd compaction with waking up kcompactd
+[fixup] mm: psi/compaction: update PSI backport after 0e2275db52645b2c022d532837f3bc9c1d14c89f
+BACKPORT: mm, compaction: introduce kcompactd
+Revert "mm: compaction: compact all zones when turning off screen"
+mm, kswapd: remove bogus check of balance_classzone_idx
+a6010: update defconfig (scripted)
+fscrypt: use unbound workqueue for decryption
+utsname: spoof kernel version for netbpfload

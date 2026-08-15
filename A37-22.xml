@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Local manifest - LineageOS 22.2 (Android 15, SDK 35) untuk OPPO A37 / A37f / A37fw.
+
+  Basis: LineageOS/android lineage-22.2 - OFFICIAL.
+
+      repo init -u https://github.com/LineageOS/android.git -b lineage-22.2
+
+  BUKAN LineageOS-UL: org itu tidak punya branch di atas lineage-21.0
+  (diperiksa: lineage-19.1, lineage-20.0, lineage-21.0 saja).
+
+  Penerus UL untuk 22/23 adalah org Ultra-Legacy-Hippeastrum, dan modelnya
+  BERBEDA: bukan manifest pengganti, melainkan fork per-repo yang dipasang
+  lewat berkas ini. Patch legacy tambahan datang dari MisterZtr/LineageOS_gsi
+  branch lineage-22.2 (193 patch), BUKAN dari ULH/legacy_support_patches yang
+  hanya punya branch lineage-23.2.
+
+  Lihat PLAN-LOS22.md untuk alasan tiap baris.
+-->
+<manifest>
+
+  <remote name="gh"  fetch="https://github.com/" />
+  <remote name="ulh" fetch="https://github.com/Ultra-Legacy-Hippeastrum/" />
+
+  <!-- ================================================================
+       A37: device tree, kernel, vendor
+       ================================================================
+       Device tree branch lineage-22 DICABANGKAN DARI lineage-21, bukan dari
+       lineage-20. lineage-21 sudah membawa perbaikan yang harganya sudah
+       dibayar: APEX tak terkompres, ro.hardware.egl, packaging HAL Bluetooth,
+       ramoops lengkap, bootwatchdog dengan pengecualian odsign.
+
+       Kernel branch lineage-22 dari lineage-20 (lineage-21 hanya +2 commit).
+       Satu-satunya perubahan WAJIB adalah spoof utsname - PLAN-LOS22.md W-1. -->
+
+  <project name="rigaz29/rb_device_oppo_A37" path="device/oppo/A37"
+           remote="gh" revision="refs/heads/lineage-22" upstream="lineage-22" />
+
+  <project name="rigaz29/kernel_oppo_msm8939" path="kernel/oppo/msm8939"
+           remote="gh" revision="refs/heads/lineage-22" upstream="lineage-22" />
+
+  <project name="rigaz29/rb-vendor_oppo_A37" path="vendor/oppo"
+           remote="gh" revision="2e5c6f7ffcccbbf1430f8fa13fc530e1cae5feab"
+           upstream="lineage-18.1" />
+
+  <!-- ================================================================
+       Fork Ultra-Legacy-Hippeastrum branch lineage-22.2
+       ================================================================
+       Yang paling menentukan: frameworks/native. Fork ULH masih memiliki
+       libs/renderengine/gl/GLESRenderEngine.cpp; LineageOS resmi 22.2 TIDAK
+       (HTTP 404). Tanpa itu Adreno 306 dipaksa ke Skia.
+
+       Gerbang verifikasi setelah repo sync:
+         test -f frameworks/native/libs/renderengine/gl/GLESRenderEngine.cpp -->
+
+  <remove-project name="LineageOS/android_frameworks_native" />
+  <project name="android_frameworks_native" path="frameworks/native"
+           remote="ulh" revision="lineage-22.2" groups="pdk" />
+
+  <remove-project name="LineageOS/android_frameworks_base" />
+  <project name="android_frameworks_base" path="frameworks/base"
+           remote="ulh" revision="lineage-22.2"
+           groups="pdk-cw-fs,pdk-fs,sysui-studio" />
+
+  <remove-project name="LineageOS/android_system_core" />
+  <project name="android_system_core" path="system/core"
+           remote="ulh" revision="lineage-22.2" groups="pdk" />
+
+  <remove-project name="LineageOS/android_bionic" />
+  <project name="android_bionic" path="bionic"
+           remote="ulh" revision="lineage-22.2" groups="pdk" />
+
+  <remove-project name="LineageOS/android_system_sepolicy" />
+  <project name="android_system_sepolicy" path="system/sepolicy"
+           remote="ulh" revision="lineage-22.2" groups="pdk" />
+
+  <remove-project name="LineageOS/android_hardware_qcom-caf_common" />
+  <project name="android_hardware_qcom-caf_common" path="hardware/qcom-caf/common"
+           remote="ulh" revision="lineage-22.2" groups="qcom" />
+
+  <remove-project name="LineageOS/android_system_libhidl" />
+  <project name="android_system_libhidl" path="system/libhidl"
+           remote="ulh" revision="lineage-22.2" groups="pdk,sysui-studio" />
+
+  <!-- Di manifest resmi ini repo AOSP (platform/system/libhwbinder,
+       remote aosp), bukan LineageOS. Nama pada remove-project harus persis. -->
+  <remove-project name="platform/system/libhwbinder" />
+  <project name="android_system_libhwbinder" path="system/libhwbinder"
+           remote="ulh" revision="lineage-22.2" groups="pdk" />
+
+  <remove-project name="LineageOS/android_hardware_ril" />
+  <project name="android_hardware_ril" path="hardware/ril"
+           remote="ulh" revision="lineage-22.2" groups="pdk" />
+
+  <!-- sepolicy-legacy: penerus langsung LineageOS-UL lineage-21.0-legacy.
+       WAJIB - device/oppo/A37/BoardConfig.mk:580 meng-include
+       device/qcom/sepolicy-legacy/sepolicy.mk
+
+       Path ini BERBEDA dari device/qcom/sepolicy-legacy-um yang sudah dibawa
+       manifest resmi (snippets/lineage.xml:89, grup sdm660). Tidak bertabrakan. -->
+  <project name="android_device_qcom_sepolicy" path="device/qcom/sepolicy-legacy"
+           remote="ulh" revision="lineage-22.2-legacy" />
+
+  <!-- ================================================================
+       HAL qcom-caf msm8916 - PEKERJAAN SUNGGUHAN, lihat PLAN-LOS22.md 5.2
+       ================================================================
+       Tidak ada penerus 22.x untuk msm8916 di org mana pun:
+         LineageOS      berhenti di lineage-19.0-caf-msm8916
+         LineageOS-UL   berhenti di lineage-21.0-caf-msm8916  (dipakai LOS 21 kita)
+         ULH            hanya lineage-22.2-caf-msm8952        (msm8952, bukan 8916)
+
+       Baris di bawah menunjuk ke titik awal 5.2a: kode UL 21.0 yang sudah siap
+       Android 14 DAN sudah terbukti berbunyi di A37. SHA dipaku ke nilai yang
+       sama dengan manifest LOS 21, supaya titik awalnya identik dan satu-satunya
+       variabel adalah port ke A15.
+
+       Begitu forward-port dimulai, GANTI ketiganya ke fork rigaz29 sendiri
+       (branch lineage-22) - jangan menambal di dalam pohon tanpa fork, karena
+       repo sync berikutnya akan menghapusnya. -->
+
+  <project name="LineageOS-UL/android_hardware_qcom_audio" path="hardware/qcom-caf/msm8916/audio"
+           remote="gh" revision="1b2c9f8e95f74f724894cbbe89b92d16239aff26"
+           upstream="lineage-21.0-caf-msm8916" />
+  <project name="LineageOS-UL/android_hardware_qcom_display" path="hardware/qcom-caf/msm8916/display"
+           remote="gh" revision="c9d61b95f6ad6aebc5d2f33837b036dc55ac9365"
+           upstream="lineage-21.0-caf-msm8916" />
+  <project name="LineageOS-UL/android_hardware_qcom_media" path="hardware/qcom-caf/msm8916/media"
+           remote="gh" revision="ee0cb10a3b8388bd24f78530b64204aeb185affc"
+           upstream="lineage-21.0-caf-msm8916" />
+
+  <!-- timekeep: punya lineage-22.2 resmi, tapi TIDAK ada di manifest 22.2
+       (diperiksa: nol kecocokan di default.xml dan snippets/lineage.xml),
+       jadi tetap harus ditambahkan sendiri.
+       Dipakai: device/oppo/A37/device.mk PRODUCT_PACKAGES, dan servisnya
+       memang berjalan di perangkat (ro.boottime.timekeep ada di getprop). -->
+  <project name="LineageOS/android_hardware_sony_timekeep" path="hardware/sony/timekeep"
+           remote="gh" revision="lineage-22.2" />
+
+  <!-- ================================================================
+       TIDAK ADA DI SINI, DAN ITU DISENGAJA
+       ================================================================
+       system/tools/dtbtool - LOS 21 mengambilnya dari LineageOS-UL. Tidak ada
+       penerus 22.x di mana pun (LineageOS resmi bahkan tidak punya branch 21).
+       Ternyata TIDAK DIBUTUHKAN: TARGET_CUSTOM_DTBTOOL := dtbToolOppo
+       (BoardConfig.mk:302) dilayani device tree sendiri lewat
+       device/oppo/A37/dtbtool/Android.bp:27. Jangan tambahkan kembali.
+
+       hardware/qcom/wlan - sudah ada di manifest resmi 22.2. Pertahankan
+       (alasan panjangnya ada di A37-21.xml: libwifi_hal_vendor_impl_defaults
+       mengharapkan modul libwifi-hal-qcom dari luar).
+
+       frameworks/av dan packages/modules/Connectivity - ULH TIDAK menyediakan
+       fork 22.2 untuk keduanya (hanya 23.2). Ditangani lewat patch
+       MisterZtr/LineageOS_gsi lineage-22.2, bukan lewat manifest. -->
+
+</manifest>
