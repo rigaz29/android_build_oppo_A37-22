@@ -52,6 +52,38 @@ echo "== frameworks/base: nama modul AIDL powershare =="
 # hardware/lineage/interfaces resmi menghasilkan -V1-java.
 terap frameworks/base "$KIT/patches/frameworks_base/0201-SystemUI-perbaiki-nama-modul-AIDL-powershare-untuk-b.patch"
 
+echo "== frameworks/base: resource yang hilang dari fork ULH =="
+# Build gagal di 11% karena frameworks/opt/telephony resmi memakai
+# com.android.internal.R.integer.auto_data_switch_availability_switchback_*
+# yang tidak ada di fork ULH. Seluruh core/res/res/values/ dibandingkan dengan
+# hulu resmi: selisihnya tuntas 3 berkas / 18 baris, ketiganya di patch ini.
+terap frameworks/base "$KIT/patches/frameworks_base/0202-core-res-kembalikan-resource-yang-hilang-dari-fork-U.patch"
+
+echo "== frameworks/base: cabut dua revert telephony milik ULH =="
+# ULH mem-fork frameworks/base TAPI TIDAK frameworks/opt/telephony yang
+# berpasangan dengannya, jadi dua revert telephony-nya membuat basis 22.2
+# tidak konsisten dengan dirinya sendiri:
+#
+#   Revert "Removed IWLAN legacy mode support"
+#     -> setOutOfService(boolean legacyMode, boolean powerOff)  2 argumen
+#        sedangkan frameworks/opt/telephony resmi memanggilnya dengan 1
+#        -> ServiceStateTracker.java: cannot be applied to given types (7 titik)
+#
+#   Revert "Remove deprecated IRadio <1.4 APIs and references"
+#     -> invokeOemRilRequestRaw kembali ke ITelephony.aidl
+#        -> PhoneInterfaceManager.java: does not override abstract method
+#
+# INI BUKAN PENILAIAN BARU. Proyek LOS 21 sudah menemui galat yang persis sama,
+# mendiagnosisnya, dan memutuskan membuang keduanya -- lihat
+# android_build_oppo_A37-21/patches/ul21/MANIFEST.md baris 56. Alasannya masih
+# berlaku: yang dipulihkan hanya mode IWLAN legacy (panggilan Wi-Fi), sedangkan
+# RIL adalah satu-satunya subsistem A37 yang sudah TERBUKTI berfungsi.
+#
+# Kalau IWLAN suatu saat dibutuhkan, port frameworks_opt_telephony sebagai
+# pasangannya -- jangan kembalikan revert ini sendirian.
+terap frameworks/base "$KIT/patches/frameworks_base/0203-Reapply-Removed-IWLAN-legacy-mode-support.patch"
+terap frameworks/base "$KIT/patches/frameworks_base/0204-Reapply-Remove-deprecated-IRadio-1.4-APIs-and-refere.patch"
+
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"
 

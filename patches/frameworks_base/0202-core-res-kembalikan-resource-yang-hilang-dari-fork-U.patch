@@ -1,0 +1,101 @@
+From 58011a33a355d5dde457a860c8a0eec3e662f63d Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sat, 15 Aug 2026 21:46:23 +0000
+Subject: [PATCH 202/204] core/res: kembalikan resource yang hilang dari fork
+ ULH
+
+Build gagal di 11% saat mengompilasi frameworks/opt/telephony:
+
+  DataConfigManager.java:1163: error: cannot find symbol
+    com.android.internal.R.integer
+      .auto_data_switch_availability_switchback_stability_time_threshold_millis
+
+frameworks/opt/telephony datang dari LineageOS resmi lineage-22.2 dan memakai
+resource itu; frameworks/base di sini adalah fork Ultra-Legacy-Hippeastrum yang
+tidak memilikinya.
+
+Alih-alih menambal satu simbol lalu menunggu kegagalan berikutnya berjam-jam
+kemudian, seluruh core/res/res/values/ dibandingkan dengan LineageOS resmi.
+Selisihnya ternyata KECIL dan tuntas: 3 berkas, 18 baris.
+
+  config_telephony.xml    +7   auto_data_switch_availability_switchback_*
+  policy_exempt_apps.xml  +10  array application_hidden_policy_exempt_apps
+  symbols.xml             +1   java-symbol untuk array itu
+
+Ketiganya ditambahkan. Nilai disalin apa adanya dari
+LineageOS/android_frameworks_base lineage-22.2, bukan dikarang.
+
+KONTEKS YANG LEBIH BESAR, diukur saat menelusuri ini:
+  commit resmi yang TIDAK ada di fork ULH : 295
+  commit khas ULH                          : 7 (+1 milik kita)
+  selisih berkas keseluruhan               : 302 berkas, 8420+/1997-
+
+Fork ini tetap DIPERLUKAN: dua dari tujuh commitnya load-bearing untuk A37 --
+Revert "Remove deprecated IRadio <1.4 APIs" (A37 memakai radio 1.1) dan
+toleransi galat cgroup untuk kernel 3.10. Pindah ke frameworks/base resmi
+justru akan mencabut keduanya; terlihat di diff sebagai ITelephony.aidl -11
+dan RILConstants.java -5.
+
+Perbaikan struktural yang sebenarnya adalah me-rebase ketujuh commit itu ke
+atas lineage-22.2 resmi. Itu perubahan besar dan tidak dilakukan di tengah
+build; dicatat sebagai rekomendasi.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+---
+ core/res/res/values/config_telephony.xml   |  7 +++++++
+ core/res/res/values/policy_exempt_apps.xml | 10 ++++++++++
+ core/res/res/values/symbols.xml            |  1 +
+ 3 files changed, 18 insertions(+)
+
+diff --git a/core/res/res/values/config_telephony.xml b/core/res/res/values/config_telephony.xml
+index 666f1cf39fe3..bddcd03b2b3e 100644
+--- a/core/res/res/values/config_telephony.xml
++++ b/core/res/res/values/config_telephony.xml
+@@ -64,6 +64,13 @@
+     <integer name="auto_data_switch_performance_stability_time_threshold_millis">120000</integer>
+     <java-symbol type="integer" name="auto_data_switch_performance_stability_time_threshold_millis" />
+ 
++    <!-- Define the bar for switching data back to the default SIM when both SIMs are out of service
++         in milliseconds. A value of 0 means an immediate switch, otherwise for a negative value,
++         the threshold defined by auto_data_switch_availability_stability_time_threshold_millis
++         will be used instead. -->
++    <integer name="auto_data_switch_availability_switchback_stability_time_threshold_millis">150000</integer>
++    <java-symbol type="integer" name="auto_data_switch_availability_switchback_stability_time_threshold_millis" />
++
+     <!-- Define the maximum retry times when a validation for switching failed.-->
+     <integer name="auto_data_switch_validation_max_retry">7</integer>
+     <java-symbol type="integer" name="auto_data_switch_validation_max_retry" />
+diff --git a/core/res/res/values/policy_exempt_apps.xml b/core/res/res/values/policy_exempt_apps.xml
+index 1cead8322e55..e3591e517397 100644
+--- a/core/res/res/values/policy_exempt_apps.xml
++++ b/core/res/res/values/policy_exempt_apps.xml
+@@ -21,4 +21,14 @@
+     -->
+     <string-array translatable="false" name="policy_exempt_apps">
+     </string-array>
++
++    <!--
++    A collection of apps that are critical for the device and hence will never be affected by
++    DevicePolicyManager.setApplicationHidden policy.
++    -->
++    <string-array translatable="false" name="application_hidden_policy_exempt_apps">
++        <item>com.android.nfc</item>
++        <item>com.android.settings</item>
++        <item>com.android.providers.settings</item>
++    </string-array>
+ </resources>
+diff --git a/core/res/res/values/symbols.xml b/core/res/res/values/symbols.xml
+index 28de553f6063..ead4f323f971 100644
+--- a/core/res/res/values/symbols.xml
++++ b/core/res/res/values/symbols.xml
+@@ -1303,6 +1303,7 @@
+   <java-symbol type="array" name="cross_profile_apps" />
+   <java-symbol type="array" name="vendor_cross_profile_apps" />
+   <java-symbol type="array" name="policy_exempt_apps" />
++  <java-symbol type="array" name="application_hidden_policy_exempt_apps" />
+   <java-symbol type="array" name="vendor_policy_exempt_apps" />
+   <java-symbol type="array" name="cloneable_apps" />
+   <java-symbol type="array" name="config_securityStatePackages" />
+-- 
+2.43.0
+
