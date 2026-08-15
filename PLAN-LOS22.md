@@ -364,24 +364,40 @@ Basis: `rb_device_oppo_A37`. Branch `lineage-21` sudah jauh lebih maju dari `lin
 membuang temuan yang harganya sudah dibayar. Basis `lineage-20` tetap dipakai sebagai
 rujukan seperti diminta, tapi bukan sebagai titik cabang.
 
-### 5.1 Delta yang terbaca dari jangkar
+### 5.1 Delta jangkar, dan apa yang tersisa setelah diperiksa ke pohon A37
 
-Device tree a6010 `lineage-21.0` → `lineage-22.2`: **165 commit, 403 berkas**. Tema yang
-berlaku untuk A37:
+Device tree a6010 `lineage-21.0` → `lineage-22.2`: **165 commit, 403 berkas**. Daftar di
+bawah semula diturunkan dari diff itu. **Setelah pohon A37 ter-sync dan diperiksa langsung
+(15 Agustus 2026), sebagian besar ternyata sudah beres atau tidak berlaku** — dicatat apa
+adanya karena inilah bedanya membaca jangkar dan membaca perangkat sendiri:
 
-- **`rro_overlays/PrivateSpaceOverlay/`** — baru di A15 (Private Space). 3 berkas,
-  `res/xml/config_user_types.xml` 119 baris. Tanpa ini Private Space bisa memaksa perilaku
-  yang tak didukung di RAM 2 GB.
-- **`touch/` pindah ke AIDL Rust** — `keydisabler_hal.rs`, `main.rs`,
-  `vendor.lineage.touch-service.a6010.{rc,xml}`. Konsekuensinya `vendor.lineage.touch@1.0`
-  **dihapus dari VINTF manifest**.
-- **VINTF**: `android.hardware.radio` 1.1 → **1.4**; tambah
-  `android.hardware.bluetooth.audio@2.0`; buang `vendor.lineage.touch`.
-- **DRM ClearKey pindah ke AIDL**: `android.hardware.drm@1.4-service-lazy.clearkey` →
-  `android.hardware.drm-service-lazy.clearkey`.
-- **Wi-Fi Vendor HAL pindah ke AIDL** (commit `8af9c3e8`).
-- **LMKD disetel ulang**: `ro.lmk.psi_partial_stall_ms` 100→200,
-  `swap_free_low_percentage` 20→35, tambah `kill_timeout_ms=50`, buang `sys.use_fifo_ui=1`.
+| Item dari diff a6010 | Keadaan sebenarnya di `device/oppo/A37` |
+|---|---|
+| Tambah `android.hardware.bluetooth.audio@2.0` ke VINTF | **sudah ada** |
+| Buang `vendor.lineage.touch` | **tidak pernah ada** — A37 tak punya touch HAL, jadi migrasi AIDL Rust a6010 tidak berlaku |
+| ClearKey DRM ke AIDL | **sudah** — `android.hardware.drm-service.clearkey` (varian non-lazy) |
+| Packaging HAL Bluetooth | **sudah** diperbaiki di `lineage-21`, terverifikasi di perangkat |
+| Radio 1.1 → 1.4 | **sengaja tidak diikuti** — lihat §5.4 |
+| `rro_overlays/PrivateSpaceOverlay` | **tidak dipakai, dan itu keputusan sadar** — lihat di bawah |
+
+⚠️ **Koreksi terhadap versi pertama dokumen ini.** Di sana `PrivateSpaceOverlay` disebut
+melindungi dari "perilaku yang tak didukung di RAM 2 GB". Itu **salah**. Isi aktifnya, di
+luar blok komentar AOSP, hanyalah:
+
+```xml
+<user-types>
+    <profile-type name="android.os.usertype.profile.PRIVATE" enabled='1'>
+    </profile-type>
+</user-types>
+```
+
+Overlay itu **menyalakan** Private Space, bukan meredamnya. Dan a6010 memasangnya hanya di
+varian `lineage_a6010_gms_go_2gb.mk` / `lineage_sisleyr_gms_go_2gb.mk`, bukan di produk
+dasarnya. Untuk A37 dengan RAM 2 GB, tidak memakainya adalah pilihan yang benar: Private
+Space menambah profil pengguna kedua.
+
+Yang belum diperiksa dan masih terbuka: **Wi-Fi Vendor HAL AIDL** (a6010 commit `8af9c3e8`)
+dan **penyetelan ulang LMKD**. Keduanya Fase 6, bukan prasyarat boot.
 
 ### 5.2 HAL qcom-caf msm8916 — masalah struktural yang harus diputuskan
 

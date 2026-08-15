@@ -74,9 +74,56 @@
   <project name="android_system_sepolicy" path="system/sepolicy"
            remote="ulh" revision="lineage-22.2" groups="pdk" />
 
+  <!-- PERHATIAN: project ini WAJIB membawa seluruh <linkfile> milik entri resmi.
+       Repo memperlakukan linkfile sebagai anak dari entri project, jadi
+       remove-project + tambah-ulang MENGHAPUS semuanya.
+
+       Berkas yang ditaut adalah os_pickup*.bp/mk, dan os_pickup.bp isinya
+       persis `soong_namespace {}` (20 byte). Tanpa taut itu, SETIAP pohon
+       hardware/qcom-caf/<soc> kehilangan namespace-nya dan seluruh modulnya
+       jatuh ke namespace global. Karena nama modul qcom-caf diturunkan dari
+       TARGET_BOARD_PLATFORM (audio.primary.$(PLATFORM), gralloc.$(PLATFORM)),
+       membangun untuk msm8916 membuat SEMUA pohon SoC menghasilkan nama yang
+       sama dan bertabrakan.
+
+       Diukur: menghilangkannya menghasilkan 443 galat "module already defined"
+       di 12 pohon SoC, dan soong bootstrap gagal sebelum analisis dimulai.
+
+       Daftar ini disalin dari snippets/lineage.xml manifest lineage-22.2
+       (22 taut). SENGAJA TIDAK ada taut untuk hardware/qcom-caf/msm8916:
+       manifest LOS 21 yang terbukti build juga tidak punya, jadi direktori itu
+       memang tidak menuntut soong_namespace meski disebut di
+       PRODUCT_SOONG_NAMESPACES.
+
+       Kalau LineageOS menambah SoC baru di 22.2, daftar ini harus disamakan:
+         diff <(sed -n 's/.*linkfile src="\([^"]*\)" dest="\([^"]*\)".*/\1 \2/p' \
+                  .repo/manifests/snippets/lineage.xml) ... -->
   <remove-project name="LineageOS/android_hardware_qcom-caf_common" />
   <project name="android_hardware_qcom-caf_common" path="hardware/qcom-caf/common"
-           remote="ulh" revision="lineage-22.2" groups="qcom" />
+           remote="ulh" revision="lineage-22.2" groups="qcom">
+    <linkfile src="os_pickup_aosp.mk" dest="hardware/qcom/Android.mk" />
+    <linkfile src="os_pickup_sepolicy_vndr.mk" dest="device/qcom/sepolicy_vndr/SEPolicy.mk" />
+    <linkfile src="os_pickup_qssi.bp" dest="hardware/qcom-caf/msm8953/Android.bp" />
+    <linkfile src="os_pickup.bp" dest="hardware/qcom-caf/msm8996/Android.bp" />
+    <linkfile src="os_pickup.mk" dest="hardware/qcom-caf/msm8996/Android.mk" />
+    <linkfile src="os_pickup.bp" dest="hardware/qcom-caf/msm8998/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp" dest="hardware/qcom-caf/sdm660/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp" dest="hardware/qcom-caf/sdm845/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp" dest="hardware/qcom-caf/sm8150/Android.bp" />
+    <linkfile src="os_pickup.mk" dest="hardware/qcom-caf/sm8150/Android.mk" />
+    <linkfile src="os_pickup_qssi.bp" dest="hardware/qcom-caf/sm8250/Android.bp" />
+    <linkfile src="os_pickup.mk" dest="hardware/qcom-caf/sm8250/Android.mk" />
+    <linkfile src="os_pickup_qssi.bp" dest="hardware/qcom-caf/sm8350/Android.bp" />
+    <linkfile src="os_pickup.mk" dest="hardware/qcom-caf/sm8350/Android.mk" />
+    <linkfile src="os_pickup_audio-ar.mk" dest="hardware/qcom-caf/sm8450/audio/Android.mk" />
+    <linkfile src="os_pickup_qssi.bp" dest="hardware/qcom-caf/sm8450/Android.bp" />
+    <linkfile src="os_pickup_audio-ar.mk" dest="hardware/qcom-caf/sm8550/audio/Android.mk" />
+    <linkfile src="os_pickup_qssi.bp" dest="hardware/qcom-caf/sm8550/Android.bp" />
+    <linkfile src="os_pickup_audio-ar.mk" dest="hardware/qcom-caf/sm8650/audio/Android.mk" />
+    <linkfile src="os_pickup_qssi.bp" dest="hardware/qcom-caf/sm8650/Android.bp" />
+    <linkfile src="os_pickup_audio-ar.mk" dest="hardware/qcom-caf/sm8750/audio/Android.mk" />
+    <linkfile src="os_pickup_qssi.bp" dest="hardware/qcom-caf/sm8750/Android.bp" />
+  </project>
 
   <remove-project name="LineageOS/android_system_libhidl" />
   <project name="android_system_libhidl" path="system/libhidl"

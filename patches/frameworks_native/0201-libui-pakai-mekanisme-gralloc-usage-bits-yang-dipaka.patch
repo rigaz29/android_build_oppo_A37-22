@@ -1,0 +1,55 @@
+From 56eb3237c2f473487f99013f8cd242a07d1d7cf2 Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sat, 15 Aug 2026 18:54:21 +0000
+Subject: [PATCH] libui: pakai mekanisme gralloc usage bits yang dipakai basis
+ 22.2
+
+Fork ULH masih memakai bentuk lama `defaults: ["gralloc_10_usage_bits_defaults"]`,
+sedangkan modul defaults itu tidak ada di mana pun di pohon lineage-22.2 --
+diperiksa dengan grep seluruh pohon: hanya satu kecocokan, yaitu rujukan ini
+sendiri.
+
+LineageOS resmi sudah pindah ke select() atas soong config variable, dan
+itulah yang benar-benar disuapi basis:
+
+  device/oppo/A37/BoardConfig.mk:402
+    TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x2000U | 0x02000000U | 0x02002000U
+  vendor/lineage/config/BoardConfigSoong.mk:54
+    soong_config_set,libui,additional_gralloc_10_usage_bits
+
+Jadi rujukan itu tidak boleh sekadar dibuang: A37 MEMANG menyetel usage bits
+tambahan, dan membuangnya akan diam-diam mengubahnya jadi 0. Bentuk resmi
+disalin apa adanya dari LineageOS/android_frameworks_native lineage-22.2.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+---
+ libs/ui/Android.bp | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/libs/ui/Android.bp b/libs/ui/Android.bp
+index 9082b171b1..5a8c0501ae 100644
+--- a/libs/ui/Android.bp
++++ b/libs/ui/Android.bp
+@@ -110,7 +110,10 @@ cc_library_shared {
+     cflags: [
+         "-Wall",
+         "-Werror",
+-    ],
++    ] + select(soong_config_variable("libui", "additional_gralloc_10_usage_bits"), {
++        any @ flag_val: ["-DADDNL_GRALLOC_10_USAGE_BITS=" + flag_val],
++        default: ["-DADDNL_GRALLOC_10_USAGE_BITS=0"],
++    }),
+     cppflags: [
+         "-Wextra",
+     ],
+@@ -154,7 +157,6 @@ cc_library_shared {
+         "android.hardware.graphics.allocator-ndk_shared",
+         "android.hardware.graphics.common-ndk_shared",
+         "libui-defaults",
+-        "gralloc_10_usage_bits_defaults",
+         // Uncomment the following line to enable VALIDATE_REGIONS traces
+         //defaults: ["libui-validate-regions-defaults"],
+     ],
+-- 
+2.43.0
+

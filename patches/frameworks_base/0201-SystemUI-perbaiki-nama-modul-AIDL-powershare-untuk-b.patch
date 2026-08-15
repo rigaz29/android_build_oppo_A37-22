@@ -1,0 +1,46 @@
+From 6ba6a244f238cea238995c7403dd6227334462c1 Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sat, 15 Aug 2026 18:54:24 +0000
+Subject: [PATCH] SystemUI: perbaiki nama modul AIDL powershare untuk basis
+ 22.2
+
+Fork ULH merujuk "vendor.lineage.powershare-V1.0-java" (gaya penamaan lama).
+hardware/lineage/interfaces resmi mendeklarasikan aidl_interface bernama
+"vendor.lineage.powershare", sehingga soong menghasilkan
+"vendor.lineage.powershare-V1-java".
+
+Dua kemunculan, keduanya di packages/SystemUI/Android.bp.
+
+Kelas yang sama dengan perbaikan libui di frameworks/native: fork ULH
+lineage-22.2 (dorongan terakhir Mei 2026) tertinggal dari basis resmi.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+---
+ packages/SystemUI/Android.bp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/Android.bp b/packages/SystemUI/Android.bp
+index bc219dd5abef..e5fc3d509c30 100644
+--- a/packages/SystemUI/Android.bp
++++ b/packages/SystemUI/Android.bp
+@@ -512,7 +512,7 @@ android_library {
+         "androidx.activity_activity-compose",
+         "androidx.compose.animation_animation-graphics",
+         "androidx.lifecycle_lifecycle-viewmodel-compose",
+-        "vendor.lineage.powershare-V1.0-java",
++        "vendor.lineage.powershare-V1-java",
+     ],
+     libs: [
+         "keepanno-annotations",
+@@ -695,7 +695,7 @@ android_library {
+         "androidx.lifecycle_lifecycle-viewmodel-compose",
+         "TraceurCommon",
+         "Traceur-res",
+-        "vendor.lineage.powershare-V1.0-java",
++        "vendor.lineage.powershare-V1-java",
+     ],
+ }
+ 
+-- 
+2.43.0
+
