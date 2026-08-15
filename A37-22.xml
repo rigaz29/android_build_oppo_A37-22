@@ -110,19 +110,31 @@
          ULH            hanya lineage-22.2-caf-msm8952        (msm8952, bukan 8916)
 
        Baris di bawah menunjuk ke titik awal 5.2a: kode UL 21.0 yang sudah siap
-       Android 14 DAN sudah terbukti berbunyi di A37. SHA dipaku ke nilai yang
-       sama dengan manifest LOS 21, supaya titik awalnya identik dan satu-satunya
-       variabel adalah port ke A15.
+       Android 14 DAN sudah terbukti berbunyi di A37.
 
-       Begitu forward-port dimulai, GANTI ketiganya ke fork rigaz29 sendiri
-       (branch lineage-22) - jangan menambal di dalam pohon tanpa fork, karena
-       repo sync berikutnya akan menghapusnya. -->
+       PERHATIAN - SHA BERBEDA DARI A37-21.xml, DAN ITU TERPAKSA.
+       Diperiksa 15 Agustus 2026: dua SHA yang dipakai manifest LOS 21 SUDAH
+       TIDAK ADA di LineageOS-UL. Bukan sekadar tertinggal di belakang HEAD:
+       diverifikasi dengan fetch seluruh refs/heads lalu cat-file, keduanya
+       tidak terjangkau dari branch mana pun. Branch-nya di-rewrite.
+
+         audio    1b2c9f8e...  HILANG   ->  4eeadcd5  "audio: fix compilation for U"
+         display  c9d61b95...  HILANG   ->  6d408c97  "hwc: drop libmedia dependency"
+         media    ee0cb10a...  masih HEAD, tidak berubah
+
+       Memakai SHA lama berarti repo sync gagal di dua project. SHA baru adalah
+       HEAD lineage-21.0-caf-msm8916 per 15 Agustus 2026 - isinya tetap kode
+       msm8916 siap-A14 (judul commit-nya menyebut "for U" secara eksplisit).
+
+       Pelajarannya: UL bukan remote yang stabil. Fork ketiganya ke rigaz29
+       SEBELUM forward-port dimulai, jangan menambal di dalam pohon - repo sync
+       berikutnya akan menghapusnya, dan hulunya bisa lenyap kapan saja. -->
 
   <project name="LineageOS-UL/android_hardware_qcom_audio" path="hardware/qcom-caf/msm8916/audio"
-           remote="gh" revision="1b2c9f8e95f74f724894cbbe89b92d16239aff26"
+           remote="gh" revision="4eeadcd50dbccabe53da1114858ea373203bac44"
            upstream="lineage-21.0-caf-msm8916" />
   <project name="LineageOS-UL/android_hardware_qcom_display" path="hardware/qcom-caf/msm8916/display"
-           remote="gh" revision="c9d61b95f6ad6aebc5d2f33837b036dc55ac9365"
+           remote="gh" revision="6d408c97b324217f465fbb4d06905d2f8d6f5585"
            upstream="lineage-21.0-caf-msm8916" />
   <project name="LineageOS-UL/android_hardware_qcom_media" path="hardware/qcom-caf/msm8916/media"
            remote="gh" revision="ee0cb10a3b8388bd24f78530b64204aeb185affc"
