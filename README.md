@@ -103,3 +103,27 @@ Yang belum terbukti ditulis sebagai belum terbukti — termasuk yang paling pent
 ini tidak mengklaim A37 akan boot.** Yang ditunjukkan adalah bahwa setiap pemblokir yang
 diketahui punya jalan keluar yang dapat ditunjuk ke kode, dan bahwa perangkat sekelas
 menjalankan LOS 22.2 hari ini.
+
+---
+
+## Status pengerjaan
+
+Diperbarui 15 Agustus 2026. Setiap gerbang di bawah dijalankan sungguhan, bukan diperkirakan.
+
+| Fase | Status | Gerbang |
+|---|---|---|
+| **0** Basis bersih | ✅ | `repo sync` rc=0, 23m41s, 162 GB, **1149 project, nol HEAD kosong**. `frameworks/native/libs/renderengine/gl/GLESRenderEngine.cpp` **ada** (1866 baris) |
+| **1** Patch BPF-less | ✅ | 13 patch (11 trebledroid + 2 sendiri), `apply-fase1.sh` idempoten, gerbang jalur keluar dini lolos |
+| **2** Kernel W-1 | ✅ | Kernel terkompilasi dengan `aarch64-linux-android-4.9`, `Image` 18.310.776 B, dan literal spoof terbukti ada di `kernel/sys.o` (tempat `uname()` dilayani) |
+| **3** Device tree & konfigurasi | ✅ | `lunch lineage_A37-bp1a-userdebug` + `m nothing` → **rc=0, nol galat, 20m58s**, `build.lineage_A37.ninja` 1,04 GB tergenerate |
+| **4** Build ROM | belum | |
+| **5** Boot | belum | |
+| **6** Fungsi | belum | |
+
+Perintah gerbang Fase 3:
+
+```bash
+source build/envsetup.sh
+lunch lineage_A37-bp1a-userdebug     # format TIGA bagian, release bp1a
+m nothing                            # ~21 menit di mesin 12 core / 11 GB
+```
