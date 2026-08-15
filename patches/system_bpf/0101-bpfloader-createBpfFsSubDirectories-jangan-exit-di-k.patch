@@ -1,0 +1,52 @@
+From 56ed1949077c905b286ed2e8575a78c649978b29 Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sat, 15 Aug 2026 17:52:42 +0000
+Subject: [PATCH] bpfloader: createBpfFsSubDirectories jangan exit di kernel
+ tanpa BPF
+
+Pasangan dari perbaikan di packages/modules/Connectivity. Trebledroid
+0001-Support-no-bpf-usecase membuat legacyBpfLoader() return alih-alih
+exit(121), tapi createBpfFsSubDirectories() tepat SEBELUMNYA masih exit(120).
+
+  bpfloader.rs:305  initLogging()
+  bpfloader.rs:306  createBpfFsSubDirectories()   <- exit(120) di sini
+  bpfloader.rs:307  legacyBpfLoader()             <- sudah non-fatal
+  bpfloader.rs:308  execNetBpfLoadDone()          <- yang menyetel bpf.progs_loaded
+
+Keluar di baris 306 berarti baris 308 tidak pernah tercapai, sehingga
+bpf.progs_loaded tidak pernah disetel dan netd menggantung -- gejala yang sama
+persis dengan yang ditambal di sisi Connectivity.
+
+Kegagalan dicatat lalu iterasi dilanjutkan.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Change-Id: I19e1985c1306b85abb74d3a19f297294ba202081
+---
+ loader/Loader.cpp | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/loader/Loader.cpp b/loader/Loader.cpp
+index 5b6e88c..3043238 100644
+--- a/loader/Loader.cpp
++++ b/loader/Loader.cpp
+@@ -1008,7 +1008,16 @@ void initLogging() {
+ void createBpfFsSubDirectories() {
+     for (const auto& location : android::bpf::locations) {
+         if (android::bpf::createSysFsBpfSubDir(location.prefix)) {
+-            exit(120);
++            // A37 / kernel tanpa BPF: bpffs tidak terdaftar sehingga mkdir
++            // selalu gagal. exit(120) di sini membunuh bpfloader sebelum
++            // bpfloader.rs:308 memanggil execNetBpfLoadDone(), yang meng-exec
++            // "netbpfload done" -- satu-satunya penyetel bpf.progs_loaded=1.
++            // Tanpa properti itu netd menggantung di waitForProgsLoaded().
++            // Dicatat lalu dilanjutkan; jalur pemuatan program di
++            // legacyBpfLoader() sudah dibuat non-fatal oleh patch trebledroid
++            // 0001-Support-no-bpf-usecase.
++            ALOGE("Failed to create BPF FS subdirectory for %s, continuing anyway",
++                  location.prefix);
+         }
+     }
+ }
+-- 
+2.43.0
+
