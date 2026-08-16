@@ -101,3 +101,83 @@ seluruh device tree disapu dan **dua bug lagi** ketahuan sebelum sempat menggaga
 `msm-vidc-test` — `'utils/Log.h' file not found`. Alat uji, tidak diminta `device.mk` mana
 pun, jadi tidak ikut ROM. Memperbaikinya menuntut perubahan sistem build untuk alat yang
 tidak dipakai.
+
+---
+
+## Hasil akhir — Fase 4 SELESAI
+
+**Percobaan 18, 16 Agustus 2026 07:17 — rc=0, nol target gagal.**
+
+```
+lineage-22.2-20260816_071019-UNOFFICIAL-A37.zip   754.028.285 B
+boot.img          20.246.528 B  (19,3 MiB dari partisi 32 MiB)
+recovery.img      30.945.280 B
+system.img     1.700.319.764 B
+```
+
+### Gerbang yang diperiksa, bukan diasumsikan
+
+Identitas dan spoof — port kunci A15 (`BuildDesc`/`DeviceName`) bekerja persis
+seperti yang dituju:
+
+```
+ro.build.version.release    15
+ro.lineage.version          22.2-20260816_071012-UNOFFICIAL-A37
+ro.product.system.device    A37     <- identitas Lineage utuh
+ro.lineage.device           A37     <- pencocokan OTA aman
+ro.build.product            A37f    <- spoof stok
+ro.build.description        msm8916_64-user 5.1.1 LMY47V eng.root...
+```
+
+adb, dari rantai yang diprediksi `post_process_props.py:35-42`:
+
+```
+ro.adb.secure               0
+persist.sys.usb.config      adb
+```
+
+Perbaikan boot LOS 21 terbawa utuh:
+
+```
+ro.hardware.egl             adreno        <- Lapis 2 LOS 21
+ro.vndk.version             tidak diset   <- Lapis 1 LOS 21
+```
+
+Kernel W-1 terverifikasi di artefak yang DIKIRIM, bukan hanya di hasil
+kompilasi antara:
+
+```
+kernel di boot.img   18.310.776 B  = identik dengan Image hasil build W-1
+string '3.17'        7x
+string 'netbpfload'  1x
+```
+
+### Empat kegagalan terakhir: asumsi yang diam-diam terbalik di A15
+
+Setelah sepolicy beres, sisanya bukan lagi soal legacy vs modern melainkan
+**default yang berubah diam-diam**:
+
+| Kegagalan | Yang berubah |
+|---|---|
+| `Key "PRIVATE_BUILD_DESC" isn't a valid prop override` | `PRODUCT_BUILD_PROP_OVERRIDES` kini divalidasi; kunci lama tidak sah. Padanannya `BuildDesc`/`DeviceName` |
+| `checkvintf INCOMPATIBLE` | `vendor.lineage.health` naik ke AIDL V2; matrix device masih menyebut V1 dan tanpa `IFastCharge` |
+| `META/ab_partitions.txt is required for ab_update` | `board_config.mk:945` — `AB_OTA_UPDATER` kosong dulu berarti non-A/B, di A15 berarti **A/B** |
+| `zip I/O error: Bad address` | `non_ab_ota.py` memanggil zip tanpa `-y`; terpicu karena target berupa direktori DAN build berjalan sebagai root |
+
+### Dua kelalaian yang harus dicatat
+
+`PLAN.md` LOS 21 menyebut **tiga** hal yang tetap wajib meski basis berganti.
+Dua di antaranya saya biarkan sampai build menabraknya, masing-masing menelan
+satu siklus penuh (~1 jam):
+
+- `String8::string()` di qcom-caf — patchnya sudah ada di kit LOS 21 dan terap
+  bersih untuk `display` **dan** `audio`
+- `zip -y` di `non_ab_ota.py` — patchnya juga sudah ada, terap bersih, dan
+  commit-nya bahkan sudah menjelaskan syarat pemicunya
+
+Yang ketiga, Camera HAL1 `device1/`, tidak berlaku di LOS 22 karena jalurnya
+berpindah ke `hal3on1`.
+
+Pelajarannya bukan "baca rencana lebih teliti" melainkan: **daftar
+prasyarat yang sudah terbukti dari versi sebelumnya diterapkan DI MUKA, bukan
+menunggu gerbang menemukannya.**

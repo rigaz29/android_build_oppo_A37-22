@@ -130,6 +130,15 @@ echo "== device/qcom/sepolicy-legacy: selaraskan dengan sepolicy_test A15 =="
 terap device/qcom/sepolicy-legacy \
       "$KIT/patches/device_qcom_sepolicy_legacy/0302-Selaraskan-sepolicy-legacy-dengan-sepolicy_test-Andr.patch"
 
+echo "== build/make: zip -y saat mengemas OTA =="
+# non_ab_ota.py memanggil zip TANPA -y, sehingga zip MENGIKUTI symlink alih-alih
+# menyimpannya. target_files memuat RECOVERY/RAMDISK/d -> /sys/kernel/debug, jadi
+# zip menelusuri debugfs MESIN BUILD dan gagal di langkah pengemasan terakhir:
+#   zip I/O error: Bad address
+# Terpicu hanya bila target_file berupa DIREKTORI (jalur LineageOS) DAN build
+# berjalan sebagai root -- keduanya berlaku di sini.
+terap build/make "$KIT/patches/build_make/0701-releasetools-zip-y-agar-symlink-tidak-diikuti.patch"
+
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"
 
