@@ -110,6 +110,14 @@ echo "== device/lineage/sepolicy: pulihkan dukungan ultra-legacy =="
 terap device/lineage/sepolicy \
       "$KIT/patches/device_lineage_sepolicy/0401-Pulihkan-dukungan-sepolicy-ultra-legacy-untuk-msm891.patch"
 
+echo "== hardware/qcom-caf/wlan: jalur WCNSS QMI OSS =="
+# Android.mk menyetel -DWCNSS_QMI tanpa syarat lalu menambah -DWCNSS_QMI_OSS,
+# sehingga wcnss_init_qmi dideklarasikan dua kali dengan jenis berbeda
+# (fungsi di header, pointer di wcnss_service.c). A37 memakai jalur OSS ini
+# secara sengaja; libwcnss_qmi.so-nya dibangun device tree dari wcnss_oppo/.
+terap hardware/qcom-caf/wlan \
+      "$KIT/patches/hardware_qcom-caf_wlan/0501-wcnss-service-jangan-tarik-wcnss_qmi_client.h-di-jal.patch"
+
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"
 

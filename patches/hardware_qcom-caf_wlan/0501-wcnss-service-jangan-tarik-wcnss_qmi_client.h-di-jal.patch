@@ -1,0 +1,70 @@
+From 9a804a513907084d996a92339ef3c098295cc5b6 Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sun, 16 Aug 2026 04:23:28 +0000
+Subject: [PATCH] wcnss-service: jangan tarik wcnss_qmi_client.h di jalur OSS
+
+Build gagal:
+  wcnss_service.c:717: error: redefinition of 'wcnss_init_qmi' as different
+  kind of symbol  (juga wcnss_qmi_get_wlan_address dan wcnss_qmi_deinit)
+
+Android.mk menyetel -DWCNSS_QMI TANPA SYARAT di cabang non-QCPATH (baris 24),
+lalu menambahkan -DWCNSS_QMI_OSS bila TARGET_PROVIDES_WCNSS_QMI=true (baris
+27). Kedua makro karena itu aktif bersamaan, dan simbol yang sama
+dideklarasikan dua kali dengan jenis berbeda:
+
+  wcnss_qmi_client.h:44   int wcnss_init_qmi(void);            <- fungsi
+  wcnss_service.c:717     static int (*wcnss_init_qmi)(void);  <- pointer
+
+Di mode OSS ketiga fungsi itu justru di-resolve saat runtime lewat dlsym dari
+libwcnss_qmi.so, jadi deklarasi headernya memang tidak diperlukan. Header itu
+juga tidak menyediakan apa pun selain ketiga deklarasi tersebut; SUCCESS dan
+FAILED didefinisikan di wcnss_service.c sendiri (baris 54-55).
+
+A37 memakai jalur OSS ini secara sengaja: TARGET_USES_QCOM_WCNSS_QMI=true +
+TARGET_PROVIDES_WCNSS_QMI=true, konfigurasi yang sama persis dengan ROM LOS 20
+A37 yang Wi-Fi-nya berfungsi, dan libwcnss_qmi.so-nya dibangun device tree dari
+wcnss_oppo/.
+
+Diverifikasi terpisah: `m wcnss_service` rc=0, nol target gagal.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Change-Id: Ibcd9c5a0bae13d98f4c2c884df787c102bcaefff
+---
+ wcnss-service/wcnss_service.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/wcnss-service/wcnss_service.c b/wcnss-service/wcnss_service.c
+index 6a3095d..d81d717 100644
+--- a/wcnss-service/wcnss_service.c
++++ b/wcnss-service/wcnss_service.c
+@@ -42,7 +42,27 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ #include <cutils/log.h>
+ #include <cutils/properties.h>
+ #ifdef WCNSS_QMI
++/*
++ * Jangan tarik header ini di jalur OSS.
++ *
++ * Android.mk menyetel -DWCNSS_QMI TANPA SYARAT di cabang non-QCPATH, lalu
++ * menambahkan -DWCNSS_QMI_OSS bila TARGET_PROVIDES_WCNSS_QMI=true. Jadi kedua
++ * makro aktif bersamaan, dan simbol yang sama dideklarasikan dua kali dengan
++ * jenis berbeda:
++ *
++ *   wcnss_qmi_client.h:44   int wcnss_init_qmi(void);            <- fungsi
++ *   wcnss_service.c:717     static int (*wcnss_init_qmi)(void);  <- pointer
++ *
++ *   error: redefinition of 'wcnss_init_qmi' as different kind of symbol
++ *
++ * Di mode OSS ketiga fungsi itu di-resolve saat runtime lewat dlsym dari
++ * libwcnss_qmi.so, jadi deklarasi header-nya memang tidak diperlukan. Header
++ * ini pun tidak menyediakan apa pun selain ketiga deklarasi tersebut --
++ * SUCCESS/FAILED didefinisikan di berkas ini sendiri (baris 54-55).
++ */
++#ifndef WCNSS_QMI_OSS
+ #include "wcnss_qmi_client.h"
++#endif
+ #ifdef MDM_DETECT
+ #include "mdm_detect.h"
+ #endif
+-- 
+2.43.0
+
