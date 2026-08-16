@@ -223,6 +223,59 @@ audit SELinux permissive — jadi jangan mengandalkan `dmesg` sendirian.
 
 ---
 
+## Boot 3 — setelah perbaikan netd BPF-less
+
+Boot 2 gagal karena `netd` abort di `BpfHandler::init` (24 tombstone). Rincian
+di `DIAGNOSIS-boot2.md`. Yang berubah di build ini **dua** hal:
+
+1. penjaga eBPF di `bpf/netd/NetdUpdatable.cpp` — perbaikan sesungguhnya
+2. bootwatchdog 120 → 300 detik — permintaan, bukan perbaikan
+
+Keduanya sudah diverifikasi ada di zip yang dikirim lewat `tools/verify-ship.sh`.
+
+### Gerbang penentu, urut
+
+```bash
+adb shell getprop init.svc.netd          # harus "running", BUKAN "restarting"
+adb shell getprop sys.boot_completed     # 1 kalau boot benar-benar selesai
+adb shell ls -l /data/system/environ/    # 'classpath' harus tetap ada
+```
+
+- `netd` **running** → akar boot 2 tuntas
+- `netd` masih **restarting** → periksa apakah abortnya masih di `BpfHandler::init`;
+  kalau backtrace-nya berpindah, itu akar lain
+- `netd` running tapi boot tetap tidak selesai → penghalang bergeser ke tempat
+  lain; kumpulkan log seperti di bawah
+
+### Kalau boot berhasil, yang paling perlu diperiksa
+
+```bash
+adb logcat -d | grep -iE 'IdleInvalidator|RefBase.*Double owned'   # composer
+adb shell getprop init.svc.vendor.hwcomposer-2-1                   # jangan "restarting"
+adb logcat -d | grep -iE 'freezer|cgroup|SensorPrivacy|ConsumerIr' # kandidat audit
+```
+
+Composer sempat crash 2× di boot 2 lalu pulih. Kalau ia mulai crash-loop setelah
+netd sehat, akarnya ada di `IdleInvalidator::~IdleInvalidator` (`libqdutils`)
+yang dipanggil dari `qhwc::MDPComp::init`.
+
+### Kalau gagal lagi
+
+Kumpulkan **sekaligus**, seperti daftar di bagian Boot 2 di atas. Dua tambahan
+khusus kali ini:
+
+```bash
+adb shell ls -l /sys/fs/bpf/ /sys/fs/bpf/netd_shared/ 2>&1 > bpf-fs.txt
+adb logcat -d -b all > logcat-all.txt
+```
+
+`-b all` penting: logcat boot 2 kehilangan baris karena **69% isinya `avc:
+denied`** dan satu proses membanjiri ring buffer. Kalau banjir itu masih ada,
+ambil juga `adb logcat -d | grep -v 'avc:' > logcat-bersih.txt` supaya baris yang
+berguna tidak tenggelam.
+
+---
+
 ## Yang belum bisa dijawab dari mesin build
 
 Dokumen ini **tidak** mengklaim A37 akan boot. Yang terbukti sejauh ini: seluruh
