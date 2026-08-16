@@ -118,6 +118,18 @@ echo "== hardware/qcom-caf/wlan: jalur WCNSS QMI OSS =="
 terap hardware/qcom-caf/wlan \
       "$KIT/patches/hardware_qcom-caf_wlan/0501-wcnss-service-jangan-tarik-wcnss_qmi_client.h-di-jal.patch"
 
+echo "== system/sepolicy: cabut sysfs_disk_stat yang melanggar uji beku =="
+# Fork ULH mengembalikan tipe sysfs_disk_stat (dicabut AOSP di A15) tapi tidak
+# menambahkannya ke prebuilts/api/202404, sehingga se_freeze_test menolak build:
+#   The following public types were added: sysfs_disk_stat
+terap system/sepolicy "$KIT/patches/system_sepolicy/0601-Revert-Fix-storaged-access-to-sys-block-mmcblk0-stat.patch"
+
+echo "== device/qcom/sepolicy-legacy: selaraskan dengan sepolicy_test A15 =="
+# 58 pelanggaran di lima kelas dengan aturan BERLAWANAN. Lihat badan commit
+# patch 0302 untuk keputusan per kelas.
+terap device/qcom/sepolicy-legacy \
+      "$KIT/patches/device_qcom_sepolicy_legacy/0302-Selaraskan-sepolicy-legacy-dengan-sepolicy_test-Andr.patch"
+
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"
 
