@@ -276,6 +276,57 @@ berguna tidak tenggelam.
 
 ---
 
+## Boot 4 — setelah perbaikan BPF clat
+
+Boot 3 gagal karena `system_server` abort di `JNI_OnLoad` (`ClatCoordinator`),
+12 tombstone. Rincian di `DIAGNOSIS-boot3.md`. Build ini mengubah **satu** hal:
+penjaga eBPF di `verifyClatPerms()`.
+
+```
+lineage-22.2-20260816_100715-UNOFFICIAL-A37.zip   754.028.583 B
+sha256 cecc42050fd6625d0fa952448b6a49f13f8afa3694fbcff706544dfe62e05048
+```
+
+### Gerbang penentu, urut
+
+```bash
+adb shell getprop sys.boot_completed              # 1 = boot selesai
+adb logcat -d | grep -c 'system_server'           # harus banyak, dan TIDAK berulang mati
+adb logcat -d | grep 'ClatCoordinator'            # harus sunyi, atau hanya baris "dilewati"
+```
+
+Tiga akar sebelumnya sudah tidak boleh muncul lagi:
+
+```bash
+adb shell ls -l /data/system/environ/classpath    # ada  (boot 1)
+adb shell getprop init.svc.netd                   # running  (boot 2)
+adb logcat -d | grep -c '>>> system_server <<<'   # 0  (boot 3)
+```
+
+### Kalau berhasil sampai homescreen
+
+Yang paling perlu diawasi, karena sudah terlihat crash dua boot berturut-turut
+lalu pulih sendiri:
+
+```bash
+adb shell getprop init.svc.vendor.hwcomposer-2-1  # jangan "restarting"
+adb logcat -d | grep -iE 'IdleInvalidator|Double owned'
+```
+
+Kalau ia berubah jadi crash-loop, akarnya di `IdleInvalidator` (`libqdutils`):
+turunan RefBase yang dipegang `static sp<>` sementara `getInstance()`
+mengembalikan pointer mentah.
+
+Lalu pemeriksaan fungsi yang tertunda sejak awal:
+
+```bash
+adb shell getprop ro.lineage.version
+adb logcat -d | grep 'Networking module does not have permission'   # tethering
+adb shell getprop init.svc.vendor.bluetooth-1-0-qti                 # jangan "restarting"
+```
+
+---
+
 ## Yang belum bisa dijawab dari mesin build
 
 Dokumen ini **tidak** mengklaim A37 akan boot. Yang terbukti sejauh ini: seluruh
