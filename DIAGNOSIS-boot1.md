@@ -120,6 +120,40 @@ Ketiga patch yang terlewat itu semuanya akan muncul sebagai **ABSEN**.
 
 ---
 
+## Verifikasi — dan dua jebakan yang hampir menipu
+
+Tanda tangan yang dicari sudah ditetapkan LOS 21: `rename()` harus melompat ke
+`renameat`. Hasil pada libc yang baru dibangun:
+
+```
+65a30: mvn  r0, #0x63                                  <- -100 = AT_FDCWD
+65a38: b.w  0xb147c <__ThumbV7PILongThunk_renameat>    <- bukan renameat2
+```
+
+Cocok persis. Tapi dua hal hampir menghasilkan kesimpulan yang salah:
+
+**1. Stempel waktu berbohong.** `out/target/product/A37/system/lib/libc.so`
+bertanggal **15 Agustus 22:05** — lebih tua dari patchnya — yang tampak seperti
+bukti kuat bahwa libc tidak dibangun ulang. Kenyataannya intermediate bionic
+dibangun ulang jam **07:55:28**. Di Android modern libc yang dipakai dikirim di
+dalam **APEX `com.android.runtime`**, dan berkas di `/system/lib/libc.so` adalah
+sisa yang tidak ikut terpakai.
+
+**2. Disassembly berkas yang salah balik kosong, bukan salah.** Membongkar
+`/system/lib/libc.so` menghasilkan nol baris. Kalau outputnya dibaca sekilas,
+"tidak ada renameat2" gampang disalahartikan sebagai lolos. Verifikator karena
+itu memaksa `exit 1` kalau target lompatan tidak terbaca — diam bukan lulus.
+
+**3. `debugfs` tidak bisa membaca Android sparse image.** Gejalanya menyesatkan:
+`ls /` balik kosong dan setiap path tampak tidak ada, seolah isi image-nya salah
+padahal cuma formatnya. `tools/verify-rename.sh` kini mendeteksi magic `3aff26ed`
+dan menjalankan `simg2img` lebih dulu.
+
+Alat lengkapnya menempuh jalur penuh dari zip yang dikirim:
+`zip → brotli → sdat2img → simg2img → debugfs → APEX → objdump`.
+
+---
+
 ## Kandidat ABSEN yang relevan untuk boot berikutnya
 
 **Sengaja TIDAK diterapkan sekarang.** Build ini menguji satu hipotesis; menumpuk
