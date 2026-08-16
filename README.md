@@ -117,7 +117,7 @@ Diperbarui 15 Agustus 2026. Setiap gerbang di bawah dijalankan sungguhan, bukan 
 | **2** Kernel W-1 | ✅ | Kernel terkompilasi dengan `aarch64-linux-android-4.9`, `Image` 18.310.776 B, dan literal spoof terbukti ada di `kernel/sys.o` (tempat `uname()` dilayani) |
 | **3** Device tree & konfigurasi | ✅ | `lunch lineage_A37-bp1a-userdebug` + `m nothing` → **rc=0, nol galat, 20m58s**, `build.lineage_A37.ninja` 1,04 GB tergenerate |
 | **4** Build ROM | ✅ | **18 percobaan**. ROM jadi: `lineage-22.2-20260816_071019-UNOFFICIAL-A37.zip`, 754 MB. `boot.img` 20.246.528 B (19,3 MiB) dari partisi 32 MiB. Lihat `CATATAN-fase4.md` |
-| **5** Boot | belum | |
+| **5** Boot | menunggu perangkat | Perkakas diagnosis diverifikasi ADA di ROM. Prosedur di [`FASE5-boot.md`](FASE5-boot.md) |
 | **6** Fungsi | belum | |
 
 Perintah gerbang Fase 3:
