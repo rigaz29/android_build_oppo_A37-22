@@ -119,6 +119,25 @@ build LOS 21 yang offline         usb_legacy=0  transport_legacy=0
 
 Ditambah gerbang kedua: `ro.adb.nonblocking_ffs=false` harus ada di `build.prop`.
 
+## Hasil build
+
+```
+lineage-22.2-20260816_112357-UNOFFICIAL-A37.zip   754.101.564 B
+sha256 b7eb3c9cbacf76ad8230ecd0f6fd5f52105f9c84a01f4e77fea686fa38ed2ce2
+```
+
+Diverifikasi dari zip yang dikirim, menembus APEX com.android.adbd:
+
+```
+usb_legacy=3  transport_legacy=2      <- cocok persis dengan ROM LOS 20
+ro.adb.nonblocking_ffs=false          <- ada di build.prop
+```
+
+⚠️ Kompilasi pertama sempat menyesatkan: `m adbd` membangun varian **linux_glibc**
+(adbd host), yang justru memakai `usb_dummy.cpp` dan tidak pernah menyentuh
+`usb_legacy.cpp`. Build itu lolos tanpa membuktikan apa pun. Varian perangkat
+harus diminta terpisah lewat `m com.android.adbd`.
+
 ## Kalau masih offline setelah ini
 
 Perangkat sudah boot ke homescreen, jadi diagnosis tidak lagi bergantung pada
