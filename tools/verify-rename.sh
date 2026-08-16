@@ -45,28 +45,33 @@ fi
 # system/lib/libc.so memang ada tapi merupakan sisa lama -- stempel waktunya
 # bahkan lebih tua dari patch dan disassembly-nya kosong. Memverifikasi berkas
 # itu akan memberi kesimpulan yang salah dengan meyakinkan.
+# Berkas .apex adalah ZIP yang berisi apex_payload.img -- sebuah ext4 TERSEMAT.
+# libc ada di dalam image itu, bukan langsung di dalam zip-nya. Jadi tiga lapis:
+#   system.img (ext4) -> com.android.runtime.apex (zip) -> apex_payload.img (ext4)
 LIBC=""
-for apex in /apex/com.android.runtime.apex /apex/com.android.runtime_stripped.apex; do
-  rm -f "$W/rt.apex"
+for apex in /system/apex/com.android.runtime.apex /apex/com.android.runtime.apex; do
+  rm -f "$W/rt.apex" "$W/apex_payload.img"
   debugfs -R "dump $apex $W/rt.apex" "$W/system.img" 2>/dev/null
   [ -s "$W/rt.apex" ] || continue
-  for inner in lib/bionic/libc.so lib64/bionic/libc.so; do
-    if unzip -q -o -j "$W/rt.apex" "$inner" -d "$W" 2>/dev/null && [ -s "$W/libc.so" ]; then
-      LIBC="$apex!$inner"; break 2
-    fi
+  unzip -q -o -j "$W/rt.apex" apex_payload.img -d "$W" 2>/dev/null
+  [ -s "$W/apex_payload.img" ] || continue
+  for inner in /lib/bionic/libc.so /lib64/bionic/libc.so; do
+    rm -f "$W/libc.so"
+    debugfs -R "dump $inner $W/libc.so" "$W/apex_payload.img" 2>/dev/null
+    [ -s "$W/libc.so" ] && { LIBC="$apex!apex_payload.img!$inner"; break 2; }
   done
 done
 # fallback: tata letak lama (libc langsung di partisi)
 if [ -z "$LIBC" ]; then
-  for cand in /lib/libc.so /lib64/libc.so; do
+  for cand in /system/lib/libc.so /system/lib64/libc.so /lib/libc.so; do
     rm -f "$W/libc.so"
     debugfs -R "dump $cand $W/libc.so" "$W/system.img" 2>/dev/null
     [ -s "$W/libc.so" ] && { LIBC=$cand; break; }
   done
 fi
 if [ -z "$LIBC" ]; then
-  echo "  libc.so tidak ketemu. Isi /apex:"
-  debugfs -R "ls /apex" "$W/system.img" 2>&1 | head -5 | sed 's/^/    /'
+  echo "  libc.so tidak ketemu. Isi /system/apex:"
+  debugfs -R "ls /system/apex" "$W/system.img" 2>&1 | head -8 | sed 's/^/    /'
   exit 1
 fi
 echo "  $LIBC  ($(stat -c%s "$W/libc.so") B)"

@@ -158,6 +158,71 @@ Ini gejala LOS 21 yang paling melumpuhkan. Urutannya:
 
 ---
 
+## Boot 2 — setelah perbaikan renameat2
+
+Boot 1 gagal: bootanimation lalu reboot ke TWRP di detik 120. Akarnya sudah
+ditemukan dan diperbaiki — lihat `DIAGNOSIS-boot1.md`. Ringkasnya: `rename()`
+memakai syscall `renameat2` yang tidak ada di kernel 3.10 ini, sehingga
+`BOOTCLASSPATH` tidak pernah terbentuk dan zygote abort tiap 5 detik.
+
+### Yang berubah — hanya satu hal
+
+Sengaja **satu** perubahan saja di build ini, supaya hasilnya tidak ambigu.
+Kalau beberapa perbaikan ditumpuk lalu boot berhasil, tidak akan diketahui mana
+yang bekerja; kalau gagal, tidak akan diketahui mana yang merusak.
+
+### Cara membaca hasilnya
+
+**Kalau lolos bootanimation dan masuk homescreen** — akarnya benar dan tuntas.
+
+**Kalau masih berputar di bootanimation**, yang pertama diperiksa adalah apakah
+akar yang sama masih menggigit atau sudah bergeser ke yang lain:
+
+```bash
+adb shell ls -l /data/system/environ/          # classpath harus ADA, bukan cuma .tmp
+adb shell getprop | grep -i bootclasspath      # harus terisi
+```
+
+- `classpath` **ada** → renameat2 tuntas, kegagalan berikutnya hal lain
+- masih hanya `classpath.tmp` → perbaikan tidak sampai ke perangkat; periksa
+  apakah zip yang di-flash benar-benar build baru (bandingkan sha256)
+
+### Kalau boot lebih jauh tapi tetap gagal
+
+Lima kandidat dari `tools/audit-kit21.sh` sudah disiapkan tapi **belum**
+diterapkan, karena boot 1 mati sebelum `system_server` hidup sehingga kelimanya
+belum pernah teruji. Daftar dan alasannya ada di `DIAGNOSIS-boot1.md`. Yang
+paling perlu dicari di logcat boot berikutnya:
+
+```bash
+adb logcat -d | grep -iE 'freezer|cgroup|SensorPrivacy|ConsumerIr|BpfMap|clat'
+```
+
+Kalau ada yang muncul, patchnya sudah ada di kit dan tinggal diterapkan.
+
+### Yang harus dikumpulkan kalau gagal lagi
+
+Supaya satu siklus flash menghasilkan satu diagnosis utuh, kumpulkan **sekaligus**:
+
+```bash
+adb logcat -d > logcat.txt
+adb shell getprop > getprop.txt
+adb shell ls -lR /data/system/environ > environ.txt
+adb shell dmesg > dmesg.txt
+adb shell cat /sys/fs/pstore/console-ramoops-0 > console-ramoops-0
+adb shell cat /sys/fs/pstore/pmsg-ramoops-0 > pmsg-ramoops-0
+```
+
+⚠️ `console-ramoops` di `report/bootfail` kemarin ternyata berasal dari sesi
+**TWRP**, bukan dari boot yang gagal — jadi isinya tidak relevan. Kalau perangkat
+sudah sempat masuk TWRP dan reboot lagi, pstore-nya sudah tertimpa. Ambil
+pstore **sesegera mungkin** setelah kegagalan, sebelum reboot berikutnya.
+
+Dan `dmesg` kemarin hanya mencakup dari detik ~133 karena ring buffer dibanjiri
+audit SELinux permissive — jadi jangan mengandalkan `dmesg` sendirian.
+
+---
+
 ## Yang belum bisa dijawab dari mesin build
 
 Dokumen ini **tidak** mengklaim A37 akan boot. Yang terbukti sejauh ini: seluruh
