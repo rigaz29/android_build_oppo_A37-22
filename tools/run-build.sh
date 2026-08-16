@@ -13,6 +13,10 @@
 #   -j6,  swap 16 GB                  LOLOS
 #
 # Karena itu swap dinaikkan ke 31 GB dan swappiness ke 60 sebelum build.
+#
+# 16 Agustus 2026: turun ke -j6 atas permintaan, setelah soong_build kena OOM
+# killer (anon-rss 9,3 GB di mesin 11 GB). Titik -j6 sudah tercatat LOLOS di
+# tabel di atas, dan soong bootstrap memang fase paling haus memori.
 
 cd /root/los22 || exit 1
 export LC_ALL=C
@@ -27,14 +31,14 @@ LOG=/root/los22/build-fase4.log
   echo "swap    $(free -g | awk '/Swap/{print $2}') GB"
   echo "swappy  $(cat /proc/sys/vm/swappiness)"
   echo "disk    $(df -h / | tail -1 | awk '{print $4}') bebas"
-  echo "jobs    -j10"
+  echo "jobs    -j6"
   echo "----"
 } > "$LOG"
 
 source build/envsetup.sh >/dev/null 2>&1
 lunch lineage_A37-bp1a-userdebug >/dev/null 2>&1
 
-m -j10 bacon >> "$LOG" 2>&1
+m -j6 bacon >> "$LOG" 2>&1
 rc=$?
 
 {

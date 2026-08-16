@@ -187,6 +187,14 @@ echo "== adb: pulihkan jalur FunctionFS legacy non-AIO (WAJIB untuk adb USB) =="
 # sudah punya client/transport_usb.cpp. Patch 0804 sudah memperbaikinya.
 terap packages/modules/adb "$KIT/patches/packages_modules_adb/0804-A37-pulihkan-jalur-FunctionFS-legacy-non-AIO-untuk-a.patch"
 
+echo "== netd: aturan rute langsung-terhubung (WAJIB untuk Wi-Fi) =="
+# DHCP berhasil tapi addRoute ditolak ENONET, DNS kosong, dan framework memutus
+# di detik ke-18 -- UI menampilkannya sebagai "obtaining IP address" padahal IP
+# sudah didapat. Rute lewat gateway menuntut rute langsung-terhubung yang
+# mencakup gateway itu; kernel membuatnya di tabel main, netd bekerja di tabel
+# per-jaringan. Lihat DIAGNOSIS-wifi.md.
+terap system/netd "$KIT/patches/system_netd/0805-A37-aturan-rute-langsung-terhubung-agar-DHCP-bisa-me.patch"
+
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"
 

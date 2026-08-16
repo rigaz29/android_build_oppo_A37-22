@@ -96,6 +96,23 @@ echo "build.prop:"
 periksa "ro.adb.nonblocking_ffs=false" \
   "grep -q '^ro.adb.nonblocking_ffs=false' '$W/build.prop'"
 
+# ---- 2e. netd: biner yang DIKIRIM sama dengan yang dibangun dengan
+#          -DNEEDS_NETD_DIRECT_CONNECT_RULE.
+# Simbol addDirectlyConnectedRule sengaja TIDAK dipakai sebagai patokan: fungsinya
+# dipanggil sekali sehingga wajar di-inline dan simbolnya hilang -- ketiadaannya
+# bukan bukti. Yang dibuktikan di sini asal-usulnya; keaktifan define-nya
+# diverifikasi di tingkat build lewat cFlags di build.lineage_A37.*.ninja.
+rm -f "$W/netd"
+debugfs -R "dump /system/bin/netd $W/netd" "$W/system.img" 2>/dev/null
+echo "netd:"
+OUTNETD=/root/los22/out/target/product/A37/system/bin/netd
+if [ -s "$W/netd" ] && [ -f "$OUTNETD" ]; then
+  a=$(sha256sum "$W/netd" | cut -d' ' -f1); b=$(sha256sum "$OUTNETD" | cut -d' ' -f1)
+  periksa "biner terkirim identik dengan hasil build" "[ '$a' = '$b' ]"
+else
+  echo "  ✗ netd tidak ketemu"; gagal=1
+fi
+
 # ---- 3. bootwatchdog
 rm -f "$W/bw.sh"
 for p in /system/vendor/bin/bootwatchdog.sh /vendor/bin/bootwatchdog.sh \
