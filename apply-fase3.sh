@@ -157,6 +157,17 @@ echo "== bionic: rename() kembali ke syscall renameat (WAJIB, kernel 3.10) =="
 # "Function not implemented".
 terap bionic "$KIT/patches/bionic/0801-A37-revert-Rewrite-renameat-kembalikan-rename-ke-sys.patch"
 
+echo "== Connectivity: lewati init BPF di perangkat tanpa eBPF (WAJIB) =="
+# netd abort tanpa pesan di BpfHandler::init karena waitForBpf() memanggil
+# ctl.start=mdnsd_netbpfload untuk servis yang tidak ada di ROM ini. Di
+# report/bootfail2 terekam 24 tombstone /system/bin/netd dan init.svc.netd
+# restarting. Di belakangnya masih ada loop tak terhingga menanti
+# /sys/fs/bpf/netd_shared/mainline_done yang tidak akan pernah ada.
+#
+# Berkasnya PINDAH di 22: netd/NetdUpdatable.cpp (21) -> bpf/netd/NetdUpdatable.cpp.
+# Itu sebabnya patch kit 21 muncul sebagai BEDA di audit-kit21.sh, bukan ABSEN.
+terap packages/modules/Connectivity "$KIT/patches/packages_modules_Connectivity/0802-A37-lewati-inisialisasi-BPF-saat-perangkat-tidak-pun.patch"
+
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"
 

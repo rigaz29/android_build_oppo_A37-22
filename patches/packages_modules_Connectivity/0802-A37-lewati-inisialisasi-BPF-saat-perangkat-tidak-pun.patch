@@ -1,0 +1,76 @@
+From c9a344407736c60da64c5bb596565463a097d8e5 Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sun, 16 Aug 2026 08:25:47 +0000
+Subject: [PATCH] A37: lewati inisialisasi BPF saat perangkat tidak punya eBPF
+
+BpfHandler::init() -> waitForBpf() memanggil SetProperty(ctl.start,
+mdnsd_netbpfload) untuk servis yang tidak ada di ROM ini, gagal, lalu abort()
+tanpa pesan (BpfHandler.cpp:226-229). Terekam di report/bootfail2: 24 tombstone
+/system/bin/netd dengan backtrace #01 BpfHandler::init, dan init.svc.netd
+tercatat restarting saat log diambil.
+
+Jebakan kedua menunggu di belakangnya: waitForNetProgsLoaded() adalah loop tak
+terhingga menanti /sys/fs/bpf/netd_shared/mainline_done yang tidak akan pernah
+muncul di kernel 3.10 tanpa CONFIG_BPF_SYSCALL.
+
+Kondisinya ditulis terbalik dari hulu UL, yang keliru: __system_property_get
+mengembalikan panjang nilai dan bukan status, sehingga != 0 justru benar saat
+propertinya bernilai false. Perangkat ini memang menyetel
+ro.kernel.ebpf.supported=false.
+
+tagSocket dan untagSocket sudah berpagar mCookieTagMap.isValid(), dan komentar
+di BpfHandler.cpp:290 menyatakan peta itu sengaja diinisialisasi terakhir agar
+menjadi penanda validitas induk -- jadi melewati init aman menurut desainnya.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Change-Id: Ia95f582153d467eaff8d8f636f43803c03f322f4
+---
+ bpf/netd/NetdUpdatable.cpp | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/bpf/netd/NetdUpdatable.cpp b/bpf/netd/NetdUpdatable.cpp
+index 8b9e5a759c..be6dea54e4 100644
+--- a/bpf/netd/NetdUpdatable.cpp
++++ b/bpf/netd/NetdUpdatable.cpp
+@@ -19,6 +19,7 @@
+ #include "BpfHandler.h"
+ 
+ #include <android-base/logging.h>
++#include <android-base/properties.h>
+ #include <netdutils/Status.h>
+ 
+ #include "NetdUpdatablePublic.h"
+@@ -29,6 +30,30 @@ int libnetd_updatable_init(const char* cg2_path) {
+     android::base::InitLogging(/*argv=*/nullptr);
+     LOG(INFO) << __func__ << ": Initializing";
+ 
++    // A37: kernel 3.10 tanpa CONFIG_BPF_SYSCALL sama sekali.
++    //
++    // Tanpa penjaga ini BpfHandler::init() -> waitForBpf() masuk cabang
++    // mainlineNetBpfLoadDone()==false, memanggil SetProperty("ctl.start",
++    // "mdnsd_netbpfload") untuk servis yang tidak ada di ROM ini, gagal, lalu
++    // abort() tanpa pesan (BpfHandler.cpp:226-229). netd mati berulang tiap 5
++    // detik, servis binder-nya tidak pernah terdaftar, dan boot tidak selesai.
++    // Terekam di report/bootfail2/: 24 tombstone /system/bin/netd.
++    //
++    // Seandainya ctl.start berhasil pun jebakan kedua menunggu:
++    // waitForNetProgsLoaded() adalah loop TAK TERHINGGA menanti berkas
++    // /sys/fs/bpf/netd_shared/mainline_done yang tidak akan pernah muncul.
++    //
++    // Kondisinya sengaja ditulis begini, bukan seperti hulu UL yang TERBALIK:
++    // __system_property_get mengembalikan PANJANG nilai, bukan status, sehingga
++    // `!= 0` justru benar saat propertinya "false". Maksud yang benar: didukung
++    // kalau properti TIDAK ADA (bawaan AOSP), atau ada tapi bukan "false".
++    const std::string ebpf = android::base::GetProperty("ro.kernel.ebpf.supported", "");
++    if (ebpf == "false") {
++        LOG(INFO) << __func__ << ": eBPF tidak didukung perangkat ini, "
++                  << "inisialisasi BPF dilewati.";
++        return 0;
++    }
++
+     android::netdutils::Status ret = sBpfHandler.init(cg2_path);
+     if (!android::netdutils::isOk(ret)) {
+         LOG(ERROR) << __func__ << ": Failed. " << ret.code() << " " << ret.msg();
+-- 
+2.43.0
+

@@ -53,8 +53,25 @@ repo_of() {
   esac
 }
 
-absen=0; sudah=0; beda=0; nihil=0
-declare -a LIST_ABSEN
+# Berkas yang PINDAH antara 21 dan 22 membuat patch gagal terap maju MAUPUN
+# mundur, jadi ia jatuh ke BEDA -- kategori paling besar dan paling mudah
+# dikesampingkan. Itu persis yang terjadi pada perbaikan netd BPF-less:
+# netd/NetdUpdatable.cpp (21) -> bpf/netd/NetdUpdatable.cpp (22). Ongkosnya
+# satu siklus flash fisik. Fungsi ini memisahkan "pindah" dari "berubah".
+cek_pindah() {
+  local patch=$1 repo=$2 hasil=""
+  local f base found
+  for f in $(grep -oE '^\+\+\+ b/\S+' "$patch" | sed 's|^+++ b/||' | sort -u); do
+    [ -e "$TREE/$repo/$f" ] && continue          # masih di tempatnya
+    base=$(basename "$f")
+    found=$(find "$TREE/$repo" -name "$base" -not -path '*/.git/*' 2>/dev/null | head -1)
+    [ -n "$found" ] && hasil="$hasil ${f} -> ${found#$TREE/$repo/}"
+  done
+  echo "$hasil"
+}
+
+absen=0; sudah=0; beda=0; nihil=0; pindah=0
+declare -a LIST_ABSEN LIST_PINDAH
 
 while IFS= read -r p; do
   rel=${p#$KIT21/}
@@ -68,7 +85,13 @@ while IFS= read -r p; do
   elif git -C "$TREE/$repo" apply --check "$p" 2>/dev/null; then
     printf '  %-7s %s\n' "ABSEN" "$rel"; absen=$((absen+1)); LIST_ABSEN+=("$repo|$rel")
   else
-    printf '  %-7s %s\n' "BEDA" "$rel"; beda=$((beda+1))
+    mv=$(cek_pindah "$p" "$repo")
+    if [ -n "$mv" ]; then
+      printf '  %-7s %s\n' "PINDAH" "$rel"; pindah=$((pindah+1))
+      LIST_PINDAH+=("$repo|$rel|$mv")
+    else
+      printf '  %-7s %s\n' "BEDA" "$rel"; beda=$((beda+1))
+    fi
   fi
 done < <(find "$KIT21" -name '*.patch' | sort)
 
@@ -76,9 +99,19 @@ echo
 echo "=============================================="
 echo "SUDAH ada di pohon      : $sudah"
 echo "ABSEN (hunk tidak ada)  : $absen   <- timbang satu per satu"
+echo "PINDAH (berkas berpindah): $pindah  <- PALING MUDAH TERLEWAT"
 echo "BEDA (konteks bergeser) : $beda"
 echo "repo tidak ada          : $nihil"
 echo "=============================================="
+
+if [ ${#LIST_PINDAH[@]} -gt 0 ]; then
+  echo
+  echo "PINDAH -- patch gagal terap hanya karena berkasnya berpindah tempat."
+  echo "Isinya bisa jadi masih relevan sepenuhnya; port dengan tangan."
+  printf '%s\n' "${LIST_PINDAH[@]}" | sort | awk -F'|' '
+    $1!=prev { printf "\n  [%s]\n", $1; prev=$1 }
+    { printf "    %s\n", $2; n=split($3,a," "); for(i=1;i<=n;i+=3) printf "      %s %s %s\n", a[i], a[i+1], a[i+2] }'
+fi
 
 if [ ${#LIST_ABSEN[@]} -gt 0 ]; then
   echo
