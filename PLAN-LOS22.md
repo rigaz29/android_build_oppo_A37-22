@@ -522,12 +522,38 @@ Urutannya mempertahankan pelajaran LOS 21: **diagnosis boot didahulukan, tidak a
 dikerjakan sebelum ada homescreen.**
 
 ### Fase 0 — Mesin & basis bersih
-- Pasang `repo`. Sediakan ≥16 GB RAM efektif (mesin ini 11 GB + 15 GB swap — akan jalan,
-  akan lambat) dan ≥250 GB disk bebas untuk pohon + keluaran.
-- `repo init -u https://github.com/LineageOS/android.git -b lineage-22.2`
+- Pasang `repo` dan **`git-lfs`**. Sediakan ≥16 GB RAM efektif dan ≥250 GB disk bebas.
+- ```bash
+  repo init -u https://github.com/LineageOS/android.git -b lineage-22.2 --git-lfs
+  ```
+  ⚠️ **`--git-lfs` WAJIB, dan mudah terlewat.** Tanpa itu prebuilt WebView turun sebagai
+  *pointer* LFS 133 byte, bukan APK 95,9 MB. Build baru gagal jauh kemudian (38%) dengan
+  pesan yang menyesatkan karena tidak menyebut LFS sama sekali:
+  ```
+  webview.apk: error: failed opening zip: Invalid file
+  java.util.zip.ZipException: zip END header not found
+  ```
+  Terjadi di sesi 16 Agustus 2026 — flag ini sudah tertulis di dokumen ini sejak awal
+  lalu tetap terlewat saat dijalankan.
 - Pasang local manifest §3.2 → `repo sync`
-- **Gerbang:** 0 HEAD kosong; `frameworks/native/libs/renderengine/gl/GLESRenderEngine.cpp`
-  **ada**. Kalau tidak ada, fork ULH tidak terpasang dan seluruh rencana grafis batal.
+- **Gerbang:**
+  1. 0 HEAD kosong
+  2. `frameworks/native/libs/renderengine/gl/GLESRenderEngine.cpp` **ada** — kalau tidak,
+     fork ULH tidak terpasang dan seluruh rencana grafis batal
+  3. Nol pointer LFS yang belum terambil:
+     ```bash
+     find . -type f -size -1024c -not -path './.repo/*' -not -path './out/*' -print0 \
+       | xargs -0 -r grep -l '^version https://git-lfs'
+     ```
+     Perhatikan `-size -1024c`, **bukan** `-size -1k` — yang terakhir membulatkan ke atas
+     sehingga hanya cocok untuk berkas 0 byte dan melaporkan "bersih" secara keliru.
+
+     Kalau ada sisa, ambil per project (prebuilt WebView adalah project repo **terpisah
+     per arsitektur**, jadi jalankan di dalamnya, bukan di direktori induk):
+     ```bash
+     cd external/chromium-webview/prebuilt/arm && git lfs pull
+     ```
+     A37 hanya butuh `arm`; tiga arsitektur lain tidak perlu diambil.
 
 ### Fase 1 — Patch basis
 - Terapkan set BPF-less `MisterZtr/LineageOS_gsi@lineage-22.2` (§4.3 Rute A).
