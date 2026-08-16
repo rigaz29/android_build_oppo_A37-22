@@ -175,6 +175,18 @@ echo "== Connectivity: lewati verifikasi BPF clat (WAJIB) =="
 # pun dimulai. report/bootfail3: 12 tombstone system_server, errno=38 (ENOSYS).
 terap packages/modules/Connectivity "$KIT/patches/packages_modules_Connectivity/0803-A37-lewati-verifikasi-BPF-clat-saat-perangkat-tidak-.patch"
 
+echo "== adb: pulihkan jalur FunctionFS legacy non-AIO (WAJIB untuk adb USB) =="
+# Kernel 3.10 menyediakan FunctionFS lewat gadget android lama (android.c:39
+# #include "f_fs.c") dan nol dukungan AIO. adbd A15 hanya punya jalur io_submit,
+# jadi endpoint terbentuk tapi data tidak mengalir -> host melihat "offline".
+# Device tree sudah menyetel ro.adb.nonblocking_ffs=0 sejak LOS 20, tapi A15
+# mencabut implementasi legacy BESERTA pembacaan propertinya.
+#
+# CATATAN PORT: patch kit 21 menaruh transport_legacy.cpp di libadb_srcs; di 22
+# itu menimbulkan simbol ganda karena libadb_host memakai daftar yang sama dan
+# sudah punya client/transport_usb.cpp. Patch 0804 sudah memperbaikinya.
+terap packages/modules/adb "$KIT/patches/packages_modules_adb/0804-A37-pulihkan-jalur-FunctionFS-legacy-non-AIO-untuk-a.patch"
+
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"
 

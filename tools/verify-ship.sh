@@ -68,6 +68,34 @@ echo "libservice-connectivity (APEX com.android.tethering):"
 periksa "penjaga BPF clat ikut terkompilasi" \
   "strings '$W/lsc.so' | grep -q 'verifikasi BPF clat dilewati'"
 
+# ---- 2c. adbd: jalur FunctionFS legacy (non-AIO) ikut terkompilasi
+# Metode dari proyek LOS 21: adbd ROM LOS 20 yang adb-nya BERFUNGSI punya
+# string usb_legacy=3 dan transport_legacy=2, sedangkan build yang adb-nya
+# offline punya 0 dan 0.
+rm -f "$W/adbd.apex" "$W/apex_payload.img" "$W/adbd"
+debugfs -R "dump /system/apex/com.android.adbd.apex $W/adbd.apex" "$W/system.img" 2>/dev/null
+unzip -q -o -j "$W/adbd.apex" apex_payload.img -d "$W" 2>/dev/null
+for b in /bin/adbd /bin/adbd32; do
+  debugfs -R "dump $b $W/adbd" "$W/apex_payload.img" 2>/dev/null
+  [ -s "$W/adbd" ] && break
+done
+echo "adbd (APEX com.android.adbd):"
+if [ -s "$W/adbd" ]; then
+  ul=$(strings "$W/adbd" | grep -c usb_legacy)
+  tl=$(strings "$W/adbd" | grep -c transport_legacy)
+  echo "    usb_legacy=$ul transport_legacy=$tl   (LOS 20 yang berfungsi: 3 dan 2)"
+  periksa "jalur legacy ikut terkompilasi" "[ $ul -gt 0 ] && [ $tl -gt 0 ]"
+else
+  echo "  ✗ adbd tidak ketemu di APEX"; gagal=1
+fi
+
+# ---- 2d. build.prop memaksa jalur legacy
+rm -f "$W/build.prop"
+debugfs -R "dump /system/build.prop $W/build.prop" "$W/system.img" 2>/dev/null
+echo "build.prop:"
+periksa "ro.adb.nonblocking_ffs=false" \
+  "grep -q '^ro.adb.nonblocking_ffs=false' '$W/build.prop'"
+
 # ---- 3. bootwatchdog
 rm -f "$W/bw.sh"
 for p in /system/vendor/bin/bootwatchdog.sh /vendor/bin/bootwatchdog.sh \
