@@ -1,6 +1,6 @@
 # Tindakan tertunda: hanya dijalankan kalau build gagal
 
-Diputuskan 16 Agustus 2026, saat build percobaan 4 berjalan di 30% tanpa kegagalan.
+Diputuskan 16 Agustus 2026, saat build percobaan 4 berjalan tanpa kegagalan.
 
 **Pemicu:** `^FAILED:` muncul di `build-fase4.log`.
 **Bukan pemicu:** build selesai `rc=0`. Kalau ROM jadi, biarkan apa adanya —
@@ -9,7 +9,7 @@ terpisah.
 
 ## Yang dikerjakan sebelum rebuild
 
-### 1. Nyalakan `WITH_ADB_INSECURE`
+### Nyalakan `WITH_ADB_INSECURE`
 
 Di `device/oppo/A37/lineage_A37.mk`, baris terakhir blok panjangnya:
 
@@ -18,52 +18,45 @@ Di `device/oppo/A37/lineage_A37.mk`, baris terakhir blok panjangnya:
 +WITH_ADB_INSECURE := true
 ```
 
-⚠️ **Uncomment, jangan setel `false` untuk mematikan.**
-`vendor/lineage/config/common.mk` memakai `ifdef WITH_ADB_INSECURE`, dan `ifdef`
-di GNU Make bernilai benar untuk nilai apa pun yang tidak kosong — termasuk
-string `"false"`. Terbukti di build `20260808_130028`: `ro.adb.secure` masih 0
-meski flag sudah disetel `false`. Untuk mematikan lagi, **komentari**.
+Efeknya (`vendor/lineage/config/common.mk:31-33`): `ro.adb.secure=0`, yaitu
+otentikasi adb **dimatikan sepenuhnya**. Rantai lanjutannya di
+`post_process_props.py` menambahkan `adb` ke `persist.sys.usb.config`, sehingga
+adb hidup sejak boot pertama tanpa dialog otorisasi RSA.
 
-### 2. Pasang kunci adb mesin build
+⚠️ **Untuk mematikannya nanti: KOMENTARI, jangan setel `false`.**
+`common.mk` memakai `ifdef WITH_ADB_INSECURE`, dan `ifdef` di GNU Make bernilai
+benar untuk nilai apa pun yang tidak kosong — termasuk string `"false"`.
+Terbukti di build `20260808_130028`: `ro.adb.secure` masih 0 meski flag sudah
+disetel `false`.
 
-Blok `PRODUCT_ADB_KEYS` sudah ada di `lineage_A37.mk` tapi tidak aktif, dijaga
-`ifneq ($(wildcard device/oppo/A37/adb_keys),)`. Berkasnya tinggal disalin:
+### `adb_keys` — SENGAJA TIDAK DIPAKAI
 
-```bash
-cp /root/.android/adbkey.pub /root/los22/device/oppo/A37/adb_keys
-```
+Diputuskan 16 Agustus 2026: akses adb shell memang dikehendaki terbuka untuk
+siapa pun, bukan dibatasi ke mesin build. Karena itu blok `PRODUCT_ADB_KEYS` di
+`lineage_A37.mk` dibiarkan tidak aktif — penjaganya
+`ifneq ($(wildcard device/oppo/A37/adb_keys),)` dan berkasnya memang tidak ada.
 
-⚠️ `PRODUCT_ADB_KEYS` **sendirian tidak cukup** sejak Android 14: ia memasang ke
-`TARGET_ROOT_OUT`, sedangkan A14+ tidak lagi memakai `root/` sebagai sumber
-ramdisk. Yang benar-benar bekerja adalah `PRODUCT_COPY_FILES` ke
-`TARGET_COPY_OUT_RAMDISK` — dan blok itu sudah menyertakan keduanya.
+Jangan menyalin `adbkey.pub` ke sana. `WITH_ADB_INSECURE` sudah membuat dialog
+otorisasi tidak muncul sama sekali, jadi `adb_keys` tidak menambah apa pun
+selain mempersempit akses — kebalikan dari yang diinginkan.
 
-### 3. Verifikasi sampai ke artefak yang dikirim, bukan yang dibuat
-
-Percobaan pertama LOS 21 sempat salah menyatakan fitur ini bekerja karena hanya
-memeriksa berkas yang **dibuat**, bukan yang **ada di dalam** `boot.img`:
-
-```bash
-unzip -p <rom>.zip boot.img > /tmp/b.img
-tools/qbootimg.py /tmp/b.img   # lalu cari /adb_keys di dalam ramdisk
-```
-
-Dan setelah flash:
+## Verifikasi setelah flash
 
 ```bash
-adb shell getprop ro.adb.secure        # harus 0
-adb shell getprop persist.sys.usb.config
+adb shell getprop ro.adb.secure          # harus 0
+adb shell getprop persist.sys.usb.config # harus memuat "adb"
 ```
 
-## Keamanan
+Verifikasi harus sampai ke artefak yang **dikirim**, bukan yang dibuat di `out/`.
+Percobaan pertama LOS 21 sempat salah menyimpulkan fitur adb bekerja karena
+hanya memeriksa berkas yang dibuat, bukan yang ada di dalam `boot.img`.
 
-ROM dengan `WITH_ADB_INSECURE := true` **tidak boleh dibagikan** — siapa pun yang
-mencolokkan USB mendapat shell tanpa dialog otorisasi RSA. Untuk perangkat uji
-sendiri diterima; matikan (komentari) sebelum ada build yang beredar.
+## Konsekuensi yang disengaja
 
-`adb_keys` juga di-gitignore: ia kunci publik, tapi mengirimkannya di ROM berarti
-setiap ROM dari tree ini memercayai mesin build ini.
+ROM ini memberi **shell adb tanpa otorisasi kepada siapa pun yang mencolokkan
+USB**. Itu pilihan sadar untuk perangkat uji. Kalau suatu saat ROM dari tree ini
+dibagikan, komentari flag-nya lebih dulu.
 
-Catatan: keduanya tidak menolong kalau kegagalan terjadi **sebelum adbd hidup**.
-Untuk kelas itu andalkan ramoops — dan sejak LOS 21, TWRP di perangkat ini sudah
-bisa membaca `/sys/fs/pstore`.
+Catatan: flag ini tidak menolong kalau kegagalan terjadi **sebelum `adbd` hidup**.
+Untuk kelas itu andalkan ramoops — TWRP di perangkat ini sudah bisa membaca
+`/sys/fs/pstore`.
