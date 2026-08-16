@@ -58,6 +58,16 @@ echo "libnetd_updatable (APEX com.android.tethering):"
 periksa "penjaga eBPF ikut terkompilasi" \
   "strings '$W/lnu.so' | grep -q 'eBPF tidak didukung perangkat ini'"
 
+# ---- 2b. libservice-connectivity: penjaga BPF clat
+rm -f "$W/lsc.so"
+for p in /lib/libservice-connectivity.so /lib64/libservice-connectivity.so; do
+  debugfs -R "dump $p $W/lsc.so" "$W/apex_payload.img" 2>/dev/null
+  [ -s "$W/lsc.so" ] && break
+done
+echo "libservice-connectivity (APEX com.android.tethering):"
+periksa "penjaga BPF clat ikut terkompilasi" \
+  "strings '$W/lsc.so' | grep -q 'verifikasi BPF clat dilewati'"
+
 # ---- 3. bootwatchdog
 rm -f "$W/bw.sh"
 for p in /system/vendor/bin/bootwatchdog.sh /vendor/bin/bootwatchdog.sh \

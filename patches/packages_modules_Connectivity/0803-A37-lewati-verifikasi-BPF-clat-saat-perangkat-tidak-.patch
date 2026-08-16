@@ -1,0 +1,73 @@
+From bac5478925200cec1592beb3132856f0576e7f06 Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sun, 16 Aug 2026 10:06:52 +0000
+Subject: [PATCH] A37: lewati verifikasi BPF clat saat perangkat tidak punya
+ eBPF
+
+verifyClatPerms() memeriksa /sys/fs/bpf dan lima berkas prog/map di bawah
+net_shared, lalu abort() kalau ada yang meleset. Di kernel tanpa
+CONFIG_BPF_SYSCALL semuanya pasti meleset, dan abort itu terjadi di dalam
+JNI_OnLoad -> register_com_android_server_connectivity_ClatCoordinator,
+sehingga system_server mati sebelum satu servis pun dimulai.
+
+Terekam di report/bootfail3: 12 tombstone system_server dengan backtrace yang
+identik, didahului '/sys/fs/bpf' mode is 00 != 041777 dan bpf_obj_get gagal
+dengan errno=38 (ENOSYS).
+
+Penjagaan dipasang setelah pemeriksaan direktori dan biner clatd, bukan dengan
+mencabut abort() seperti UL, supaya dua pemeriksaan itu -- yang menurut komentar
+hulu 99% menandakan masalah build -- tetap berlaku, dan abort() tetap menjadi
+jaring pengaman sungguhan di perangkat ber-eBPF.
+
+Sapuan lanjutan: abort() lain di bpf/netd/BpfHandler.cpp:153-168 berada di dalam
+BpfHandler::init() yang sudah dilewati penjaga netd, jadi tak terjangkau. Di
+antara seluruh pendaftaran JNI di service/jni/onload.cpp, hanya ClatCoordinator
+yang punya abort().
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Change-Id: I3f1bd852288acf628948a6c38a8995dd5fe477d3
+---
+ ...id_server_connectivity_ClatCoordinator.cpp | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/service/jni/com_android_server_connectivity_ClatCoordinator.cpp b/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
+index c0082bbe3a..a32783ca42 100644
+--- a/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
++++ b/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
+@@ -33,6 +33,7 @@
+ #include <string>
+ #include <unistd.h>
+ 
++#include <android-base/properties.h>
+ #include <android-modules-utils/sdk_level.h>
+ #include <bpf/BpfMap.h>
+ #include <bpf/BpfUtils.h>
+@@ -110,6 +111,25 @@ static void verifyClatPerms() {
+     // Move on to verifying that the bpf programs and maps are as expected.
+     // This relies on the kernel and bpfloader.
+ 
++    // A37: kernel 3.10 tanpa CONFIG_BPF_SYSCALL, jadi bpf() mengembalikan ENOSYS
++    // dan /sys/fs/bpf tidak pernah ada. Seluruh pemeriksaan di bawah pasti gagal
++    // dan `if (fatal) abort()` di ujung fungsi ini akan mematikan system_server
++    // di dalam JNI_OnLoad -- sebelum satu servis pun sempat dimulai.
++    //
++    // Terekam di report/bootfail3: 12 tombstone system_server dengan backtrace
++    // register_com_android_server_connectivity_ClatCoordinator -> JNI_OnLoad,
++    // didahului "'/sys/fs/bpf' mode is 00 != 041777" dan
++    // "bpf_obj_get ... failed, errno=38" (ENOSYS).
++    //
++    // Penjagaan dipasang DI SINI, bukan dengan mencabut abort() seperti UL,
++    // supaya dua pemeriksaan di atas -- direktori dan biner clatd, yang menurut
++    // komentar hulu "99% likely to be build problems" -- tetap berlaku penuh,
++    // dan abort() tetap jadi jaring pengaman sungguhan di perangkat ber-eBPF.
++    if (android::base::GetProperty("ro.kernel.ebpf.supported", "") == "false") {
++        ALOGI("eBPF tidak didukung perangkat ini, verifikasi BPF clat dilewati.");
++        return;
++    }
++
+     // Clat BPF was only mainlined during T.
+     if (!modules::sdklevel::IsAtLeastT()) return;
+ 
+-- 
+2.43.0
+

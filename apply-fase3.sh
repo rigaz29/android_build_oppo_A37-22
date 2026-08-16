@@ -168,6 +168,13 @@ echo "== Connectivity: lewati init BPF di perangkat tanpa eBPF (WAJIB) =="
 # Itu sebabnya patch kit 21 muncul sebagai BEDA di audit-kit21.sh, bukan ABSEN.
 terap packages/modules/Connectivity "$KIT/patches/packages_modules_Connectivity/0802-A37-lewati-inisialisasi-BPF-saat-perangkat-tidak-pun.patch"
 
+echo "== Connectivity: lewati verifikasi BPF clat (WAJIB) =="
+# verifyClatPerms() abort() kalau /sys/fs/bpf dan lima prog/map di bawahnya tidak
+# cocok. Di kernel tanpa CONFIG_BPF_SYSCALL semuanya pasti tidak cocok, dan abort
+# itu terjadi di dalam JNI_OnLoad sehingga system_server mati sebelum satu servis
+# pun dimulai. report/bootfail3: 12 tombstone system_server, errno=38 (ENOSYS).
+terap packages/modules/Connectivity "$KIT/patches/packages_modules_Connectivity/0803-A37-lewati-verifikasi-BPF-clat-saat-perangkat-tidak-.patch"
+
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"
 
