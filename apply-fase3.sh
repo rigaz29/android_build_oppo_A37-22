@@ -93,6 +93,14 @@ done
 # tidak diperlukan. Disimpan sebagai arsip diagnosis, bukan untuk diterapkan.
 
 
+echo "== device/qcom/sepolicy-legacy: atribut HAL yang dirujuk lineage sepolicy =="
+# sepolicy.mk:27 pohon legacy menarik masuk device/lineage/sepolicy/qcom (milik
+# LineageOS resmi), yang mengasumsikan device/qcom/sepolicy MODERN. Tanpa patch
+# ini kompilasi sepolicy gagal di 38%:
+#   platform_app.te:1: ERROR 'attribute vendor_hal_soter_client is not declared'
+terap device/qcom/sepolicy-legacy \
+      "$KIT/patches/device_qcom_sepolicy_legacy/0301-public-attributes-deklarasikan-tiga-atribut-HAL-yang.patch"
+
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"
 

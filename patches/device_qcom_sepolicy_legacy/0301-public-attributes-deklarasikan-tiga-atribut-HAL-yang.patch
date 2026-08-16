@@ -1,0 +1,82 @@
+From c80b2f064f3c9f2b41f7fdda33fe53ecc62f4033 Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sun, 16 Aug 2026 01:38:14 +0000
+Subject: [PATCH] public/attributes: deklarasikan tiga atribut HAL yang dirujuk
+ lineage sepolicy
+
+sepolicy.mk:27 di pohon ini melakukan
+  -include device/lineage/sepolicy/qcom/sepolicy.mk
+Berkas itu milik LineageOS RESMI dan mengasumsikan device/qcom/sepolicy MODERN,
+yang mendeklarasikan atribut-atribut ini di generic/public/attributes:142-144.
+Pohon legacy tidak, sehingga kompilasi sepolicy gagal:
+
+  device/lineage/sepolicy/qcom/private/platform_app.te:1:
+    ERROR 'attribute vendor_hal_soter_client is not declared'
+
+Rujukannya:
+  sepolicy.mk:28   hal_gnss_qti=vendor_hal_gnss_qti
+  sepolicy.mk:29   hal_perf_default=vendor_hal_perf_default
+  platform_app.te  hal_client_domain(platform_app, vendor_hal_soter)
+
+Ketiganya diperiksa: nol deklarasi di pohon legacy ini.
+
+Deklarasi saja tidak memberi izin apa pun -- tidak ada domain yang menyandang
+atribut ini, jadi policy tetap kosong. Ini hanya membuat rujukan dari
+device/lineage/sepolicy bisa di-resolve.
+
+gnss_qti dan perf_default memang relevan untuk msm8916 (VINTF A37
+mendeklarasikan vendor.qti.hardware.perf@1.0). soter TIDAK relevan -- nol blob
+soter di proprietary-files A37 -- tapi atributnya tetap harus ada karena
+platform_app.te merujuknya tanpa syarat.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+---
+ public/attributes | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+diff --git a/public/attributes b/public/attributes
+index 2031dc3..8f2263b 100644
+--- a/public/attributes
++++ b/public/attributes
+@@ -1,3 +1,38 @@
+ attribute vendor_hal_fm;
+ attribute vendor_hal_fm_client;
+ attribute vendor_hal_fm_server;
++
++# Tiga atribut di bawah dirujuk device/lineage/sepolicy/qcom, yang ditarik
++# masuk oleh sepolicy.mk:27 lewat `-include device/lineage/sepolicy/qcom/
++# sepolicy.mk`. Berkas itu milik LineageOS resmi dan mengasumsikan
++# device/qcom/sepolicy MODERN, yang mendeklarasikan ketiganya di
++# generic/public/attributes. Pohon legacy ini tidak, sehingga kompilasi
++# sepolicy gagal:
++#
++#   device/lineage/sepolicy/qcom/private/platform_app.te:1:
++#     ERROR 'attribute vendor_hal_soter_client is not declared'
++#
++# Rujukannya:
++#   sepolicy.mk:28   hal_gnss_qti=vendor_hal_gnss_qti
++#   sepolicy.mk:29   hal_perf_default=vendor_hal_perf_default
++#   platform_app.te  hal_client_domain(platform_app, vendor_hal_soter)
++#
++# Mendeklarasikannya saja tidak memberi izin apa pun: tidak ada domain yang
++# diberi atribut ini, jadi policy-nya tetap kosong. Ini sekadar membuat
++# rujukan dari device/lineage/sepolicy bisa di-resolve.
++#
++# gnss_qti dan perf_default memang relevan untuk perangkat msm8916 (VINTF A37
++# mendeklarasikan vendor.qti.hardware.perf@1.0). soter TIDAK -- nol blob soter
++# di proprietary-files A37 -- tapi atributnya tetap harus ada karena
++# platform_app.te merujuknya tanpa syarat.
++attribute vendor_hal_soter;
++attribute vendor_hal_soter_client;
++attribute vendor_hal_soter_server;
++
++attribute vendor_hal_gnss_qti;
++attribute vendor_hal_gnss_qti_client;
++attribute vendor_hal_gnss_qti_server;
++
++attribute vendor_hal_perf_default;
++attribute vendor_hal_perf_default_client;
++attribute vendor_hal_perf_default_server;
+-- 
+2.43.0
+
