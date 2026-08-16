@@ -139,6 +139,24 @@ echo "== build/make: zip -y saat mengemas OTA =="
 # berjalan sebagai root -- keduanya berlaku di sini.
 terap build/make "$KIT/patches/build_make/0701-releasetools-zip-y-agar-symlink-tidak-diikuti.patch"
 
+echo "== bionic: rename() kembali ke syscall renameat (WAJIB, kernel 3.10) =="
+# Kernel 3.10 A37 TIDAK punya renameat2: arch/arm64/include/asm/unistd32.h:788
+# mencantumkannya sebagai komentar (nomor 382 disediakan, tidak diimplementasikan)
+# dan fs/namei.c tidak punya SYSCALL_DEFINE5(renameat2). Tetangganya di-backport
+# (seccomp 383, getrandom 384, memfd_create 385), renameat2 tidak.
+#
+# bionic hulu memakai renameat2 untuk rename() DAN renameat(), jadi keduanya
+# ENOSYS. Akibatnya derive_classpath menulis /data/system/environ/classpath.tmp
+# lalu rename()-nya gagal -> berkas exports tidak pernah ada -> BOOTCLASSPATH
+# kosong -> odrefresh dan zygote abort tiap 5 detik -> tidak pernah homescreen.
+#
+# Fork ULH TIDAK membawa revert ini (diperiksa di lineage-22.2). Proyek LOS 21
+# sudah mendiagnosis dan memperbaikinya; patch ini diambil dari kit itu.
+# Gejala samping yang mengonfirmasi: vold "Failed to rename /data/media/obb.new"
+# dan installd "Failed to save version ... layout_version", dua-duanya
+# "Function not implemented".
+terap bionic "$KIT/patches/bionic/0801-A37-revert-Rewrite-renameat-kembalikan-rename-ke-sys.patch"
+
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"
 

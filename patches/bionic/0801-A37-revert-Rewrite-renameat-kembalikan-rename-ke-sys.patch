@@ -1,0 +1,53 @@
+From 0e8bbfa52f02f0f09b87107138939ab642f34f6d Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sat, 15 Aug 2026 03:58:59 +0000
+Subject: [PATCH] A37: revert Rewrite renameat() -- kembalikan rename() ke
+ syscall renameat
+
+Kernel 3.10 A37 tidak punya renameat2 (calls.S:382 = sys_ni_syscall,
+selalu ENOSYS). Bionic official memakai renameat2 di dalam rename(),
+sehingga SEMUA rename di /data gagal ENOSYS: vold (obb.new),
+installd (layout_version), dan derive_classpath -- yang terakhir
+membuat /data/system/environ/classpath kosong -> BOOTCLASSPATH tak
+terdefinisi -> zygote abort 'BOOTCLASSPATH and DEX2OATBOOTCLASSPATH
+must not be empty' -> bootloop (report/bootfail5).
+
+Sama dengan revert LineageOS-UL android_bionic 76aa2d240664
+('We still want to support kernels without renameat2').
+
+Change-Id: I22c6140ca91e274d9617dfea0dfa4e92bb6d7146
+---
+ libc/SYSCALLS.TXT      | 1 +
+ libc/bionic/rename.cpp | 6 +-----
+ 2 files changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/libc/SYSCALLS.TXT b/libc/SYSCALLS.TXT
+index 8c5572eb3..fd9cffdfb 100644
+--- a/libc/SYSCALLS.TXT
++++ b/libc/SYSCALLS.TXT
+@@ -161,6 +161,7 @@ int linkat(int, const char*, int, const char*, int)  all
+ int mkdirat(int, const char*, mode_t)  all
+ int mknodat(int, const char*, mode_t, dev_t)  all
+ ssize_t readlinkat(int, const char*, char*, size_t)  all
++int renameat(int, const char*, int, const char*)  all
+ int renameat2(int, const char*, int, const char*, unsigned)  all
+ int symlinkat(const char*, int, const char*)  all
+ int unlinkat(int, const char*, int)   all
+diff --git a/libc/bionic/rename.cpp b/libc/bionic/rename.cpp
+index 89786f7a0..82955596b 100644
+--- a/libc/bionic/rename.cpp
++++ b/libc/bionic/rename.cpp
+@@ -30,9 +30,5 @@
+ #include <stdio.h>
+ 
+ int rename(const char* old_path, const char* new_path) {
+-  return renameat2(AT_FDCWD, old_path, AT_FDCWD, new_path, 0);
+-}
+-
+-int renameat(int old_dir_fd, const char* old_path, int new_dir_fd, const char* new_path) {
+-  return renameat2(old_dir_fd, old_path, new_dir_fd, new_path, 0);
++  return renameat(AT_FDCWD, old_path, AT_FDCWD, new_path);
+ }
+-- 
+2.43.0
+
