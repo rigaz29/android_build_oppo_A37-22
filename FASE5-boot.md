@@ -1,5 +1,29 @@
 # Fase 5 — boot
 
+## ✅ GERBANG TERCAPAI — 16 Agustus 2026
+
+`lineage-22.2-20260816_100715-UNOFFICIAL-A37.zip` **boot sampai homescreen**,
+melewati setup wizard. Android 15 berjalan di OPPO A37 (MSM8916, kernel 3.10.108).
+
+Empat build, empat akar, masing-masing ditemukan dari log perangkat:
+
+| Boot | Tertahan | Akar | Perbaikan |
+|---|---|---|---|
+| 1 | 120 s | `rename()` memakai syscall `renameat2` yang tidak ada di kernel 3.10 -> `BOOTCLASSPATH` kosong -> zygote abort | bionic diarahkan ke `renameat` (329) |
+| 2 | 199 s | `netd` abort di `BpfHandler::init` -> `ctl.start mdnsd_netbpfload` untuk servis yang tidak ada | penjaga `ro.kernel.ebpf.supported` di `NetdUpdatable.cpp` |
+| 3 | 370 s | `system_server` abort di `JNI_OnLoad` -> `verifyClatPerms()` menuntut `/sys/fs/bpf` | penjaga eBPF di `ClatCoordinator.cpp` |
+| 4 | — | **boot** | — |
+
+Benang merahnya satu: **kernel 3.10 tanpa `CONFIG_BPF_SYSCALL`**, dan Android 15
+yang mengasumsikan eBPF selalu ada. Tiga dari empat akar adalah wujud berbeda
+dari asumsi yang sama.
+
+Langkah berikutnya: `bash tools/cek-fungsi.sh > hasil-cek.txt 2>&1` di mesin yang
+tercolok perangkat. Skrip itu memetakan tiap pemeriksaan ke risiko yang sudah
+tercatat, termasuk yang **diharapkan** rusak karena BPF-less.
+
+---
+
 ROM terbaru: `lineage-22.2-20260816_100715-UNOFFICIAL-A37.zip` (754.028.583 B).
 Riwayat boot dan akarnya ada di `DIAGNOSIS-boot1.md` .. `DIAGNOSIS-boot3.md`.
 
