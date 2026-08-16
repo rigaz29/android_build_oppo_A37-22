@@ -99,7 +99,16 @@ echo "== device/qcom/sepolicy-legacy: atribut HAL yang dirujuk lineage sepolicy 
 # ini kompilasi sepolicy gagal di 38%:
 #   platform_app.te:1: ERROR 'attribute vendor_hal_soter_client is not declared'
 terap device/qcom/sepolicy-legacy \
-      "$KIT/patches/device_qcom_sepolicy_legacy/0301-public-attributes-deklarasikan-tiga-atribut-HAL-yang.patch"
+      "$KIT/patches/device_qcom_sepolicy_legacy/0301-public-attributes-deklarasikan-vendor_hal_soter-saja.patch"
+
+echo "== device/lineage/sepolicy: pulihkan dukungan ultra-legacy =="
+# LineageOS resmi mencabut dukungan platform ultra-legacy dari repo ini, dan ULH
+# tidak menyediakan fork untuk 22.2 (hanya 23.2). Tanpa patch ini build gagal:
+#   common/hal_gnss_qti.te:31: ERROR 'unknown type vendor_hal_gnss_qti_exec'
+# karena substitusi M4 mengganti `hal_gnss_qti` tapi tidak `hal_gnss_qti_exec`.
+# Patch ini mengeluarkan msm8916 dari substitusi itu sama sekali.
+terap device/lineage/sepolicy \
+      "$KIT/patches/device_lineage_sepolicy/0401-Pulihkan-dukungan-sepolicy-ultra-legacy-untuk-msm891.patch"
 
 echo
 echo "ringkasan: $ok diterapkan, $skip sudah ada, $fail gagal"

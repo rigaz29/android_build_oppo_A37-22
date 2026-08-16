@@ -1,0 +1,154 @@
+From 9c61719dc2847378eb703b1d890b28dd64e11437 Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sun, 16 Aug 2026 01:56:05 +0000
+Subject: [PATCH] Pulihkan dukungan sepolicy ultra-legacy untuk msm8916
+
+ULH tidak menyediakan fork device_lineage_sepolicy untuk lineage-22.2 (hanya
+23.2), sedangkan LineageOS resmi sudah mencabut dukungan platform ultra-legacy.
+Tiga dari empat patch UL yang proyek LOS 21 pakai dibawa ke sini.
+
+1. qcom/sepolicy.mk: keluarkan platform ultra-legacy dari substitusi M4
+   (padanan "Revert qcom: Drop support for ultra-legacy platforms";
+   patch aslinya konflik di basis 22.2, jadi di-port tangan)
+
+   Ini PEMBLOKIR BUILD. Substitusi mengganti token `hal_gnss_qti` menjadi
+   `vendor_hal_gnss_qti` tapi TIDAK mengganti `hal_gnss_qti_exec` -- token
+   berbeda. Di device/qcom/sepolicy-legacy/common/hal_gnss_qti.te:
+
+     :29  type hal_gnss_qti, domain;        -> jadi vendor_hal_gnss_qti
+     :30  type hal_gnss_qti_exec, ...       -> TETAP hal_gnss_qti_exec
+     :31  init_daemon_domain(hal_gnss_qti)  -> mencari vendor_hal_gnss_qti_exec
+
+     ERROR 'unknown type vendor_hal_gnss_qti_exec'
+
+   Pohon sepolicy legacy ditulis untuk dunia tanpa substitusi ini. Menambal
+   tipe satu per satu adalah jalan yang salah -- yang benar tidak menerapkan
+   substitusinya sama sekali di platform ini, persis yang UL lakukan.
+   Ditambah direktori qcom/legacy-vendor beserta aturan livedisplay-nya.
+
+2. Revert "Remove legacy camera HAL1 sepolicy" -- terap bersih. A37 memang
+   memakai camera HAL1.
+
+3. Revert "Remove legacy sepolicy leftover" -- terap bersih. Hanya menambah
+   `-include device/lineage/sepolicy/legacy-common/sepolicy.mk`.
+
+SENGAJA DILEWATI: "Revert common: Delete labels of legacy GNSS and Wi-Fi".
+Patch itu melabeli android.hardware.{gnss,wifi}@1.0-service.LEGACY, sedangkan
+device.mk A37:429 memakai android.hardware.gnss@1.0-service tanpa akhiran
+.legacy. Tidak relevan, dan memang konflik di basis 22.2.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Change-Id: Ia7d227e51319daf6ba5222a340a03dd3b2d3b940
+---
+ common/sepolicy.mk                            |  3 +++
+ .../public/legacy-camera-hal1/mediaserver.te  | 20 ++++++++++++++
+ legacy-common/sepolicy.mk                     |  9 +++++++
+ .../hal_lineage_livedisplay_qti.te            |  1 +
+ qcom/sepolicy.mk                              | 26 ++++++++++++++++++-
+ 5 files changed, 58 insertions(+), 1 deletion(-)
+ create mode 100644 legacy-common/public/legacy-camera-hal1/mediaserver.te
+ create mode 100644 legacy-common/sepolicy.mk
+ create mode 100644 qcom/legacy-vendor/hal_lineage_livedisplay_qti.te
+
+diff --git a/common/sepolicy.mk b/common/sepolicy.mk
+index 9a1620d..1a55071 100644
+--- a/common/sepolicy.mk
++++ b/common/sepolicy.mk
+@@ -25,6 +25,9 @@ BOARD_VENDOR_SEPOLICY_DIRS += \
+     device/lineage/sepolicy/common/vendor
+ endif
+ 
++# Selectively include legacy rules defined by the products
++-include device/lineage/sepolicy/legacy-common/sepolicy.mk
++
+ # Include atv rules on atv product
+ ifeq ($(PRODUCT_IS_ATV), true)
+ include device/lineage/sepolicy/atv/sepolicy.mk
+diff --git a/legacy-common/public/legacy-camera-hal1/mediaserver.te b/legacy-common/public/legacy-camera-hal1/mediaserver.te
+new file mode 100644
+index 0000000..be47e52
+--- /dev/null
++++ b/legacy-common/public/legacy-camera-hal1/mediaserver.te
+@@ -0,0 +1,20 @@
++# Legacy camera HAL1
++add_service(mediaserver, cameraserver_service)
++add_hwservice(mediaserver, fwk_camera_hwservice)
++
++allow mediaserver { cameraproxy_service sensor_privacy_service }:service_manager find;
++allow mediaserver hal_camera_hwservice:hwservice_manager find;
++
++# hal_client_domain(mediaserver, hal_lineage_camera_motor) DIBUANG.
++#
++# HAL kamera bermotor Lineage sudah dicabut di lineage-22.2: atribut
++# hal_lineage_camera_motor tidak dideklarasikan di mana pun, dan satu-satunya
++# rujukan yang tersisa di seluruh pohon adalah baris ini sendiri -- sisa era
++# LOS 21 yang ikut terbawa saat "Revert Remove legacy camera HAL1 sepolicy"
++# diterapkan. Membiarkannya menggagalkan build:
++#
++#   legacy-camera-hal1/mediaserver.te:8:
++#     ERROR 'attribute hal_lineage_camera_motor_client is not declared'
++#
++# Tidak relevan untuk A37: nol rujukan "motor" di device.mk, perangkat ini
++# tidak punya kamera bermotor.
+diff --git a/legacy-common/sepolicy.mk b/legacy-common/sepolicy.mk
+new file mode 100644
+index 0000000..8624753
+--- /dev/null
++++ b/legacy-common/sepolicy.mk
+@@ -0,0 +1,9 @@
++#
++# This policy configuration will be used by select legacy products that
++# inherit from Lineage
++#
++
++ifeq ($(TARGET_HAS_LEGACY_CAMERA_HAL1), true)
++SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += \
++    device/lineage/sepolicy/legacy-common/public/legacy-camera-hal1
++endif
+diff --git a/qcom/legacy-vendor/hal_lineage_livedisplay_qti.te b/qcom/legacy-vendor/hal_lineage_livedisplay_qti.te
+new file mode 100644
+index 0000000..c54d52b
+--- /dev/null
++++ b/qcom/legacy-vendor/hal_lineage_livedisplay_qti.te
+@@ -0,0 +1 @@
++unix_socket_connect(hal_lineage_livedisplay_qti, pps, mm-pp-daemon)
+diff --git a/qcom/sepolicy.mk b/qcom/sepolicy.mk
+index a92ac8b..4261e94 100644
+--- a/qcom/sepolicy.mk
++++ b/qcom/sepolicy.mk
+@@ -22,7 +22,31 @@ BOARD_VENDOR_SEPOLICY_DIRS += \
+     device/lineage/sepolicy/qcom/vendor
+ endif
+ 
+-ifeq (,$(filter msm8937 msm8953 msm8996 msm8998 sdm660 sdm710 sdm845, $(TARGET_BOARD_PLATFORM)))
++# Aturan legacy untuk platform ultra-legacy. Padanan patch LineageOS-UL
++# "Revert qcom: Drop support for ultra-legacy platforms" yang proyek LOS 21
++# pakai. ULH tidak menyediakan fork device_lineage_sepolicy untuk lineage-22.2
++# (hanya 23.2), jadi ini dibawa sendiri.
++ifneq ($(filter msm8960 msm8226 msm8610 msm8974 apq8084 msm8909 msm8916 msm8952 msm8992 msm8994,$(TARGET_BOARD_PLATFORM)),)
++BOARD_VENDOR_SEPOLICY_DIRS += \
++    device/lineage/sepolicy/qcom/legacy-vendor
++endif
++
++# Platform ultra-legacy DIKELUARKAN dari substitusi M4 di bawah.
++#
++# Substitusi mengganti token `hal_gnss_qti` jadi `vendor_hal_gnss_qti`, TAPI
++# TIDAK mengganti `hal_gnss_qti_exec` -- itu token berbeda. Akibatnya di
++# device/qcom/sepolicy-legacy/common/hal_gnss_qti.te:
++#
++#   :29  type hal_gnss_qti, domain;        -> jadi vendor_hal_gnss_qti
++#   :30  type hal_gnss_qti_exec, ...       -> TETAP hal_gnss_qti_exec
++#   :31  init_daemon_domain(hal_gnss_qti)  -> mencari vendor_hal_gnss_qti_exec
++#
++#   ERROR 'unknown type vendor_hal_gnss_qti_exec'
++#
++# Pohon sepolicy legacy ditulis untuk dunia tanpa substitusi ini, jadi jalan
++# keluarnya bukan menambal tipe satu per satu melainkan tidak menerapkan
++# substitusinya sama sekali di platform ini. msm8916 ditambahkan ke filter.
++ifeq (,$(filter msm8960 msm8226 msm8610 msm8974 apq8084 msm8909 msm8916 msm8952 msm8992 msm8994 msm8937 msm8953 msm8996 msm8998 sdm660 sdm710 sdm845, $(TARGET_BOARD_PLATFORM)))
+ BOARD_SEPOLICY_M4DEFS += \
+     display_vendor_data_file=vendor_display_vendor_data_file \
+     hal_gnss_qti=vendor_hal_gnss_qti \
+-- 
+2.43.0
+
