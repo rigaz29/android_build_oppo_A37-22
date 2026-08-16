@@ -1,0 +1,80 @@
+From 25d42b5cdc5e24f238e6a7c49f92be428e262d2d Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Sun, 16 Aug 2026 14:30:48 +0000
+Subject: [PATCH] A37: jangan tolak RTM_NEWADDR saat kernel tidak mengirim
+ IFA_FLAGS
+
+RtNetlinkAddressMessage.parse mensyaratkan atribut IFA_FLAGS dan mengembalikan
+null kalau tidak ada. Atribut itu (8) baru diperkenalkan Linux 3.14; kernel 3.10
+perangkat ini tidak mengenalnya -- enum di include/uapi/linux/if_addr.h berakhir
+di IFA_CACHEINFO (6) dan IFA_MULTICAST (7). Jadi SETIAP pesan alamat ditolak.
+
+Terekam di report/wifi2: 20 dari 20 pesan unparsable adalah RTM_NEWADDR (12) dan
+RTM_DELADDR (8); tidak ada tipe lain yang gagal. Pesannya sendiri sempurna --
+64 byte, AF_INET6, prefixlen 64, ifindex 31 (wlan0), fe80::aa1b:5aff:feab:b155,
+lengkap dengan IFA_CACHEINFO.
+
+Rantai akibatnya menyesatkan karena ujungnya tidak menyerupai masalah netlink:
+IpClientLinkObserver tidak pernah tahu alamat terpasang -> IpClient tidak pernah
+melaporkan provisioning (nol baris, sukses maupun gagal) -> agen Wi-Fi tidak
+pernah CONNECTED -> shouldCreateNativeNetwork tidak pernah true ->
+networkCreate tidak pernah dipanggil -> networkAddInterface dan ketiga
+networkAddRouteParcel ditolak dengan 'no such netId' (ENONET) -> DNS kosong ->
+framework memutus sendiri di detik ke-18. Di layar: 'obtaining IP address'.
+
+Kalau atributnya tidak ada, flag 8-bit dari ifaddrmsg tetap dipakai -- itu
+memang satu-satunya sumber flag sebelum IFA_FLAGS diperkenalkan.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Change-Id: I97ef15103553f17763e08fc447041ec6377f1761
+---
+ .../util/netlink/RtNetlinkAddressMessage.java | 31 +++++++++++++++----
+ 1 file changed, 25 insertions(+), 6 deletions(-)
+
+diff --git a/staticlibs/device/com/android/net/module/util/netlink/RtNetlinkAddressMessage.java b/staticlibs/device/com/android/net/module/util/netlink/RtNetlinkAddressMessage.java
+index 4846df7880..d2d1ff49af 100644
+--- a/staticlibs/device/com/android/net/module/util/netlink/RtNetlinkAddressMessage.java
++++ b/staticlibs/device/com/android/net/module/util/netlink/RtNetlinkAddressMessage.java
+@@ -130,14 +130,33 @@ public class RtNetlinkAddressMessage extends NetlinkMessage {
+ 
+         // The first 8 bits of flags are in the ifaddrmsg.
+         addrMsg.mFlags = addrMsg.mIfaddrmsg.flags;
+-        // IFA_FLAGS. All the flags are in the IF_FLAGS attribute. This should always be present,
+-        // and will overwrite the flags set above.
++        // IFA_FLAGS. All the flags are in the IF_FLAGS attribute, and will overwrite the flags set
++        // above -- TAPI HANYA KALAU ATRIBUTNYA ADA.
++        //
++        // A37: IFA_FLAGS (8) baru diperkenalkan Linux 3.14. Kernel 3.10 perangkat ini tidak
++        // mengenalnya sama sekali -- enum di include/uapi/linux/if_addr.h berakhir di
++        // IFA_CACHEINFO (6) dan IFA_MULTICAST (7). Kernel tidak pernah mengirimnya, sehingga
++        // `return null` di sini menolak SETIAP RTM_NEWADDR.
++        //
++        // Akibatnya berantai, dan ujungnya sama sekali tidak terlihat seperti masalah netlink:
++        //   NetlinkMonitor mencatat "unparsable netlink msg"
++        //     -> IpClientLinkObserver tidak pernah tahu alamatnya terpasang
++        //     -> IpClient tidak pernah melaporkan provisioning, sukses maupun gagal
++        //     -> agen Wi-Fi tidak pernah CONNECTED
++        //     -> ConnectivityService tidak pernah memanggil networkCreate
++        //     -> networkAddInterface & networkAddRouteParcel ditolak "no such netId" (ENONET)
++        //     -> DNS kosong, dan framework memutus sendiri di detik ke-18
++        // Di layar hanya tampak "obtaining IP address", padahal DHCP sudah lama berhasil.
++        // Terekam di report/wifi dan report/wifi2.
++        //
++        // Kalau atributnya tidak ada, flag 8-bit dari ifaddrmsg yang sudah dibaca di atas tetap
++        // dipakai -- itu memang satu-satunya sumber flag sebelum IFA_FLAGS diperkenalkan.
+         byteBuffer.position(baseOffset);
+         nlAttr = StructNlAttr.findNextAttrOfType(IFA_FLAGS, byteBuffer);
+-        if (nlAttr == null) return null;
+-        final Integer value = nlAttr.getValueAsInteger();
+-        if (value == null) return null;
+-        addrMsg.mFlags = value;
++        if (nlAttr != null) {
++            final Integer value = nlAttr.getValueAsInteger();
++            if (value != null) addrMsg.mFlags = value;
++        }
+ 
+         return addrMsg;
+     }
+-- 
+2.43.0
+

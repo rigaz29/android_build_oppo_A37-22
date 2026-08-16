@@ -113,6 +113,33 @@ else
   echo "  ✗ netd tidak ketemu"; gagal=1
 fi
 
+# ---- 2f. IFA_FLAGS: RtNetlinkAddressMessage.parse tidak lagi menolak
+#          RTM_NEWADDR saat kernel tidak mengirim IFA_FLAGS.
+#
+# Diperiksa di tingkat BYTECODE, bukan asal-usul berkas, karena perubahannya
+# murni alur kendali tanpa string baru. Metode parse() yang benar punya tepat
+# 4 return-object: 3 jalur null (ifaddrmsg, IFA_ADDRESS, alamat) + 1 hasil.
+# Versi hulu punya 6 karena IFA_FLAGS menambah 2 jalur null lagi.
+rm -f "$W/ns.apk" "$W/classes.dex" "$W/dump.txt"
+debugfs -R "dump /system/priv-app/InProcessNetworkStack/InProcessNetworkStack.apk $W/ns.apk" \
+        "$W/system.img" 2>/dev/null
+echo "InProcessNetworkStack (RtNetlinkAddressMessage.parse):"
+if [ -s "$W/ns.apk" ] && unzip -q -o -j "$W/ns.apk" classes.dex -d "$W" 2>/dev/null; then
+  /root/los22/out/host/linux-x86/bin/dexdump -d "$W/classes.dex" > "$W/dump.txt" 2>/dev/null
+  ln=$(grep -n 'Class descriptor.*RtNetlinkAddressMessage;' "$W/dump.txt" | head -1 | cut -d: -f1)
+  if [ -n "$ln" ]; then
+    off=$(sed -n "${ln},$((ln+400))p" "$W/dump.txt" | grep -nE "^\s+name\s+: 'parse'" | head -1 | cut -d: -f1)
+    a=$((ln+off)); b=$((a+80))
+    nret=$(sed -n "${a},${b}p" "$W/dump.txt" | grep -c 'return-object')
+    echo "    return-object dalam parse(): $nret   (diperbaiki: 4, hulu: 6)"
+    periksa "IFA_FLAGS tidak lagi wajib" "[ $nret -eq 4 ]"
+  else
+    echo "  ✗ kelas tidak ketemu di dex"; gagal=1
+  fi
+else
+  echo "  ✗ InProcessNetworkStack.apk tidak ketemu"; gagal=1
+fi
+
 # ---- 3. bootwatchdog
 rm -f "$W/bw.sh"
 for p in /system/vendor/bin/bootwatchdog.sh /vendor/bin/bootwatchdog.sh \
