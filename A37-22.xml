@@ -210,13 +210,13 @@
        Naikkan SHA ini secara sengaja setiap kali sebuah tahap port selesai. -->
 
   <project name="rigaz29/android_hardware_qcom_audio" path="hardware/qcom-caf/msm8916/audio"
-           remote="gh" revision="4eeadcd50dbccabe53da1114858ea373203bac44"
+           remote="gh" revision="a672d73bb82d1fa6b49e29f612afe142db88e723"
            upstream="lineage-22" />
   <project name="rigaz29/android_hardware_qcom_display" path="hardware/qcom-caf/msm8916/display"
-           remote="gh" revision="6d408c97b324217f465fbb4d06905d2f8d6f5585"
+           remote="gh" revision="84b92f3abf28c4a76c0a2bfb57b19fe6110b2ea3"
            upstream="lineage-22" />
   <project name="rigaz29/android_hardware_qcom_media" path="hardware/qcom-caf/msm8916/media"
-           remote="gh" revision="ee0cb10a3b8388bd24f78530b64204aeb185affc"
+           remote="gh" revision="d324fb1ccefb76d43408794e075b5dc1e8771879"
            upstream="lineage-22" />
 
   <!-- timekeep: punya lineage-22.2 resmi, tapi TIDAK ada di manifest 22.2
