@@ -1,6 +1,7 @@
 # Fase 5 — boot
 
-ROM siap: `lineage-22.2-20260816_071019-UNOFFICIAL-A37.zip` (754.028.285 B).
+ROM terbaru: `lineage-22.2-20260816_100715-UNOFFICIAL-A37.zip` (754.028.583 B).
+Riwayat boot dan akarnya ada di `DIAGNOSIS-boot1.md` .. `DIAGNOSIS-boot3.md`.
 
 Fase ini **butuh perangkat fisik** dan tidak bisa dikerjakan dari mesin build.
 Dokumen ini menyiapkan segalanya sampai batas itu.
@@ -63,8 +64,8 @@ proyek 21 sia-sia sampai akarnya ketemu.
 ### Pengaman boot
 
 `/vendor/bin/bootwatchdog.sh`, dijalankan dari `init.target.rc:193`.
-Batas 120 detik, dengan **pagu mutlak 600 detik** dan pengecualian selama
-`init.svc.odsign` berjalan.
+Batas **300 detik** (dinaikkan dari 120 pada 16 Agustus 2026), dengan **pagu
+mutlak 600 detik** dan pengecualian selama `init.svc.odsign` berjalan.
 
 Pengecualian itu penting: di LOS 21 boot yang **sehat** terpotong di detik 120
 karena `odrefresh` mengompilasi ulang boot classpath (81,5 detik, 190× dex2oat).
