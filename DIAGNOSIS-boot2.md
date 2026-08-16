@@ -117,4 +117,35 @@ Sisanya sengaja belum diport. Alasannya berbasis bukti, bukan penghematan:
 sudah selesai normal), dan `DnsBpfHelper` mengembalikan `EUNATCH` alih-alih
 abort. Jadi tidak ada di antaranya yang terbukti fatal pada boot ini.
 
+### Prediksi yang saya buat, lalu terbukti salah
+
+Saya menduga penghalang berikutnya adalah `BpfNetMaps` di `system_server`:
+`ConnectivityService.java:1979` membuatnya saat boot, konstruktornya memanggil
+`ensureInitialized` -> `initBpfMaps()`, dan getternya melempar
+`IllegalStateException("Cannot open netd configuration map")`. Tanpa
+`CONFIG_BPF_SYSCALL` peta itu memang tidak bisa dibuka, jadi kelihatannya pasti
+menjatuhkan `system_server`.
+
+Sebelum menambal 25 titik pemakaian secara buta, saya periksa konstruktornya —
+dan ternyata **sudah berpagar**:
+
+```java
+try {
+    ensureInitialized(context);
+} catch (Throwable t) {
+    android.util.Log.e("PHH", "Failed initialization BpfMaps, doing without it", t);
+}
+```
+
+Tag `"PHH"` menandakan asalnya dari patchset **trebledroid** yang memang sudah
+diterapkan, dan ia lengkap: **20 penjaga null** tersebar di seluruh berkas
+(`sUidOwnerMap == null` dsb.) sehingga metode-metodenya aman dipanggil tanpa peta.
+
+Dua pelajaran. Pertama, menambal itu buta akan mubazir sekaligus berbahaya —
+beberapa metode mengembalikan default **firewall**, dan menebak salah di sana
+punya implikasi keamanan. Kedua, ini menjelaskan bentuk celahnya: trebledroid
+menutup lapis **Java/framework** BPF-less dengan rapi, tapi tidak menyentuh
+`libnetd_updatable` yang **native** — dan persis di situlah satu-satunya
+kebocoran berada.
+
 Angka audit setelah perbaikan: **23 SUDAH, 33 ABSEN, 14 PINDAH, 68 BEDA**.
