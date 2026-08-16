@@ -1,0 +1,1688 @@
+[    0.000000] Initializing cgroup subsys cpuset
+[    0.000000] Initializing cgroup subsys cpu
+[    0.000000] Initializing cgroup subsys cpuacct
+[    0.000000] Linux version 3.10.108-lineageos-g6fa5298755d-dirty (nobody@android-build) (gcc version 4.9.x 20150123 (prerelease) (GCC) ) #9 SMP PREEMPT Tue Aug 11 12:03:29 UTC 2026
+[    0.000000] CPU: AArch64 Processor [410fd030] revision 0
+[    0.000000] Machine: Qualcomm Technologies, Inc. MSM 8916 MTP
+[    0.000000] cma: Found external_image__region@0, memory base 0x0000000086000000, size 8 MiB, limit 0xffffffffffffffff
+[    0.000000] cma: Found modem_adsp_region@0, memory base 0x0000000086800000, size 85 MiB, limit 0xffffffffffffffff
+[    0.000000] cma: Found pheripheral_region@0, memory base 0x000000008bd00000, size 6 MiB, limit 0xffffffffffffffff
+[    0.000000] cma: Found mba_region@0, memory base 0x0000000000000000, size 2 MiB, limit 0xffffffffffffffff
+[    0.000000] cma: Found venus_qseecom_region@0, memory base 0x0000000000000000, size 18 MiB, limit 0x0000000090000000
+[    0.000000] cma: Found audio_region@0, memory base 0x0000000000000000, size 3 MiB, limit 0xffffffffffffffff
+[    0.000000] cma: Found splash_region@83000000, memory base 0x0000000083000000, size 20 MiB, limit 0xffffffffffffffff
+[    0.000000] cma: Found pstore_reserve_region@0, memory base 0x000000009ff00000, size 4 MiB, limit 0xffffffffffffffff
+[    0.000000] cma: Found nvbackup_regions@0, memory base 0x0000000085f00000, size 1 MiB, limit 0xffffffffffffffff
+[    0.000000] cma: CMA: reserved 8 MiB at 0x0000000086000000 for external_image_mem
+[    0.000000] cma: CMA: reserved 85 MiB at 0x0000000086800000 for modem_adsp_mem
+[    0.000000] cma: CMA: reserved 6 MiB at 0x000000008bd00000 for peripheral_mem
+[    0.000000] cma: CMA: reserved 4 MiB at 0x00000000ffc00000 for mba_mem
+[    0.000000] cma: CMA: reserved 20 MiB at 0x000000008ec00000 for venus_qseecom_mem
+[    0.000000] cma: CMA: reserved 4 MiB at 0x00000000ff800000 for audio_mem
+[    0.000000] cma: CMA: reserved 20 MiB at 0x0000000083000000 for cont_splash_mem
+[    0.000000] cma: CMA: reserved 4 MiB at 0x000000009ff00000 for pstore_reserve_mem
+[    0.000000] cma: CMA: reserved 1 MiB at 0x0000000085f00000 for memory_nvbackup
+[    0.000000] cma: CMA: reserved 8 MiB at 0x00000000ff000000 for default region
+[    0.000000] PERCPU: Embedded 14 pages/cpu @ffffffc07ef17000 s33536 r0 d23808 u57344
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 489472
+[    0.000000] Kernel command line: sched_enable_hmp=1 console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 androidboot.selinux=permissive ramoops.mem_address=0x9ff00000 ramoops.mem_size=0x400000 ramoops.record_size=0x40000 ramoops.console_size=0x100000 ramoops.pmsg_size=0x40000 ramoops.dump_oops=1 ramoops.ecc=1 buildvariant=eng androidboot.emmc=true androidboot.serialno=23bb7d0 gpt androidboot.baseband=msm mdss_mdp.panel=1:dsi:0:qcom,mdss_dsi_oppo15399boe_ili9881c_720p_video:1:none inside_ldo androidboot.startupmode=pwrkey androidboot.mode=recovery oppo_ftm_mode=ftmrecovery lk_version=V1.0
+[    0.000000] [get_ldo_status]oppo_inside_ldo_status= 1 
+[    0.000000] PID hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.000000] Dentry cache hash table entries: 262144 (order: 9, 2097152 bytes)
+[    0.000000] Inode-cache hash table entries: 131072 (order: 8, 1048576 bytes)
+[    0.000000] software IO TLB [mem 0xfcb00000-0xfcc00000] (1MB) mapped at [ffffffc07cb00000-ffffffc07cbfffff]
+[    0.000000] Memory: 1866576K/1990656K available (11390K kernel code, 1049K rwdata, 3556K rodata, 312K init, 2148K bss, 124080K reserved)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vmalloc : 0xffffff8000000000 - 0xffffffbbffff0000   (245759 MB)
+[    0.000000]     vmemmap : 0xffffffbc02000000 - 0xffffffbc04000000   (    32 MB)
+[    0.000000]     modules : 0xffffffbffc000000 - 0xffffffc000000000   (    64 MB)
+[    0.000000]     memory  : 0xffffffc000000000 - 0xffffffc080000000   (  2048 MB)
+[    0.000000]       .init : 0xffffffc000f1a000 - 0xffffffc000f68300   (   313 kB)
+[    0.000000]       .text : 0xffffffc000080000 - 0xffffffc000f19994   ( 14951 kB)
+[    0.000000]       .data : 0xffffffc000f69000 - 0xffffffc00106f730   (  1050 kB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] HMP scheduling enabled.
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000] 	RCU dyntick-idle grace-period acceleration is enabled.
+[    0.000000] NR_IRQS:64 nr_irqs:64 0
+[    0.000000] Architected cp15 and mmio timer(s) running at 19.20MHz (virt/virt).
+[    0.000000] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 3579139424256ns
+[    0.000000] allocated 8388608 bytes of page_cgroup
+[    0.000000] please try 'cgroup_disable=memory' option if you don't want memory cgroups
+[    0.003708] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.00 BogoMIPS (lpj=64000)
+[    0.003719] pid_max: default: 32768 minimum: 301
+[    0.003842] Security Framework initialized
+[    0.003868] SELinux:  Initializing.
+[    0.004013] Mount-cache hash table entries: 256
+[    0.041192] Initializing cgroup subsys memory
+[    0.041233] Initializing cgroup subsys freezer
+[    0.041243] Initializing cgroup subsys bfqio
+[    0.041602] /cpus/cpu@0: Unknown CPU type
+[    0.041617] /cpus/cpu@1: Unknown CPU type
+[    0.041628] /cpus/cpu@2: Unknown CPU type
+[    0.041638] /cpus/cpu@3: Unknown CPU type
+[    0.048984] MSM Memory Dump base table set up
+[    0.049009] MSM Memory Dump apps data table set up
+[    0.051945] Brought up 4 CPUs
+[    0.051955] SMP: Total of 4 processors activated.
+[    0.062506] pinctrl core: initialized pinctrl subsystem
+[    0.062769] regulator-dummy: no parameters
+[    0.064295] NET: Registered protocol family 16
+[    0.066200] DMA: preallocated 256 KiB pool for atomic allocations
+[    0.066254] ramoops: using module parameters
+[    2.602458] console [pstore-1] enabled
+[    2.602665] ramoops: attached 0x400000@0x9ff00000, ecc: 16/0
+[    2.640888] msm_watchdog b017000.qcom,wdt: wdog absent resource not present
+[    2.641166] msm_watchdog b017000.qcom,wdt: MSM Watchdog Initialized
+[    2.644709] spmi_pmic_arb 200f000.qcom,spmi: PMIC Arb Version-2 0x20010000
+[    2.648486] cma: Assigned CMA region at 0 to 1de0000.qcom,venus device
+[    2.649023] cma: Assigned CMA region at 0 to 4080000.qcom,mss device
+[    2.649549] cma: Assigned CMA region at 0 to a21b000.qcom,pronto device
+[    2.650113] ACC: mem_acc_efuse_init: efuse_addr = 0x0000000000058000 (len=0x1000)
+[    2.650308] ACC: mem_acc_fuse_is_setting_expected: [row:0] = 0x4426008000d00705 @52:1 == 1 ?: no
+[    2.650528] mem_acc_corner: 0 <--> 0 mV 
+[    2.652527] vdso: 2 pages (1 code, 1 data) at base ffffffc000f71000
+[    2.653080] msm_mpm_dev_probe(): Cannot get clk resource for XO
+[    2.653180] platform 601d0.qcom,mpm: Driver mpm-v2 requests probe deferral
+[    2.653577] platform qcom,rpm-smd.35: Driver rpm-smd requests probe deferral
+[    2.653760] msm_smd_init: unable to create SMD logging context
+[    2.653920] msm_smd_init: unable to create SMSM logging context
+[    2.654630] msm_smem_init: unable to create logging context
+[    2.655852] smd_channel_probe_worker: allocation table not initialized
+[    2.656650] smd_channel_probe_worker: allocation table not initialized
+[    2.659183] 8916_s2: 1050 <--> 1350 mV at 1150 mV 
+[    2.659434] spm_regulator_probe: name=8916_s2, range=LV, voltage=1150000 uV, mode=PWM, step rate=1200 uV/us
+[    2.659999] cpr_efuse_init: apc_corner: efuse_addr = 0x0000000000058000 (len=0x1000)
+[    2.660189] cpr_parse_speed_bin_fuse: apc_corner: [row: 0]: 0x4426008000d00705, speed_bits = 0
+[    2.660355] cpr_parse_pvs_version_fuse: apc_corner: [row: 0]: 0x4426008000d00705, pvs_version = 0
+[    2.660517] cpr_pvs_init: apc_corner: pvs voltage: [1050000 1100000 1250000] uV
+[    2.660678] cpr_pvs_init: apc_corner: ceiling voltage: [1050000 1150000 1350000] uV
+[    2.660840] cpr_pvs_init: apc_corner: floor voltage: [1050000 1050000 1162500] uV
+[    2.661177] platform b018000.regulator: Driver qcom,cpr-regulator requests probe deferral
+[    2.661678] i2c-msm-v2 78b6000.i2c: probing driver i2c-msm-v2
+[    2.661924] i2c-msm-v2 78b6000.i2c: error on clk_get(core_clk):-517
+[    2.662017] i2c-msm-v2 78b6000.i2c: error probe() failed with err:-517
+[    2.662189] platform 78b6000.i2c: Driver i2c-msm-v2 requests probe deferral
+[    2.662363] i2c-msm-v2 78b9000.i2c: probing driver i2c-msm-v2
+[    2.662595] i2c-msm-v2 78b9000.i2c: error on clk_get(core_clk):-517
+[    2.662815] i2c-msm-v2 78b9000.i2c: error probe() failed with err:-517
+[    2.662933] platform 78b9000.i2c: Driver i2c-msm-v2 requests probe deferral
+[    2.663188] i2c-msm-v2 78ba000.i2c: probing driver i2c-msm-v2
+[    2.663348] i2c-msm-v2 78ba000.i2c: error on clk_get(core_clk):-517
+[    2.663510] i2c-msm-v2 78ba000.i2c: error probe() failed with err:-517
+[    2.663607] platform 78ba000.i2c: Driver i2c-msm-v2 requests probe deferral
+[    2.663899] i2c-msm-v2 78b8000.i2c: probing driver i2c-msm-v2
+[    2.664055] i2c-msm-v2 78b8000.i2c: error on clk_get(core_clk):-517
+[    2.664218] i2c-msm-v2 78b8000.i2c: error probe() failed with err:-517
+[    2.664385] platform 78b8000.i2c: Driver i2c-msm-v2 requests probe deferral
+[    2.664647] i2c-msm-v2 78b5000.i2c: probing driver i2c-msm-v2
+[    2.664874] i2c-msm-v2 78b5000.i2c: error on clk_get(core_clk):-517
+[    2.664965] i2c-msm-v2 78b5000.i2c: error probe() failed with err:-517
+[    2.665134] platform 78b5000.i2c: Driver i2c-msm-v2 requests probe deferral
+[    2.666899] msm-thermal qcom,msm-thermal.58: msm_thermal:Failed reading node=/soc/qcom,msm-thermal, key=qcom,rpm-phase-resource-type err=-22. KTM continues
+[    2.667069] msm-thermal qcom,msm-thermal.58: msm_thermal:Failed reading node=/soc/qcom,msm-thermal, key=qcom,gfx-sensor-id. err=-22. KTM continues
+[    2.667234] msm-thermal qcom,msm-thermal.58: probe_therm_reset:Failed reading node=/soc/qcom,msm-thermal, key=qcom,therm-reset-temp err=-22. KTM continues
+[    2.667401] msm-thermal qcom,msm-thermal.58: probe_vdd_mx:Failed reading node=/soc/qcom,msm-thermal, key=qcom,mx-restriction-temp. KTM continues
+[    2.667567] msm-thermal qcom,msm-thermal.58: probe_psm:Failed reading node=/soc/qcom,msm-thermal, key=qcom,pmic-sw-mode-temp. err=-22. KTM continues
+[    2.667773] msm_thermal:vdd_restriction_reg_init Defer regulator vdd-dig probe
+[    2.667932] msm_thermal:probe_vdd_rstr Err regulator init. err:-517. KTM continues.
+[    2.668093] msm-thermal qcom,msm-thermal.58: probe_vdd_rstr:Failed reading node=/soc/qcom,msm-thermal, key=qcom,freq-req. err=-517. KTM continues
+[    2.668254] msm_thermal:msm_thermal_dev_probe Failed reading node=/soc/qcom,msm-thermal, key=qcom,freq-control-mask. err:-517
+[    2.668421] platform qcom,msm-thermal.58: Driver msm-thermal requests probe deferral
+[    2.668961] sps:sps is ready.
+[    2.669598] platform 1800000.qcom,rpmcc: Driver qcom,rpmcc-8916 requests probe deferral
+[    2.670156] platform 1800000.qcom,gcc: Driver qcom,gcc-8916 requests probe deferral
+[    2.671237] platform b011050.qcom,clock-a7: Driver clock-a7 requests probe deferral
+[    2.672820] msm_mpm_dev_probe(): Cannot get clk resource for XO
+[    2.672994] platform 601d0.qcom,mpm: Driver mpm-v2 requests probe deferral
+[    2.673844] 8916_s1_corner: 0 <--> 0 mV at 0 mV normal idle 
+[    2.674332] 8916_s1_corner_ao: 0 <--> 0 mV at 0 mV normal idle 
+[    2.674701] 8916_s1_floor_corner: 0 <--> 0 mV at 0 mV normal idle 
+[    2.675237] 8916_s3: 1200 <--> 1300 mV at 1200 mV normal idle 
+[    2.675678] 8916_s4: 1800 <--> 2100 mV at 1800 mV normal idle 
+[    2.676257] 8916_l1: 1225 mV normal idle 
+[    2.676699] 8916_l2: 1200 mV normal idle 
+[    2.677155] 8916_l3: 500 <--> 1287 mV at 0 mV normal idle 
+[    2.677577] 8916_l3_corner_ao: 0 <--> 0 mV at 0 mV normal idle 
+[    2.677947] 8916_l3_corner_so: 0 <--> 0 mV at 0 mV normal idle 
+[    2.678444] 8916_l4: 2050 mV normal idle 
+[    2.678912] 8916_l5: 1800 mV normal idle 
+[    2.679413] 8916_l6: 1800 mV normal idle 
+[    2.679903] 8916_l7: 1800 mV normal idle 
+[    2.680249] 8916_l7_ao: 1800 mV normal idle 
+[    2.680687] 8916_l7_so: 1800 mV normal idle 
+[    2.681128] 8916_l8: 2850 <--> 2900 mV at 2850 mV normal idle 
+[    2.681685] 8916_l9: 3300 mV normal idle 
+[    2.682121] 8916_l10: 2700 <--> 2800 mV at 2700 mV normal idle 
+[    2.682656] 8916_l11: 1800 <--> 2950 mV at 1800 mV normal idle 
+[    2.683159] 8916_l12: 1800 <--> 2950 mV at 1800 mV normal idle 
+[    2.683702] 8916_l13: 3075 mV normal idle 
+[    2.684140] 8916_l14: 1800 <--> 3300 mV at 1800 mV normal idle 
+[    2.684593] 8916_l15: 1800 <--> 3300 mV at 1800 mV normal idle 
+[    2.685102] 8916_l16: 1800 <--> 3300 mV at 1800 mV normal idle 
+[    2.685561] 8916_l17: 2850 mV normal idle 
+[    2.686061] 8916_l18: 2700 mV normal idle 
+[    2.686537] cpr_efuse_init: apc_corner: efuse_addr = 0x0000000000058000 (len=0x1000)
+[    2.686728] cpr_parse_speed_bin_fuse: apc_corner: [row: 0]: 0x4426008000d00705, speed_bits = 0
+[    2.686896] cpr_parse_pvs_version_fuse: apc_corner: [row: 0]: 0x4426008000d00705, pvs_version = 0
+[    2.687059] cpr_pvs_init: apc_corner: pvs voltage: [1050000 1100000 1250000] uV
+[    2.687222] cpr_pvs_init: apc_corner: ceiling voltage: [1050000 1150000 1350000] uV
+[    2.687384] cpr_pvs_init: apc_corner: floor voltage: [1050000 1050000 1162500] uV
+[    2.687736] cpr_init_cpr_efuse: apc_corner: [row:27] = 0x888cc603319912ab
+[    2.687907] cpr_init_cpr_efuse: apc_corner: CPR disable fuse = 0
+[    2.688072] cpr_init_cpr_efuse: apc_corner: Corner[1]: ro_sel = 2, target quot = 817
+[    2.688163] cpr_init_cpr_efuse: apc_corner: Corner[2]: ro_sel = 2, target quot = 817
+[    2.688325] cpr_init_cpr_efuse: apc_corner: Corner[3]: ro_sel = 2, target quot = 1098
+[    2.688526] cpr_get_corner_quot_adjustment: apc_corner: fuse corner 2 quotient adjustment scaling factor: 0.000
+[    2.688688] cpr_get_corner_quot_adjustment: apc_corner: fuse corner 3 quotient adjustment scaling factor: 0.650
+[    2.688780] cpr_get_corner_quot_adjustment: apc_corner: adjusted quotient[1] = 817
+[    2.688939] cpr_get_corner_quot_adjustment: apc_corner: adjusted quotient[2] = 817
+[    2.689099] cpr_get_corner_quot_adjustment: apc_corner: adjusted quotient[3] = 817
+[    2.689186] cpr_get_corner_quot_adjustment: apc_corner: adjusted quotient[4] = 817
+[    2.689343] cpr_get_corner_quot_adjustment: apc_corner: adjusted quotient[5] = 961
+[    2.689504] cpr_get_corner_quot_adjustment: apc_corner: adjusted quotient[6] = 1024
+[    2.689621] cpr_get_corner_quot_adjustment: apc_corner: adjusted quotient[7] = 1061
+[    2.689781] cpr_get_corner_quot_adjustment: apc_corner: adjusted quotient[8] = 1098
+[    2.690027] cpr_init_cpr_parameters: apc_corner: up threshold = 0, down threshold = 2
+[    2.690204] cpr_init_cpr_parameters: apc_corner: CPR is enabled by default.
+[    2.690298] cpr_config: apc_corner: Timer count: 0x17700 (for 5000 us)
+[    2.690663] apc_corner: 0 <--> 0 mV 
+[    2.691002] i2c-msm-v2 78b6000.i2c: probing driver i2c-msm-v2
+[    2.691250] i2c-msm-v2 78b6000.i2c: error on clk_get(core_clk):-517
+[    2.691342] i2c-msm-v2 78b6000.i2c: error probe() failed with err:-517
+[    2.691514] platform 78b6000.i2c: Driver i2c-msm-v2 requests probe deferral
+[    2.691737] i2c-msm-v2 78b9000.i2c: probing driver i2c-msm-v2
+[    2.691968] i2c-msm-v2 78b9000.i2c: error on clk_get(core_clk):-517
+[    2.692059] i2c-msm-v2 78b9000.i2c: error probe() failed with err:-517
+[    2.692227] platform 78b9000.i2c: Driver i2c-msm-v2 requests probe deferral
+[    2.692517] i2c-msm-v2 78ba000.i2c: probing driver i2c-msm-v2
+[    2.692671] i2c-msm-v2 78ba000.i2c: error on clk_get(core_clk):-517
+[    2.692834] i2c-msm-v2 78ba000.i2c: error probe() failed with err:-517
+[    2.692932] platform 78ba000.i2c: Driver i2c-msm-v2 requests probe deferral
+[    2.693278] i2c-msm-v2 78b8000.i2c: probing driver i2c-msm-v2
+[    2.693433] i2c-msm-v2 78b8000.i2c: error on clk_get(core_clk):-517
+[    2.693594] i2c-msm-v2 78b8000.i2c: error probe() failed with err:-517
+[    2.693691] platform 78b8000.i2c: Driver i2c-msm-v2 requests probe deferral
+[    2.694018] i2c-msm-v2 78b5000.i2c: probing driver i2c-msm-v2
+[    2.694245] i2c-msm-v2 78b5000.i2c: error on clk_get(core_clk):-517
+[    2.694335] i2c-msm-v2 78b5000.i2c: error probe() failed with err:-517
+[    2.694504] platform 78b5000.i2c: Driver i2c-msm-v2 requests probe deferral
+[    2.694692] msm-thermal qcom,msm-thermal.58: msm_thermal:Failed reading node=/soc/qcom,msm-thermal, key=qcom,rpm-phase-resource-type err=-22. KTM continues
+[    2.694931] msm-thermal qcom,msm-thermal.58: msm_thermal:Failed reading node=/soc/qcom,msm-thermal, key=qcom,gfx-sensor-id. err=-22. KTM continues
+[    2.695098] msm-thermal qcom,msm-thermal.58: probe_therm_reset:Failed reading node=/soc/qcom,msm-thermal, key=qcom,therm-reset-temp err=-22. KTM continues
+[    2.695265] msm-thermal qcom,msm-thermal.58: probe_vdd_mx:Failed reading node=/soc/qcom,msm-thermal, key=qcom,mx-restriction-temp. KTM continues
+[    2.695432] msm-thermal qcom,msm-thermal.58: probe_psm:Failed reading node=/soc/qcom,msm-thermal, key=qcom,pmic-sw-mode-temp. err=-22. KTM continues
+[    2.695917] msm_thermal:vdd_restriction_reg_init Defer vdd rstr freq init.
+[    2.696663] msm-thermal qcom,msm-thermal.58: probe_sensor_info:unable to find DT for sensor-information.KTM continues
+[    2.696834] msm-thermal qcom,msm-thermal.58: probe_ocr:Failed reading node=/soc/qcom,msm-thermal, key=qcom,pmic-opt-curr-temp err:-22. KTM continues
+[    2.703043] qcom,rpmcc-8916 1800000.qcom,rpmcc: Registered RPM clocks.
+[    2.709777] qcom,gcc-8916 1800000.qcom,gcc: Registered GCC clocks
+[    2.710335] clock-a7 b011050.qcom,clock-a7: Speed bin: 0 PVS Version: 1
+[    2.711312] i2c-msm-v2 78b6000.i2c: probing driver i2c-msm-v2
+[    2.711508] AXI: msm_bus_scale_register_client(): msm_bus_scale_register_client: Bus driver not ready.
+[    2.711668] i2c-msm-v2 78b6000.i2c: msm_bus_scale_register_client(mstr-id:86):0 (not a problem)
+[    2.712787] i2c-msm-v2 78b9000.i2c: probing driver i2c-msm-v2
+[    2.712970] AXI: msm_bus_scale_register_client(): msm_bus_scale_register_client: Bus driver not ready.
+[    2.713128] i2c-msm-v2 78b9000.i2c: msm_bus_scale_register_client(mstr-id:86):0 (not a problem)
+[    2.713784] i2c-msm-v2 78ba000.i2c: probing driver i2c-msm-v2
+[    2.713963] AXI: msm_bus_scale_register_client(): msm_bus_scale_register_client: Bus driver not ready.
+[    2.714053] i2c-msm-v2 78ba000.i2c: msm_bus_scale_register_client(mstr-id:86):0 (not a problem)
+[    2.714736] i2c-msm-v2 78b8000.i2c: probing driver i2c-msm-v2
+[    2.714983] AXI: msm_bus_scale_register_client(): msm_bus_scale_register_client: Bus driver not ready.
+[    2.715073] i2c-msm-v2 78b8000.i2c: msm_bus_scale_register_client(mstr-id:86):0 (not a problem)
+[    2.715712] i2c-msm-v2 78b5000.i2c: probing driver i2c-msm-v2
+[    2.715957] AXI: msm_bus_scale_register_client(): msm_bus_scale_register_client: Bus driver not ready.
+[    2.716115] i2c-msm-v2 78b5000.i2c: msm_bus_scale_register_client(mstr-id:86):0 (not a problem)
+[    2.733209] bio: create slab <bio-0> at 0
+[    2.734017] socinfo_print: v8, id=206, ver=1.0, raw_id=1797, raw_ver=0, hw_plat=8, hw_plat_ver=65536
+[    2.734017]  accessory_chip=0, hw_plat_subtype=0, pmic_model=65547, pmic_die_revision=131072
+[    2.734883] vgaarb: loaded
+[    2.735567] SCSI subsystem initialized
+[    2.736176] usbcore: registered new interface driver usbfs
+[    2.736286] usbcore: registered new interface driver hub
+[    2.736528] usbcore: registered new device driver usb
+[    2.736685] media: Linux media interface: v0.10
+[    2.736899] Linux video capture interface: v2.00
+[    2.737072] BATTERY: batterydata_init: Battery-data device created!
+[    2.738472] cma: Assigned CMA region at 0 to 1b.qcom,ion-heap device
+[    2.738712] cma: Assigned CMA region at 0 to 1c.qcom,ion-heap device
+[    2.738972] cma: Assigned CMA region at 0 to 17.qcom,ion-heap device
+[    2.739171] cma: Assigned CMA region at 0 to 1a.qcom,ion-heap device
+[    2.739488] ION heap system created
+[    2.739630] ION heap qsecom created at 0x000000008ec00000 with size 1200000
+[    2.739752] ION heap audio created at 0x00000000ff800000 with size 314000
+[    2.739821] ION heap pil_1 created at 0x000000008bd00000 with size 600000
+[    2.739940] ION heap pil_2 created at 0x0000000086800000 with size 5500000
+[    2.740073] ion_heap_create: Heap type is disabled: 1
+[    2.740135] msm_ion_heap_create: error creating heap kmalloc type 1 base 0x0000000000000000 size 0
+[    2.740349] msm_bus_fabric_init_driver
+[    2.740556] msm_bus_device 580000.ad-hoc-bus: Dev 1024
+[    2.740678] msm_bus_device 580000.ad-hoc-bus: Util-fact is missing, default to 100
+[    2.740741] msm_bus_device 580000.ad-hoc-bus: Vrail-comp is missing, default to 100
+[    2.740917] msm_bus_device 580000.ad-hoc-bus: Dev 0
+[    2.740986] msm_bus_device 580000.ad-hoc-bus: Util-fact is missing, default to 100
+[    2.741102] msm_bus_device 580000.ad-hoc-bus: Vrail-comp is missing, default to 100
+[    2.741271] msm_bus_device 580000.ad-hoc-bus: Dev 4096
+[    2.741340] msm_bus_device 580000.ad-hoc-bus: Util-fact is missing, default to 100
+[    2.741456] msm_bus_device 580000.ad-hoc-bus: Vrail-comp is missing, default to 100
+[    2.744333] msm_bus_init_clk: Valid node clk node 1024 ctx 0
+[    2.744396] msm_bus_init_clk: Valid node clk node 1024 ctx 1msm_bus_init_clk: Valid node clk node 0 ctx 0
+[    2.744659] msm_bus_init_clk: Valid node clk node 0 ctx 1msm_bus_init_clk: Valid node clk node 4096 ctx 0
+[    2.744921] msm_bus_init_clk: Valid node clk node 4096 ctx 1[    2.748983] gdsc_venus: no parameters
+[    2.749241] gdsc_mdss: no parameters
+[    2.749430] gdsc_jpeg: no parameters
+[    2.749635] gdsc_vfe: no parameters
+[    2.749851] gdsc_oxili_gx: no parameters
+[    2.750465] mdss_pll_probe: MDSS pll label = MDSS DSI 0 PLL
+[    2.751039] dsi_pll_clock_register_lpm: Registered DSI PLL clocks successfully
+[    2.751824] msm_iommu 1f00000.qcom,iommu: device gfx_iommu (model: 500) mapped at ffffff8000260000, with 2 ctx banks
+[    2.752478] msm_iommu 1e00000.qcom,iommu: device apps_iommu (model: 500) mapped at ffffff8001b80000, with 20 ctx banks
+[    2.756237] msm_iommu_ctx 1f09000.qcom,iommu-ctx: context gfx3d_user using bank 1
+[    2.756393] msm_iommu_ctx 1f0a000.qcom,iommu-ctx: context gfx3d_priv using bank 2
+[    2.756581] msm_iommu_ctx 1e22000.qcom,iommu-ctx: context jpeg_enc0 using bank 2
+[    2.756756] msm_iommu_ctx 1e23000.qcom,iommu-ctx: context vfe using bank 3
+[    2.756876] msm_iommu_ctx 1e24000.qcom,iommu-ctx: context mdp_0 using bank 4
+[    2.757074] msm_iommu_ctx 1e25000.qcom,iommu-ctx: context venus_ns using bank 5
+[    2.757251] msm_iommu_ctx 1e26000.qcom,iommu-ctx: context cpp using bank 6
+[    2.757371] msm_iommu_ctx 1e27000.qcom,iommu-ctx: context mDSP using bank 7
+[    2.757541] msm_iommu_ctx 1e28000.qcom,iommu-ctx: context gss using bank 8
+[    2.757712] msm_iommu_ctx 1e29000.qcom,iommu-ctx: context a2 using bank 9
+[    2.757831] msm_iommu_ctx 1e32000.qcom,iommu-ctx: context mdp_1 using bank 18
+[    2.758006] msm_iommu_ctx 1e33000.qcom,iommu-ctx: context venus_sec_pixel using bank 19
+[    2.758144] msm_iommu_ctx 1e34000.qcom,iommu-ctx: context venus_sec_bitstream using bank 20
+[    2.758330] msm_iommu_ctx 1e35000.qcom,iommu-ctx: context venus_sec_non_pixel using bank 21
+[    2.758503] msm_iommu_ctx 1e36000.qcom,iommu-ctx: context venus_fw using bank 22
+[    2.758671] msm_iommu_ctx 1e37000.qcom,iommu-ctx: context periph_rpm using bank 23
+[    2.758794] msm_iommu_ctx 1e38000.qcom,iommu-ctx: context periph_CE using bank 24
+[    2.758966] msm_iommu_ctx 1e39000.qcom,iommu-ctx: context periph_BLSP using bank 25
+[    2.759148] msm_iommu_ctx 1e3a000.qcom,iommu-ctx: context periph_SDC1 using bank 26
+[    2.759280] msm_iommu_ctx 1e3b000.qcom,iommu-ctx: context periph_SDC2 using bank 27
+[    2.759461] msm_iommu_ctx 1e3c000.qcom,iommu-ctx: context periph_audio using bank 28
+[    2.759643] msm_iommu_ctx 1e3d000.qcom,iommu-ctx: context periph_USB_HS1 using bank 29
+[    2.760514] Advanced Linux Sound Architecture Driver Initialized.
+[    2.760950] Bluetooth: ffffffc00c3d7d70
+[    2.761066] NET: Registered protocol family 31
+[    2.761237] Bluetooth: ffffffc00c3d7d70
+[    2.761303] Bluetooth: ffffffc00c3d7d50Bluetooth: ffffffc00c3d7d40
+[    2.761549] Bluetooth: ffffffc00c3d7d40[    2.761836] cfg80211: Calling CRDA to update world regulatory domain
+[    2.761912] cfg80211: World regulatory domain updated:
+[    2.762022] cfg80211:   (start_freq - end_freq @ bandwidth), (max_antenna_gain, max_eirp)
+[    2.762137] cfg80211:   (2402000 KHz - 2472000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[    2.762199] cfg80211:   (2457000 KHz - 2482000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[    2.762313] cfg80211:   (2474000 KHz - 2494000 KHz @ 20000 KHz), (300 mBi, 2000 mBm)
+[    2.762425] cfg80211:   (5170000 KHz - 5250000 KHz @ 80000 KHz), (300 mBi, 2000 mBm)
+[    2.762488] cfg80211:   (5250000 KHz - 5330000 KHz @ 80000 KHz), (300 mBi, 2000 mBm)
+[    2.762600] cfg80211:   (5490000 KHz - 5710000 KHz @ 80000 KHz), (300 mBi, 2000 mBm)
+[    2.762713] cfg80211:   (5735000 KHz - 5835000 KHz @ 80000 KHz), (300 mBi, 2000 mBm)
+[    2.762775] cfg80211:   (57240000 KHz - 63720000 KHz @ 2160000 KHz), (N/A, 0 mBm)
+[    2.763574] Switching to clocksource arch_sys_counter
+[    2.765051] NET: Registered protocol family 2
+[    2.765630] TCP established hash table entries: 16384 (order: 6, 262144 bytes)
+[    2.765985] TCP bind hash table entries: 16384 (order: 6, 262144 bytes)
+[    2.766300] TCP: Hash tables configured (established 16384 bind 16384)
+[    2.766463] TCP: reno registered
+[    2.766529] UDP hash table entries: 1024 (order: 3, 32768 bytes)
+[    2.766680] UDP-Lite hash table entries: 1024 (order: 3, 32768 bytes)
+[    2.766934] NET: Registered protocol family 1
+[    2.767482] gcc-mdss-8916 qcom,gcc-mdss.29: Registered GCC MDSS clocks.
+[    2.768271] Trying to unpack rootfs image as initramfs...
+[    6.921568] Freeing initrd memory: 8576K
+[    6.923311] audit: initializing netlink socket (disabled)
+[    6.923400] type=2000 audit(6.893:1): initialized
+[    6.926212] VFS: Disk quotas dquot_6.5.2
+[    6.926407] Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    6.927313] exFAT: Version 1.2.9
+[    6.927420] Registering sdcardfs 0.1
+[    6.927648] fuse init (API version 7.23)
+[    6.929894] Key type asymmetric registered
+[    6.929961] Asymmetric key parser 'x509' registered
+[    6.930106] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 248)
+[    6.930220] io scheduler noop registered (default)
+[    6.930282] io scheduler deadline registered
+[    6.930428] io scheduler row registered
+[    6.930544] io scheduler cfq registered
+[    6.930709] io scheduler bfq registered
+[    6.930770] BFQ I/O-scheduler: v7r8
+[    6.932278] platform qcom,smp2pgpio-ssr-smp2p-1-in.12: Driver smp2pgpio requests probe deferral
+[    6.932532] platform qcom,smp2pgpio-ssr-smp2p-1-out.13: Driver smp2pgpio requests probe deferral
+[    6.933175] platform qcom,smp2pgpio-ssr-smp2p-4-in.18: Driver smp2pgpio requests probe deferral
+[    6.933317] platform qcom,smp2pgpio-ssr-smp2p-4-out.19: Driver smp2pgpio requests probe deferral
+[    6.934208] i2c-msm-v2 78b9000.i2c: msm_bus_scale_register_client(mstr-id:86):0x1 (ok)
+[    6.935640] lm3630_bl 5-0038: LM3630 backlight register OK.
+[    6.936088] msm_dss_get_res_byname: 'vbif_nrt_phys' resource not found
+[    6.936208] mdss_mdp_probe+0x244/0xcd0->msm_dss_ioremap_byname: 'vbif_nrt_phys' msm_dss_get_res_byname failed
+[    6.936326] mdss_mdp_parse_dt_hw_settings: MDSS VBIF settings not found
+[    6.936457] mdss_mdp_parse_dt_prop_len: prop qcom,mdss-pipe-cursor-off : doesn't exist in device tree
+[    6.936549] mdss_mdp_pipe_addr_setup: type:1 ftchid:1 xinid:0 num:0 ndx:0x1 prio:0
+[    6.936668] mdss_mdp_pipe_addr_setup: type:2 ftchid:7 xinid:1 num:3 ndx:0x8 prio:1
+[    6.936782] mdss_mdp_pipe_addr_setup: type:2 ftchid:8 xinid:5 num:4 ndx:0x10 prio:2
+[    6.936850] mdss_mdp_pipe_addr_setup: type:3 ftchid:4 xinid:2 num:6 ndx:0x40 prio:3
+[    6.936974] mdss_mdp_parse_dt_handler: Error from prop qcom,mdss-pipe-sw-reset-off : u32 array read
+[    6.937254] mdss_mdp_parse_dt_handler: Error from prop qcom,mdss-ib-factor-overlap : u32 array read
+[    6.937373] mdss_mdp_parse_dt_handler: Error from prop qcom,mdss-ib-factor-cmd : u32 array read
+[    6.937448] mdss_mdp_parse_dt_prop_len: prop qcom,mdss-clk-levels : doesn't exist in device tree
+[    6.937578] mdss_mdp_parse_dt_prop_len: prop qcom,mdss-ad-off : doesn't exist in device tree
+[    6.938054] mdss_mdp_irq_clk_register: unable to get clk: lut_clk
+[    6.939619] mdss_dsi_ctrl_probe: DSI Ctrl name = MDSS DSI CTRL->0
+[    6.939870] mdss_dsi_panel_init: Panel Name = oppo15399boe ili9881c 720p video mode dsi panel
+[    6.940305] mdss_dsi_parse_dcs_cmds: failed, key=qcom,mdss-dsi-post-panel-on-command
+[    6.940429] mdss_dsi_parse_panel_features: ulps feature disabled
+[    6.940548] mdss_dsi_parse_panel_features: ulps during suspend feature disabled
+[    6.940665] mdss_dsi_parse_panel_features: dynamic switch feature enabled: 0
+[    6.940790] mdss_dsi_parse_panel_features:1219, Disp_en gpio not specified
+[    6.941048] mdss_dsi_panel_init: Continuous splash enabled
+[    6.941384] dsi_panel_device_register:1892, TE gpio not specified
+[    6.941770] mdss_dsi_pll_1_clk_init: can't find vco_clk. rc=-517
+[    6.941833] PLL 1 Clock's did not register
+[    6.941961] mdss_dsi_retrieve_ctrl_resources: ctrl_base=ffffff80001dc000 ctrl_size=25c phy_base=ffffff80001de500 phy_size=2b0
+[    6.964245] mdss_register_panel: adding framebuffer device 1a98000.qcom,mdss_dsi
+[    6.964489] mdss_hw_rev_init: MDP Rev=10060000
+[    6.965000] mdss_dsi_status_init: DSI status check interval:5000
+[    6.965382] mdss_register_panel: adding framebuffer device qcom,mdss_wb_panel.24
+[    6.966237] mdss_fb_register: FrameBuffer[0] 720x1280 registered successfully!
+[    6.966380] mdss_mdp_overlay_init: mdss_mdp_overlay_init: unable to add event timer
+[    6.966686] mdss_fb_register: FrameBuffer[1] 1280x720 registered successfully!
+[    6.966817] mdss_mdp_overlay_init: mdss_mdp_overlay_init: unable to add event timer
+[    6.966947] mdss_mdp_splash_parse_dt: splash mem child node is not present
+[    6.968417] IPC_RTR: msm_ipc_router_smd_driver_register Already driver registered IPCRTR
+[    6.968789] msm_smp2p_init: unable to create log context
+[    6.969805] IPC_RTR: msm_ipc_router_init: Unable to create IPC logging for IPC RTR
+[    6.969970] NET: Registered protocol family 27
+[    6.970140] IPC_RTR: msm_ipc_router_ipc_log_init: Unable to create IPC logging for Req/Resp
+[    6.970201] IPC_RTR: msm_ipc_router_ipc_log_init: Unable to create IPC logging for Indications[    6.971672] In memshare_probe, Memshare probe success
+[    6.973636] subsys-pil-tz a21b000.qcom,pronto: [wcnss]: Error getting proxy unvoting gpio
+[    6.973819] platform a21b000.qcom,pronto: Driver subsys-pil-tz requests probe deferral
+[    6.975183] pil-q6v5-mss 4080000.qcom,mss: [modem]: Error getting proxy unvoting gpio
+[    6.975377] platform 4080000.qcom,mss: Driver pil-q6v5-mss requests probe deferral
+[    6.975621] core_ctl: Creating CPU group 0
+[    6.975735] core_ctl: Init CPU0 state
+[    6.975796] core_ctl: Init CPU1 state
+[    6.975856] core_ctl: Init CPU2 state
+[    6.975969] core_ctl: Init CPU3 state
+[    6.976595] hw_operator_name [0]
+[    6.977523] uart_tx_gpio is not available
+[    6.977636] uart_rx_gpio is not available
+[    6.977698] uart_cts_gpio is not available
+[    6.977759] uart_rfr_gpio is not available
+[    6.977893] msm_serial_hs 78af000.uart: msm_hs_probe: error creating logging context
+[    6.978301] sps: BAM device 0x0000000007884000 is not registered yet.
+[    6.978421] sps:BAM 0x0000000007884000 is registered.
+[    6.980389] 78af000.uart: ttyHS0 at MMIO 0x78af000 (irq = 139) is a MSM HS UART
+[    6.982216] msm_serial_hs module loaded
+[    6.982521] msm_serial_hsl_probe: detected port #0 (ttyHSL0)
+[    6.982728] AXI: get_pdata(): Error: Client name not found
+[    6.982791] AXI: msm_bus_cl_get_pdata(): client has to provide missing entry for successful registration
+[    6.982904] msm_serial_hsl_probe: Bus scaling is disabled
+[    6.983059] 78b0000.serial: ttyHSL0 at MMIO 0x78b0000 (irq = 140) is a MSM
+[    6.983403] msm_serial_hsl_init: driver initialized
+[    6.983518] smd_tty_log_init: Unable to create IPC log
+[    6.991774] kgsl kgsl-3d0: Initialized kgsl-3d0: mmu=on
+[    6.996483] brd: module loaded
+[    7.003030] loop: module loaded
+[    7.003342] zram: Created 1 device(s)
+[    7.003857] QSEECOM: qseecom_probe: qseecom.qsee_version = 0x800000
+[    7.003986] QSEECOM: qseecom_probe: disk-encrypt-pipe-pair=0x2
+[    7.004048] QSEECOM: qseecom_probe: Device does not support PFEQSEECOM: qseecom_probe: qsee-ce-hw-instance=0x0
+[    7.004230] QSEECOM: qseecom_probe: qseecom.appsbl_qseecom_support = 0x0[    7.004399] QSEECOM: qseecom_probe: qseecom clocks handled by other subsystem
+[    7.004891] QSEECOM: qseecom_probe: secure app region addr=0x86000000 size=0x300000
+[    7.006884] i2c-core: driver [tabla-i2c-core] using legacy suspend method
+[    7.007055] i2c-core: driver [tabla-i2c-core] using legacy resume method
+[    7.007220] i2c-core: driver [wcd9xxx-i2c-core] using legacy suspend method
+[    7.007333] i2c-core: driver [wcd9xxx-i2c-core] using legacy resume method
+[    7.007507] i2c-core: driver [tasha-i2c-core] using legacy suspend method
+[    7.007570] i2c-core: driver [tasha-i2c-core] using legacy resume method
+[    7.008205] SCSI Media Changer driver v0.25 
+[    7.011104] sps:BAM 0x0000000007884000 (va:0xffffff80006c0000) enabled: ver:0x18, number of pipes:16
+[    7.012261] tun: Universal TUN/TAP device driver, 1.6
+[    7.012402] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    7.014274] PPP generic driver version 2.4.2
+[    7.014435] PPP BSD Compression module registered
+[    7.014547] PPP Deflate Compression module registered
+[    7.014618] PPP MPPE Compression module registered
+[    7.014731] NET: Registered protocol family 24
+[    7.014817] SLIP: version 0.8.4-NET3.019-NEWTTY (dynamic channels, max=256) (6 bit encapsulation enabled).
+[    7.014930] CSLIP: code copyright 1989 Regents of the University of California.
+[    7.015618] wcnss_wlan probed in built-in mode
+[    7.016145] usbcore: registered new interface driver asix
+[    7.016274] usbcore: registered new interface driver ax88179_178a
+[    7.016348] usbcore: registered new interface driver cdc_ether
+[    7.016475] usbcore: registered new interface driver dm9601
+[    7.016550] usbcore: registered new interface driver net1080
+[    7.016677] usbcore: registered new interface driver cdc_subset
+[    7.016751] usbcore: registered new interface driver zaurus
+[    7.017088] usbcore: registered new interface driver cdc_ncm
+[    7.017518] msm_sharedmem: sharedmem_register_qmi: qmi init successful
+[    7.017963] msm_sharedmem: msm_sharedmem_probe: Device created for client 'rmtfs'
+[    7.018092] msm_sharedmem: msm_sharedmem_probe: Device created for client 'rfsa_dsp'
+[    7.018265] msm_sharedmem: msm_sharedmem_probe: Device created for client 'rfsa_mdm'
+[    7.018453] msm_sharedmem: msm_sharedmem_probe: qcom,client-id property not found
+[    7.018564] msm_sharedmem: msm_sharedmem_probe: Device created for client 'bimc'
+[    7.018764] msm_sharedmem: msm_sharedmem_probe: Device created for client 'opponvbk'
+[    7.019212] msm_otg 78d9000.usb: msm_otg probe
+[    7.021528] msm_otg 78d9000.usb: OTG regs = ffffff80002f2000
+[    7.025607] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    7.025674] ehci-pci: EHCI PCI platform driver
+[    7.025802] ehci-msm: Qualcomm On-Chip EHCI Host Controller
+[    7.026079] Unable to get vbus_otg
+[    7.026147] msm_hsusb_host msm_hsusb_host: unable to register with transceiver
+[    7.026272] platform msm_hsusb_host: Driver msm_hsusb_host requests probe deferral
+[    7.026396] ehci-msm2: Qualcomm EHCI Host Controller
+[    7.026961] usbcore: registered new interface driver cdc_acm
+[    7.027101] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    7.027182] usbcore: registered new interface driver ccid_bridge
+[    7.027371] ccid_bridge_init: success
+[    7.027449] usbcore: registered new interface driver usb-storage
+[    7.027578] usbcore: registered new interface driver ums-alauda
+[    7.027651] usbcore: registered new interface driver ums-cypress
+[    7.027774] usbcore: registered new interface driver ums-datafab
+[    7.027849] usbcore: registered new interface driver ums-freecom
+[    7.027971] usbcore: registered new interface driver ums-isd200
+[    7.028044] usbcore: registered new interface driver ums-jumpshot
+[    7.028169] usbcore: registered new interface driver ums-karma
+[    7.028243] usbcore: registered new interface driver ums-sddr09
+[    7.028367] usbcore: registered new interface driver ums-sddr55
+[    7.028444] usbcore: registered new interface driver ums-usbat
+[    7.028665] usbcore: registered new interface driver usbserial
+[    7.028741] usbcore: registered new interface driver qc_csvt
+[    7.028867] usbserial: USB Serial support registered for qc_csvt
+[    7.028943] usbcore: registered new interface driver usb_ehset_test
+[    7.029640] Registering trace failed
+[    7.030330] mousedev: PS/2 mouse device common for all mice
+[    7.030533] usbcore: registered new interface driver xpad
+[    7.030596] Synaptics:tpd_driver_init is called
+[    7.030758] Synaptics:tpd_driver_init is called
+[    7.031239] synaptics-s3203: synaptics_ts_probe  is called
+[    7.031473] synaptics-s3203: get_tp_id::BIEL
+[    7.031537] get_tp_id::id1:0 id2:1 id3:1
+[    7.031604] synaptics-s3203: synaptics,tx-rx-num is 13 23 
+[    7.031722] synaptics-s3203: synaptic:ts->irq_gpio:915 irq_flags:8200 id1_gpio:1011 id2_gpio:1016 id3_gpio:1021 max_num 10
+[    7.044234] synaptics-s3203: F11_2D_QUERY_BASE = ad 
+ 			F11_2D_CMD_BASE  = 86 
+			F11_2D_CTRL_BASE	= 57 
+			F11_2D_DATA_BASE	= 15 
+			synaptics:before fw update,bootloader_mode = 0x0
+[    7.045780] synaptics-s3203: CURRENT_FIRMWARE_ID = 0x15127621
+[    7.047163] random: nonblocking pool is initialized
+[    7.047582] synaptics-s3203: max_x = 1100,max_y = 1745
+[    7.047582]  max_x_ic = 1100,max_y_ic = 1900
+[    7.048222] input: synaptics-s3203 as /devices/virtual/input/input0
+[    7.048461] input: synaptics-s3203-kpd as /devices/virtual/input/input1
+[    7.048993] synaptics-s3203: synaptics_ts_probe: going to set GPIO
+[    7.150430] synaptics-s3203: synaptic:ts->client->irq is 13
+[    7.150776] synaptics-s3203: synaptics_ts_probe 3203: normal end
+[    7.151645] input: hbtp_vm as /devices/virtual/input/input2
+[    7.233930] i2c-msm-v2 78b6000.i2c: msm_bus_scale_register_client(mstr-id:86):0xb (ok)
+[    7.234309] i2c-msm-v2 78b6000.i2c: NACK: slave not responding, ensure its powered: msgs(n:2 cur:0 tx) bc(rx:1 tx:1) mode:FIFO slv_addr:0x1f MSTR_STS:0x0d1343c8 OPER:0x00000010
+[    7.234452] kxtj9 0-001f: read err int source
+[    7.234565] kxtj9 0-001f: device not recognized
+[    7.234752] i2c-msm-v2 78b6000.i2c: NACK: slave not responding, ensure its powered: msgs(n:1 cur:0 tx) bc(rx:0 tx:2) mode:FIFO slv_addr:0x1f MSTR_STS:0x0d1343c8 OPER:0x00000090
+[    7.234941] kxtj9 0-001f: soft power off failed
+[    7.235071] kxtj9 0-001f: kxtj9_probe: kxtj9_probe err=-107
+[    7.235136] kxtj9: probe of 0-001f failed with error -107
+[    7.256054] input: compass as /devices/soc.0/78b6000.i2c/i2c-0/0-0030/input/input3
+[    7.256376] mmc3416x 0-0030: mmc3416x successfully probed
+[    7.256477] AKM compass driver: initialize.[    7.337222] i2c-msm-v2 78b6000.i2c: NACK: slave not responding, ensure its powered: msgs(n:1 cur:0 tx) bc(rx:0 tx:2) mode:FIFO slv_addr:0xc MSTR_STS:0x0d1343c8 OPER:0x00000090
+
+[    7.337412] akm8963 0-000c: akm_i2c_txdata: transfer failed.
+[    7.337534] akm8963 0-000c: AKECS_Set_PowerDown: Can not set to powerdown mode.
+[    7.337770] i2c-msm-v2 78b6000.i2c: NACK: slave not responding, ensure its powered: msgs(n:2 cur:0 tx) bc(rx:2 tx:1) mode:FIFO slv_addr:0xc MSTR_STS:0x0d1343c8 OPER:0x00000010
+[    7.337906] akm8963 0-000c: akm_i2c_rxdata: transfer failed.
+[    7.338072] akm8963: probe of 0-000c failed with error -107
+[    7.365243] input: lis3dh-accel as /devices/soc.0/78b6000.i2c/i2c-0/0-0019/input/input4
+[    7.365944] i2c-core: driver [lis3dh_acc] using legacy suspend method
+[    7.366058] i2c-core: driver [lis3dh_acc] using legacy resume method
+[    7.366237] apds9921_probe start.
+[    7.366308] apds_parse_dt, irq = 1015
+[    7.366422] apds9921_sensor_regulator_configure, on = 1
+[    7.366577] apds9921_sensor_regulator_power_on, on = 1
+[    7.387086] apds9921_init_client.
+[    7.387896] chip APDS-9921.
+[    7.390719] apds9921_probe interrupt is hooked
+[    7.390935] input: light as /devices/soc.0/78b6000.i2c/i2c-0/0-0053/input/input5
+[    7.391105] input: proximity as /devices/soc.0/78b6000.i2c/i2c-0/0-0053/input/input6
+[    7.391400] apds9921_sensor_regulator_power_on, on = 0
+[    7.391464] apds9921_probe support ver. 1.0.0 enabled
+[    7.392192] qcom,qpnp-rtc qpnp-rtc-4: rtc core: registered qpnp_rtc as rtc0
+[    7.392438] i2c /dev entries driver
+[    7.394405] platform 1d00000.qcom,vidc: Driver msm_vidc_v4l2 requests probe deferral
+[    7.398638] LED trigger flashlight-trigger failed to register (-17)
+[    7.398800] msm_led_torch_create_classdev:76 Invalid fctrl->torch_trigger[0]
+[    7.399421] msm_flash_init_module:1026 Enter
+[    7.399721] msm_flash_lm3642_init entry
+[    7.400099] msm_flash_lm3642_platform_probe entry
+[    7.400212] msm_flash_lm3642_platform_probe of_match_device success
+[    7.407125] lm3642_id_match:num_vreg:1 
+[    7.407364]  msm_cci_init: Failed in getting TOP gdscr regulator handle
+[    7.407671] msm_cci_init:872: hw_version = 0x10000008
+[    7.434091] lm3642_id_match: read id: 0x0 expected id 0x0:
+[    7.434155] lm3642_id_match: probe success
+[    7.434391] flash_age 0
+[    7.434473] msm_flash_lm3642_init after entry
+[    7.434592] msm_flash_lm3643_init entry
+[    7.434987] msm_flash_lm3643_init after entry
+[    7.435101] msm_flash_mp3331_init entry
+[    7.435437] msm_flash_mp3331_init after entry
+[    7.435994] qcom,slave-addr = 0x20
+[    7.488745]  msm_cci_init: Failed in getting TOP gdscr regulator handle
+[    7.489018] msm_cci_init:872: hw_version = 0x10000008
+[    7.641141] qcom,slave-addr = 0x5A
+[    7.693871]  msm_cci_init: Failed in getting TOP gdscr regulator handle
+[    7.694187] msm_cci_init:872: hw_version = 0x10000008
+[    7.694386] msm_cci_irq:1085 MASTER_0 error 0x8000000
+[    7.694519] msm_cci_config:retry=2
+[    7.694699] msm_cci_irq:1085 MASTER_0 error 0x8000000
+[    7.694780] msm_cci_config:retry=1
+[    7.695008] msm_cci_irq:1085 MASTER_0 error 0x8000000
+[    7.695088] msm_cci_config:retry=0
+[    7.695151] msm_camera_cci_i2c_write: line 128 rc = -22
+[    7.747091] read_eeprom_memory: page write failed
+[    7.747153] msm_eeprom_platform_probe read_eeprom_memory failed
+[    7.798874] qcom,eeprom: probe of 24.qcom,eeprom failed with error -22
+[    7.799102] qcom,slave-addr = 0x6C
+[    7.840369]  msm_cci_init: Failed in getting TOP gdscr regulator handle
+[    7.840662] msm_cci_init:872: hw_version = 0x10000008
+[    7.948472] stmvl6180_init:1835 platform device register failed, try to register as I2C device
+[    7.948623] i2c-core: driver [vl6180] using legacy suspend method
+[    7.948685] i2c-core: driver [vl6180] using legacy resume method
+[    7.949543] g_sctrl[0] ffffffc077de1000
+[    7.949906] g_sctrl[1] ffffffc077de2000[    7.950382] MSM-CPP cpp_probe:3037 Bus master 0
+[    7.965225] MSM-CPP cpp_init_hardware:953 CPP HW Version: 0x40000000
+[    7.965294] MSM-CPP cpp_init_hardware:974 stream_cnt:0
+[    7.968421] __msm_jpeg_init:1522] Jpeg Device id 0
+[    7.969077] usbcore: registered new interface driver uvcvideo
+[    7.969248] USB Video Class driver (1.1.1)
+[    7.969308] gspca_main: v2.14.0 registered
+[    7.969501] BMS: bms_get_adc: vadc not found - defer probe rc=-517
+[    7.969616] BMS: qpnp_vm_bms_probe: Failed to get adc rc=-517
+[    7.969685] spmi qpnp-vm-bms-9: Driver qcom,qpnp-vm-bms requests probe deferral
+[    7.969846] CHG: qpnp_lbc_main_probe: battery supply not found deferring probe
+[    7.969965] spmi qpnp-linear-charger-8: Driver qcom,qpnp-linear-charger requests probe deferral
+[    7.971028] opcharger start==================================
+[    7.971150] opcharger-charger 4-006b: opcharger_i2c_id=3
+[    7.971214] opcharger-charger 4-006b: opcharger_i2c_id=3,boot_mode =1
+[    7.971403] i2c 4-006b: Driver opcharger-charger requests probe deferral
+[    7.971564] i2c-core: driver [bq27541-battery] using legacy suspend method
+[    7.971625] i2c-core: driver [bq27541-battery] using legacy resume method
+[    7.988683] device-mapper: uevent: version 1.0.3
+[    7.988857] device-mapper: ioctl: 4.24.0-ioctl (2013-01-15) initialised: dm-devel@redhat.com
+[    7.989111] device-mapper: req-crypt: dm-req-crypt successfully initalized.
+[    7.989111] 
+[    7.989848] cpuidle: using governor ladder
+[    7.989912] cpuidle: using governor menu
+[    7.989990] sdhci: Secure Digital Host Controller Interface driver
+[    7.990102] sdhci: Copyright(c) Pierre Ossman
+[    7.990162] sdhci-pltfm: SDHCI platform and OF driver helper
+[    7.993277] sdhci_msm 7824900.sdhci: host_use_default_qos = 1
+[    7.993346] sdhci_msm 7824900.sdhci: For qos_policy(default qos) = 0, tbl_sz = 3, qos type = 2
+[    7.993461] sdhci_msm 7824900.sdhci: 	dma_latency = 2
+[    7.993573] sdhci_msm 7824900.sdhci: 	dma_latency = 401
+[    7.993636] sdhci_msm 7824900.sdhci: 	dma_latency = 701
+[    7.993699] sdhci_msm 7824900.sdhci: For qos_policy(modified dynamic qos) = 1, tbl_sz = 1, qos type = 2
+[    7.993852] sdhci_msm 7824900.sdhci: 	dma_latency = 200
+[    7.993968] sdhci_msm 7824900.sdhci: For qos_policy(modified dynamic qos) = 2, tbl_sz = 1, qos type = 2
+[    7.994082] sdhci_msm 7824900.sdhci: 	dma_latency = 200
+[    7.994145] sdhci_msm 7824900.sdhci: Host using default pm_qos
+[    7.994996] mmc0: no vqmmc regulator found
+[    7.995066] mmc0: no vmmc regulator found
+[    8.025956] mmc0: SDHCI controller on 7824900.sdhci [7824900.sdhci] using 32-bit ADMA
+[    8.026581] sdhci_msm 7864900.sdhci: No vreg data found for vdd
+[    8.038136] sdhci_msm 7864900.sdhci: host_use_default_qos = 1
+[    8.038205] sdhci_msm 7864900.sdhci: For qos_policy(default qos) = 0, tbl_sz = 1, qos type = 2
+[    8.038319] sdhci_msm 7864900.sdhci: 	dma_latency = 701
+[    8.038383] sdhci_msm 7864900.sdhci: For qos_policy(modified dynamic qos) = 1, tbl_sz = 1, qos type = 2
+[    8.038496] sdhci_msm 7864900.sdhci: 	dma_latency = 200
+[    8.038609] sdhci_msm 7864900.sdhci: For qos_policy(modified dynamic qos) = 2, tbl_sz = 1, qos type = 2
+[    8.038672] sdhci_msm 7864900.sdhci: 	dma_latency = 200
+[    8.038786] sdhci_msm 7864900.sdhci: Host using default pm_qos
+[    8.039736] mmc1: no vqmmc regulator found
+[    8.039857] mmc1: no vmmc regulator found
+[    8.075946] mmc1: SDHCI controller on 7864900.sdhci [7864900.sdhci] using 32-bit ADMA
+[    8.077562] qce 720000.qcedev: Qualcomm Crypto 5.3.1 device found @0x720000
+[    8.077633] qce 720000.qcedev: CE device = 0x0
+[    8.077633] , IO base, CE = 0xffffff8000f40000
+[    8.077633] , Consumer (IN) PIPE 2,    Producer (OUT) PIPE 3
+[    8.077633] IO base BAM = 0x          (null)
+[    8.077633] BAM IRQ 239
+[    8.077633] Engines Availability = 0x2010853
+[    8.077868] sps:BAM 0x0000000000704000 is registered.
+[    8.078169] sps:BAM 0x0000000000704000 (va:0xffffff80013c0000) enabled: ver:0x25, number of pipes:8
+[    8.078656] QCE50: qce_sps_init:  Qualcomm MSM CE-BAM at 0x0000000000704000 irq 239
+[    8.079166] qcedev: FIPS140-2 Known Answer Tests : Skipped
+[    8.080113] qcrypto 720000.qcrypto: Qualcomm Crypto 5.3.1 device found @0x720000
+[    8.080234] qcrypto 720000.qcrypto: CE device = 0x0
+[    8.080234] , IO base, CE = 0xffffff8001640000
+[    8.080234] , Consumer (IN) PIPE 4,    Producer (OUT) PIPE 5
+[    8.080234] IO base BAM = 0x          (null)
+[    8.080234] BAM IRQ 239
+[    8.080234] Engines Availability = 0x2010853
+[    8.080898] QCE50: qce_sps_init:  Qualcomm MSM CE-BAM at 0x0000000000704000 irq 239
+[    8.081494] qcrypto 720000.qcrypto: qcrypto-ecb-aes
+[    8.081674] qcrypto 720000.qcrypto: qcrypto-cbc-aes
+[    8.081877] qcrypto 720000.qcrypto: qcrypto-ctr-aes
+[    8.082033] qcrypto 720000.qcrypto: qcrypto-ecb-des
+[    8.082182] qcrypto 720000.qcrypto: qcrypto-cbc-des
+[    8.082380] qcrypto 720000.qcrypto: qcrypto-ecb-3des
+[    8.082520] qcrypto 720000.qcrypto: qcrypto-cbc-3des
+[    8.082712] qcrypto 720000.qcrypto: qcrypto-xts-aes
+[    8.082851] qcrypto 720000.qcrypto: qcrypto-sha1
+[    8.083044] qcrypto 720000.qcrypto: qcrypto-sha256
+[    8.083181] qcrypto 720000.qcrypto: qcrypto-aead-hmac-sha1-cbc-aes
+[    8.083320] qcrypto 720000.qcrypto: qcrypto-aead-hmac-sha1-cbc-des
+[    8.083511] qcrypto 720000.qcrypto: qcrypto-aead-hmac-sha1-cbc-3des
+[    8.083701] qcrypto 720000.qcrypto: qcrypto-aead-hmac-sha256-cbc-aes
+[    8.083903] qcrypto 720000.qcrypto: qcrypto-aead-hmac-sha256-cbc-des
+[    8.084105] qcrypto 720000.qcrypto: qcrypto-aead-hmac-sha256-cbc-3des
+[    8.084250] qcrypto 720000.qcrypto: qcrypto-hmac-sha1
+[    8.084447] qcrypto 720000.qcrypto: qcrypto-hmac-sha256
+[    8.084586] qcrypto 720000.qcrypto: qcrypto-aes-ccm
+[    8.084776] qcrypto 720000.qcrypto: qcrypto-rfc4309-aes-ccm
+[    8.084839] qcrypto: FIPS140-2 Known Answer Tests: Skipped
+[    8.085255] hidraw: raw HID events driver (C) Jiri Kosina
+[    8.086351] usbcore: registered new interface driver usbhid
+[    8.086464] usbhid: USB HID core driver
+[    8.086866] ashmem: initialized
+[    8.087527] sps:BAM 0x00000000078c4000 is registered.
+[    8.087941] qcom,qpnp-power-on qpnp-power-on-1: PMIC@SID0 Power-on reason: Triggered from KPD (power key press) and 'warm' boot
+[    8.088125] qcom,qpnp-power-on qpnp-power-on-1: PMIC@SID0: Power-off reason: Triggered from PS_HOLD (PS_HOLD/MSM controlled shutdown)
+[    8.088372] input: qpnp_pon as /devices/virtual/input/input7
+[    8.089192] qpnp_cblpwr_irq usbin-valid triggered: 1
+[    8.089305] opchg_usbin_valid_irq_handler opchg_chip is NULL,return
+[    8.090214] PMIC@SID0: PM8916 v2.0.1 options: 0, 2, 0, 0
+[    8.090437] pft [pft_lsm_init]: pft is not the chosen lsm.
+[    8.090499] pft [pft_init]: Drivr initialized successfully Aug 11 2026 12:03:05.n
+[    8.092320] devfreq qcom,cpubw.30: Couldn't update frequency transition information.
+[    8.093260] usbcore: registered new interface driver snd-usb-audio
+[    8.093799] zp Enter ts4621_init
+[    8.093906] zppp Enter ts4621_probe[    8.094236] i2c-msm-v2 78ba000.i2c: msm_bus_scale_register_client(mstr-id:86):0x11 (ok)
+[    8.094585] Old value = 0x00000001 reg no. = 0x01
+[    8.094930] after write value = 0x00000001  reg no. = 0x01
+[    8.095126] Old value = 0x000000C0 reg no. = 0x02
+[    8.095466] after write value = 0x000000C0  reg no. = 0x02
+[    8.095660] Old value = 0x00000000 reg no. = 0x03
+[    8.095999] after write value = 0x00000000  reg no. = 0x03
+[    8.096061] [ts4621] ts4621_init_reg Success 
+[    8.096138] exit ts4621_probe err = 0
+[    8.096626] spmi msm8x16_wcd_codec-12: Driver wcd-spmi-core requests probe deferral
+[    8.096761] spmi msm8x16_wcd_codec-13: Driver wcd-spmi-core requests probe deferral
+[    8.104676] msm-pcm-lpa qcom,msm-pcm-lpa.39: msm_pcm_probe: dev name qcom,msm-pcm-lpa.39
+[    8.105333] platform qcom,msm-voip-dsp.41: Driver msm-voip-dsp requests probe deferral
+[    8.105716] platform qcom,msm-pcm-voice.42: Driver msm-pcm-voice requests probe deferral
+[    8.109328] msm8x16-asoc-wcd sound.64: default codec configured
+[    8.109600] msm8x16_asoc_machine_probe: 15037 hw version after EVT2, hs use external micbias
+[    8.109719] msm8x16_dt_parse_cap_info: 15009 hw version after EVT2, set MICBIAS_EXT_BYP_CAP mode
+[    8.111555] pdata->spk_pa_en = 1022
+[    8.111673] pdata->yda145_boost_en = 1020
+[    8.111844] msm8x16-asoc-wcd sound.64: ASoC: platform (null) not registered
+[    8.111981] msm8x16-asoc-wcd sound.64: snd_soc_register_card failed (-517)
+[    8.112084] platform sound.64: Driver msm8x16-asoc-wcd requests probe deferral
+[    8.112746] u32 classifier
+[    8.112809]     Actions configured
+[    8.112872] Netfilter messages via NETLINK v0.30.
+[    8.113033] nf_conntrack version 0.5.0 (16384 buckets, 65536 max)
+[    8.113387] ctnetlink v0.93: registering with nfnetlink.
+[    8.113571] NF_TPROXY: Transparent proxy support initialized, version 4.1.0
+[    8.113632] NF_TPROXY: Copyright (c) 2006-2007 BalaBit IT Ltd.
+[    8.113998] xt_time: kernel timezone is -0000
+[    8.114239] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    8.114504] arp_tables: (C) 2002 David S. Miller
+[    8.114597] TCP: cubic registered
+[    8.114658] Initializing XFRM netlink socket
+[    8.115015] NET: Registered protocol family 10
+[    8.115875] mip6: Mobile IPv6
+[    8.115958] ip6_tables: (C) 2000-2006 Netfilter Core Team
+[    8.116193] sit: IPv6 over IPv4 tunneling driver
+[    8.116567] NET: Registered protocol family 17
+[    8.116696] NET: Registered protocol family 15
+[    8.116815] Bridge firewalling registered
+[    8.116881] Ebtables v2.0 registered
+[    8.117138] Bluetooth: ffffffc00c3d7d30
+[    8.117218] Bluetooth: ffffffc00c3d7d30Bluetooth: ffffffc00c3d7d60
+[    8.117445] Bluetooth: ffffffc00c3d7d40Bluetooth: ffffffc00c3d7d40
+[    8.117626] Bluetooth: ffffffc00c3d7d20Bluetooth: ffffffc00c3d7d90
+[    8.117857] Bluetooth: ffffffc00c3d7d70[    8.117995] l2tp_core: L2TP core driver, V2.0
+[    8.118062] l2tp_ppp: PPPoL2TP kernel driver, V2.0
+[    8.121638] cma: Assigned CMA region at 0 to qcom,mba-mem.151 device
+[    8.122460] Unable to get vbus_otg
+[    8.122580] msm_hsusb_host msm_hsusb_host: unable to register with transceiver
+[    8.122652] platform msm_hsusb_host: Driver msm_hsusb_host requests probe deferral
+[    8.127770] BMS: set_battery_data: set_battery_data get bq2022 manu id fail
+[    8.127896] spmi qpnp-vm-bms-9: Driver qcom,qpnp-vm-bms requests probe deferral
+[    8.128005] CHG: qpnp_lbc_main_probe: battery supply not found deferring probe
+[    8.128121] spmi qpnp-linear-charger-8: Driver qcom,qpnp-linear-charger requests probe deferral
+[    8.128276] opcharger start==================================
+[    8.128342] opcharger-charger 4-006b: opcharger_i2c_id=3
+[    8.128455] opcharger-charger 4-006b: opcharger_i2c_id=3,boot_mode =1
+[    8.128798] i2c-msm-v2 78b8000.i2c: msm_bus_scale_register_client(mstr-id:86):0x15 (ok)
+[    8.129502] opcharger-charger 4-006b: Invalid chg-valid-gpio
+[    8.129626] opchg_parse_dt usbin_switch_gpio:-2
+[    8.129689] opcharger-charger 4-006b: Invalid usbin-switch-gpio
+[    8.129752] opcharger-charger 4-006b: Invalid batt-id-gpio
+[    8.129921] chip->charging_disabled= 0,chip->irq_gpio= 964,chip->fast_charge_project= 0,		chip->iterm_ma= 130,chip->recharge_mv= 200,chip->limit_current_max_ma= 1500,chip->vfloat_mv= 4370,chip->fastchg_current_max_ma= 1500,
+[    8.130093] chip->hot_bat_decidegc= 530,chip->temp_hot_vfloat_mv= 4110,chip->temp_hot_fastchg_current_ma= 520,		chip->warm_bat_decidegc= 450,chip->temp_warm_vfloat_mv= 4370,chip->temp_warm_fastchg_current_ma= 1500,		chip->pre_normal_bat_decidegc= 220,chip->temp_pre_normal_vfloat_mv= 4370,chip->temp_pre_normal_fastchg_current_ma= 1050,		chip->pre_cool_bat_decidegc= 120,chip->temp_pre_cool_vfloat_mv= 4370,chip->temp_pre_cool_fastchg_current_ma= 535,		chip->cool_bat_decidegc= 0,chip->temp_cool_vfloat_mv= 4000,chip->temp_cool_fastchg_current_ma= 256,
+[    8.130366] chip->cold_bat_decidegc= -30,chip->bat_present_decidegc= -200,chip->non_standard_vfloat_mv= 4000,chip->non_standard_fastchg_current_ma= 512
+[    8.130511] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[    8.132836] opcharger-charger 4-006b: bq24196_set_temrchg_current value=0
+[    8.135544] bq24196_otg_vreg: no parameters
+[    8.135737] opcharger-charger 4-006b: oppo_debug OTG set vbus 
+[    8.138193] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[    8.140474] opcharger-charger 4-006b: bq24196_set_temrchg_current value=0
+[    8.142754] opcharger-charger 4-006b: bq24196_chg_uv charger is in updating usb_psy present=1
+[    8.142959] opcharger-charger 4-006b: oppo_charger_in_init
+[    8.143133] opcharger end========================= success,charger_present:1
+[    8.143250] spmi msm8x16_wcd_codec-12: Driver wcd-spmi-core requests probe deferral
+[    8.143389] spmi msm8x16_wcd_codec-13: Driver wcd-spmi-core requests probe deferral
+[    8.144074] oppo_debug min_input_current:1000,max_input_current:1500,set_current_reason =4
+[    8.144187] oppo_debug min_input_current:0,max_input_current:1500,set_current_reason =1
+[    8.144990] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.145110] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=0,online = 0, current_limit = 0
+[    8.146086] msm8x16-asoc-wcd sound.64: default codec configured
+[    8.146358] msm8x16_asoc_machine_probe: 15037 hw version after EVT2, hs use external micbias
+[    8.146454] msm8x16_dt_parse_cap_info: 15009 hw version after EVT2, set MICBIAS_EXT_BYP_CAP mode
+[    8.148357] pdata->spk_pa_en = 1022
+[    8.148423] pdata->yda145_boost_en = 1020
+[    8.149042] msm8x16-asoc-wcd sound.64: ASoC: CODEC (null) not registered
+[    8.149126] msm8x16-asoc-wcd sound.64: snd_soc_register_card failed (-517)
+[    8.149283] platform sound.64: Driver msm8x16-asoc-wcd requests probe deferral
+[    8.150904] msm_otg 78d9000.usb: phy_reset: success
+[    8.160685] oppo_charging_status	batt_temp=365,batt_vol=4233,batt_soc=50,chg_current=-450,chg_vol=5072, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 2,charger_status=1,chip->is_charging=1,soc_cal=0,ocv=0,auth=1
+[    8.162157] MPP4 battery id volatge is V_battery_id=2723,V_battery=0
+[    8.162273] of_batterydata_read_data: oppo_4400_2550mah_ATL loaded
+[    8.162400] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.163249] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[    8.164062] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[    8.165621]  set CHG_ENABLE_BIT disable = 0
+[    8.170393] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.170529] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=0,online = 0, current_limit = 0
+[    8.174099] BMS: bms_load_hw_defaults: BMS_EN=1 Sample_Interval-S1=[100]S2=[70]  Sample_Count-S1=[256]S2=[128] Fifo_Length-S1=[5]S2=[5] FSM_state=2
+[    8.186936] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.187811] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[    8.188656] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[    8.190172]  set CHG_ENABLE_BIT disable = 0
+[    8.190631] mmc0: BKOPS_EN bit = 0
+[    8.197013] BMS: calculate_initial_soc: warm_reset=1 est_ocv=0  shutdown_soc_invalid=0 shutdown_ocv=4287000 shutdown_soc=100 last_soc=100 calculated_soc=95 last_ocv_uv=4287000
+[    8.199574] mmc0: new HS200 MMC card at address 0001
+[    8.200041] mmcblk0: mmc0:0001 Q2J96R 14.6 GiB 
+[    8.200273] mmcblk0rpmb: mmc0:0001 Q2J96R partition 3 4.00 MiB
+[    8.202871]  mmcblk0: p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12 p13 p14 p15 p16 p17 p18 p19 p20 p21 p22 p23 p24 p25 p26 p27 p28 p29 p30 p31 p32 p33 p34 p35 p36 p37 p38
+[    8.221023] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.221149] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=0,online = 0, current_limit = 0
+[    8.229841] BMS: qpnp_vm_bms_probe: probe success: soc=100 vbatt=4216617 ocv=4287000 warm_reset=1
+[    8.230272] CHG: qpnp_lbc_main_probe: qpnp_lbc_main_probe success
+[    8.230458] spmi msm8x16_wcd_codec-12: Driver wcd-spmi-core requests probe deferral
+[    8.230600] spmi msm8x16_wcd_codec-13: Driver wcd-spmi-core requests probe deferral
+[    8.231142] msm8x16-asoc-wcd sound.64: default codec configured
+[    8.231420] msm8x16_asoc_machine_probe: 15037 hw version after EVT2, hs use external micbias
+[    8.231538] msm8x16_dt_parse_cap_info: 15009 hw version after EVT2, set MICBIAS_EXT_BYP_CAP mode
+[    8.233261] pdata->spk_pa_en = 1022
+[    8.233379] pdata->yda145_boost_en = 1020
+[    8.233828] msm8x16-asoc-wcd sound.64: ASoC: CODEC (null) not registered
+[    8.233963] msm8x16-asoc-wcd sound.64: snd_soc_register_card failed (-517)
+[    8.234066] platform sound.64: Driver msm8x16-asoc-wcd requests probe deferral
+[    8.234744] Registering SWP/SWPB emulation handler
+[    8.234992] registered taskstats version 1
+[    8.235822] Key type encrypted registered
+[    8.237355] bam_dmux_init : unable to create IPC Logging Context[    8.254118] soc is 100 after pon
+[    8.254197] oppo_charging_status	batt_temp=365,batt_vol=4206,batt_soc=100,chg_current=-450,chg_vol=5070, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=100,ocv=0,auth=1
+[    8.255902] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.256754] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[    8.257554] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[    8.259130]  set CHG_ENABLE_BIT disable = 0
+[    8.275799] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.275927] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=0,online = 0, current_limit = 0
+
+[    8.280942] Unable to find log_buf by kallsyms!
+[    8.286676] opcharger-charger 4-006b: bq24196_get_otg_regulator_is_enable read OTG enable bit =27
+[    8.286816] mem_acc_corner: disabling
+[    8.286877] regulator-dummy: disabling
+[    8.287062] spmi msm8x16_wcd_codec-12: Driver wcd-spmi-core requests probe deferral
+[    8.287175] spmi msm8x16_wcd_codec-13: Driver wcd-spmi-core requests probe deferral
+[    8.287767] msm8x16-asoc-wcd sound.64: default codec configured
+[    8.288039] msm8x16_asoc_machine_probe: 15037 hw version after EVT2, hs use external micbias
+[    8.288107] msm8x16_dt_parse_cap_info: 15009 hw version after EVT2, set MICBIAS_EXT_BYP_CAP mode
+[    8.289936] pdata->spk_pa_en = 1022
+[    8.290000] pdata->yda145_boost_en = 1020
+[    8.290508] msm8x16-asoc-wcd sound.64: ASoC: CODEC (null) not registered
+[    8.290593] msm8x16-asoc-wcd sound.64: snd_soc_register_card failed (-517)
+[    8.290749] platform sound.64: Driver msm8x16-asoc-wcd requests probe deferral
+[    8.292026] file system registered
+[    8.292122] mbim_init: initialize 1 instances
+[    8.292218] mbim_init: Initialized 1 ports
+[    8.292330] mbim_bam_setup: no_ports:1
+[    8.292488] mbim_bam_setup: Initialized 1 ports
+[    8.293391] rndis_qc_init: initialize rndis QC instance
+[    8.293724] android_usb gadget: Mass Storage Function, version: 2009/09/11
+[    8.293808] android_usb gadget: Number of LUNs=2
+[    8.293923]  lun0: LUN: removable file: (no medium)
+[    8.293984]  lun1: LUN: removable file: (no medium)
+[    8.294270] android_usb gadget: android_usb ready
+[    8.294339] msm_hsusb msm_hsusb: [ci13xxx_start] hw_ep_max = 16
+[    8.294545] spmi msm8x16_wcd_codec-12: Driver wcd-spmi-core requests probe deferral
+[    8.294641] spmi msm8x16_wcd_codec-13: Driver wcd-spmi-core requests probe deferral
+[    8.295334] msm8x16-asoc-wcd sound.64: default codec configured
+[    8.295623] msm8x16_asoc_machine_probe: 15037 hw version after EVT2, hs use external micbias
+[    8.295628] input: gpio-keys as /devices/soc.0/gpio_keys.65/input/input8
+[    8.295805] msm8x16_dt_parse_cap_info: 15009 hw version after EVT2, set MICBIAS_EXT_BYP_CAP mode
+[    8.295929] qcom,qpnp-rtc qpnp-rtc-4: setting system clock to 1970-01-27 20:24:23 UTC (2319863)
+[    8.297465] msm_thermal:interrupt_mode_init Interrupt mode init
+[    8.298031] pdata->spk_pa_en = 1022
+[    8.298130] pdata->yda145_boost_en = 1020
+[    8.298668] msm8x16-asoc-wcd sound.64: ASoC: CODEC (null) not registered
+[    8.298696] /soc/qcom,lpm-levels/qcom,pm-cluster@0: No CPU phandle, assuming single cluster
+[    8.298870] msm8x16-asoc-wcd sound.64: snd_soc_register_card failed (-517)
+[    8.299171] platform sound.64: Driver msm8x16-asoc-wcd requests probe deferral
+[    8.299312] spmi msm8x16_wcd_codec-12: Driver wcd-spmi-core requests probe deferral
+[    8.299465] spmi msm8x16_wcd_codec-13: Driver wcd-spmi-core requests probe deferral
+[    8.299648] BMS: opchg_backup_ocv_soc: opchg_backup_ocv_soc is back soc=100,last_ocv_uv=4287000
+[    8.300531] msm8x16-asoc-wcd sound.64: default codec configured
+[    8.300886] msm8x16_asoc_machine_probe: 15037 hw version after EVT2, hs use external micbias
+[    8.301101] msm8x16_dt_parse_cap_info: 15009 hw version after EVT2, set MICBIAS_EXT_BYP_CAP mode
+[    8.301345] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.302203] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[    8.303076] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[    8.303310] qcom,cc-debug-8916 1874000.qcom,cc-debug: Registered Debug Mux successfully
+[    8.303948] pdata->spk_pa_en = 1022
+[    8.304015] pdata->yda145_boost_en = 1020
+[    8.304551] clock_late_init: Removing enables held for handed-off clocks
+[    8.304618]  set CHG_ENABLE_BIT disable = 0
+[    8.304846] msm8x16-asoc-wcd sound.64: ASoC: CODEC (null) not registered
+[    8.304968] msm8x16-asoc-wcd sound.64: snd_soc_register_card failed (-517)
+[    8.305172] platform sound.64: Driver msm8x16-asoc-wcd requests probe deferral
+[    8.305479] spmi msm8x16_wcd_codec-12: Driver wcd-spmi-core requests probe deferral
+[    8.305832] spmi msm8x16_wcd_codec-13: Driver wcd-spmi-core requests probe deferral
+[    8.307016] msm8x16-asoc-wcd sound.64: default codec configured
+[    8.307288] msm8x16_asoc_machine_probe: 15037 hw version after EVT2, hs use external micbias
+[    8.307438] msm8x16_dt_parse_cap_info: 15009 hw version after EVT2, set MICBIAS_EXT_BYP_CAP mode
+[    8.307522] ALSA device list:
+[    8.307523]   No soundcards found.
+[    8.308189] Warning: unable to open an initial console.
+[    8.308438] Freeing unused kernel memory: 312K
+[    8.309539] pdata->spk_pa_en = 1022
+[    8.309672] pdata->yda145_boost_en = 1020
+[    8.310323] msm8x16-asoc-wcd sound.64: ASoC: CODEC (null) not registered
+[    8.310495] msm8x16-asoc-wcd sound.64: snd_soc_register_card failed (-517)
+[    8.310616] platform sound.64: Driver msm8x16-asoc-wcd requests probe deferral
+[    8.311861] init: init first stage started!
+[    8.311954] init: First stage mount skipped (recovery mode)
+[    8.312281] init: Using Android DT directory /proc/device-tree/firmware/android/
+[    8.312406] init: Skipped setting INIT_AVB_VERSION (not vbmeta compatible)
+[    8.312654] init: Loading SELinux policy
+[    8.327922] SELinux:  Permission transition in class filesystem not defined in policy.
+[    8.328058] SELinux:  Permission swapon in class file not defined in policy.
+[    8.328180] SELinux:  Permission swapon in class dir not defined in policy.
+[    8.328255] SELinux:  Permission swapon in class lnk_file not defined in policy.
+[    8.328373] SELinux:  Permission swapon in class chr_file not defined in policy.
+[    8.328493] SELinux:  Permission swapon in class blk_file not defined in policy.
+[    8.328562] SELinux:  Permission swapon in class sock_file not defined in policy.
+[    8.328683] SELinux:  Permission swapon in class fifo_file not defined in policy.
+[    8.328810] SELinux:  Permission recv_msg in class socket not defined in policy.
+[    8.328870] SELinux:  Permission send_msg in class socket not defined in policy.
+[    8.328990] SELinux:  Permission recv_msg in class tcp_socket not defined in policy.
+[    8.329102] SELinux:  Permission send_msg in class tcp_socket not defined in policy.
+[    8.329164] SELinux:  Permission connectto in class tcp_socket not defined in policy.
+[    8.329274] SELinux:  Permission newconn in class tcp_socket not defined in policy.
+[    8.329387] SELinux:  Permission acceptfrom in class tcp_socket not defined in policy.
+[    8.329458] SELinux:  Permission recv_msg in class udp_socket not defined in policy.
+[    8.329571] SELinux:  Permission send_msg in class udp_socket not defined in policy.
+[    8.329690] SELinux:  Permission recv_msg in class rawip_socket not defined in policy.
+[    8.329753] SELinux:  Permission send_msg in class rawip_socket not defined in policy.
+[    8.329867] SELinux:  Permission tcp_recv in class node not defined in policy.
+[    8.329979] SELinux:  Permission tcp_send in class node not defined in policy.
+[    8.330039] SELinux:  Permission udp_recv in class node not defined in policy.
+[    8.330151] SELinux:  Permission udp_send in class node not defined in policy.
+[    8.330264] SELinux:  Permission rawip_recv in class node not defined in policy.
+[    8.330326] SELinux:  Permission rawip_send in class node not defined in policy.
+[    8.330483] SELinux:  Permission enforce_dest in class node not defined in policy.
+[    8.330599] SELinux:  Permission dccp_recv in class node not defined in policy.
+[    8.330661] SELinux:  Permission dccp_send in class node not defined in policy.
+[    8.330774] SELinux:  Permission tcp_recv in class netif not defined in policy.
+[    8.330885] SELinux:  Permission tcp_send in class netif not defined in policy.
+[    8.330946] SELinux:  Permission udp_recv in class netif not defined in policy.
+[    8.331058] SELinux:  Permission udp_send in class netif not defined in policy.
+[    8.331171] SELinux:  Permission rawip_recv in class netif not defined in policy.
+[    8.331232] SELinux:  Permission rawip_send in class netif not defined in policy.
+[    8.331343] SELinux:  Permission dccp_recv in class netif not defined in policy.
+[    8.331456] SELinux:  Permission dccp_send in class netif not defined in policy.
+[    8.331526] SELinux:  Permission recv_msg in class netlink_socket not defined in policy.
+[    8.331638] SELinux:  Permission send_msg in class netlink_socket not defined in policy.
+[    8.331756] SELinux:  Permission recv_msg in class packet_socket not defined in policy.
+[    8.331819] SELinux:  Permission send_msg in class packet_socket not defined in policy.
+[    8.331937] SELinux:  Permission recv_msg in class key_socket not defined in policy.
+[    8.332052] SELinux:  Permission send_msg in class key_socket not defined in policy.
+[    8.332120] SELinux:  Permission recv_msg in class unix_stream_socket not defined in policy.
+[    8.332233] SELinux:  Permission send_msg in class unix_stream_socket not defined in policy.
+[    8.332345] SELinux:  Permission newconn in class unix_stream_socket not defined in policy.
+[    8.332457] SELinux:  Permission acceptfrom in class unix_stream_socket not defined in policy.
+[    8.332524] SELinux:  Permission recv_msg in class unix_dgram_socket not defined in policy.
+[    8.332637] SELinux:  Permission send_msg in class unix_dgram_socket not defined in policy.
+[    8.332775] SELinux:  Permission recv_msg in class netlink_route_socket not defined in policy.
+[    8.332886] SELinux:  Permission send_msg in class netlink_route_socket not defined in policy.
+[    8.332950] SELinux:  Class netlink_firewall_socket not defined in policy.
+[    8.333069] SELinux:  Permission recv_msg in class netlink_tcpdiag_socket not defined in policy.
+[    8.333183] SELinux:  Permission send_msg in class netlink_tcpdiag_socket not defined in policy.
+[    8.333303] SELinux:  Permission recv_msg in class netlink_nflog_socket not defined in policy.
+[    8.333365] SELinux:  Permission send_msg in class netlink_nflog_socket not defined in policy.
+[    8.333485] SELinux:  Permission recv_msg in class netlink_xfrm_socket not defined in policy.
+[    8.333597] SELinux:  Permission send_msg in class netlink_xfrm_socket not defined in policy.
+[    8.333718] SELinux:  Permission recv_msg in class netlink_selinux_socket not defined in policy.
+[    8.333846] SELinux:  Permission send_msg in class netlink_selinux_socket not defined in policy.
+[    8.333971] SELinux:  Permission recv_msg in class netlink_audit_socket not defined in policy.
+[    8.334082] SELinux:  Permission send_msg in class netlink_audit_socket not defined in policy.
+[    8.334200] SELinux:  Class netlink_ip6fw_socket not defined in policy.
+[    8.334267] SELinux:  Permission recv_msg in class netlink_dnrt_socket not defined in policy.
+[    8.334380] SELinux:  Permission send_msg in class netlink_dnrt_socket not defined in policy.
+[    8.334502] SELinux:  Permission recv_msg in class netlink_kobject_uevent_socket not defined in policy.
+[    8.334614] SELinux:  Permission send_msg in class netlink_kobject_uevent_socket not defined in policy.
+[    8.334733] SELinux:  Permission recv_msg in class appletalk_socket not defined in policy.
+[    8.334795] SELinux:  Permission send_msg in class appletalk_socket not defined in policy.
+[    8.334923] SELinux:  Permission recv_msg in class dccp_socket not defined in policy.
+[    8.335034] SELinux:  Permission send_msg in class dccp_socket not defined in policy.
+[    8.335114] SELinux:  Permission recv_msg in class tun_socket not defined in policy.
+[    8.335227] SELinux:  Permission send_msg in class tun_socket not defined in policy.
+[    8.335344] SELinux: the above unknown classes and permissions will be denied
+[    8.379238] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.379363] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=0,online = 0, current_limit = 0
+[    8.379747] msm_hsusb msm_hsusb: CI13XXX_CONTROLLER_RESET_EVENT received
+[    8.379867] msm_hsusb msm_hsusb: CI13XXX_CONTROLLER_CONNECT_EVENT received
+[    8.399343] type=1403 audit(2319863.600:2): policy loaded auid=4294967295 ses=4294967295
+[    8.399707] selinux: SELinux: Loaded policy from /sepolicy
+[    8.399707] 
+[    8.400775] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.401624] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[    8.402514] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[    8.403629] selinux: SELinux: Loaded file_contexts
+[    8.403629] 
+[    8.404170]  set CHG_ENABLE_BIT disable = 0
+[    8.407915] init: init second stage started!
+[    8.418860] init: Using Android DT directory /proc/device-tree/firmware/android/
+[    8.419120] type=1400 audit(2319863.620:3): avc:  denied  { read } for  pid=1 comm="init" name="compatible" dev="proc" ino=4026539891 scontext=u:r:init:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+[    8.419262] type=1400 audit(2319863.620:4): avc:  denied  { open } for  pid=1 comm="init" path="/proc/device-tree/firmware/android/compatible" dev="proc" ino=4026539891 scontext=u:r:init:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+[    8.419453] type=1400 audit(2319863.620:5): avc:  denied  { getattr } for  pid=1 comm="init" path="/proc/device-tree/firmware/android/compatible" dev="proc" ino=4026539891 scontext=u:r:init:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+[    8.423858] selinux: SELinux: Loaded file_contexts
+[    8.423858] 
+[    8.423998] init: Running restorecon...
+[    8.428373] selinux: SELinux:  Could not stat /dev/block: No such file or directory.
+[    8.428373] 
+[    8.428682] init: waitid failed: No child processes
+[    8.428806] init: Couldn't load property file '/system/etc/prop.default': open() failed: No such file or directory: No such file or directory
+[    8.430704] init: Unable to set property 'ro.product.model' to 'A37f' in property file '/prop.default': Read-only property was already set
+[    8.430882] init: Unable to set property 'ro.product.device' to 'A37f' in property file '/prop.default': Read-only property was already set
+[    8.431204] init: Unable to set property 'ro.build.product' to 'A37f' in property file '/prop.default': Read-only property was already set
+[    8.431915] init: Couldn't load property file '/product/build.prop': open() failed: No such file or directory: No such file or directory
+[    8.432062] init: Couldn't load property file '/odm/default.prop': open() failed: No such file or directory: No such file or directory
+[    8.432207] init: Couldn't load property file '/vendor/default.prop': open() failed: No such file or directory: No such file or directory
+[    8.432769] init: Created socket '/dev/socket/property_service', mode 666, user 0, group 0
+[    8.433404] init: Forked subcontext for 'u:r:vendor_init:s0' with pid 211
+[    8.433988] init: Forked subcontext for 'u:r:vendor_init:s0' with pid 212
+[    8.434228] init: Parsing file /init.rc...
+[    8.434413] init: Added '/init.recovery.logd.rc' to import list
+[    8.434548] init: Added '/init.recovery.ldconfig.rc' to import list
+[    8.434626] init: Added '/init.recovery.mksh.rc' to import list
+[    8.434755] init: Added '/init.recovery.nano.rc' to import list
+[    8.434831] init: Added '/init.recovery.usb.rc' to import list
+[    8.434970] init: Added '/init.recovery.service.rc' to import list
+[    8.435048] init: Added '/init.recovery.vold_decrypt.rc' to import list
+[    8.435189] init: Added '/init.recovery.qcom.rc' to import list
+[    8.435543] init: /init.rc: 16: Invalid keyword 'setcon'
+[    8.435880] init: /init.rc: 66: Invalid keyword 'load_all_props'
+[    8.436106] init: /init.rc: 104: Invalid keyword 'powerctl'
+[    8.436300] init: Parsing file /init.recovery.logd.rc...
+[    8.436448] init: Unable to read config file '/init.recovery.logd.rc': open() failed: No such file or directory
+[    8.436528] init: /init.rc: 1: Could not import file '/init.recovery.logd.rc': No such file or directory
+[    8.436659] init: Parsing file /init.recovery.ldconfig.rc...
+[    8.436834] init: Parsing file /init.recovery.mksh.rc...
+[    8.436942] init: Parsing file /init.recovery.nano.rc...
+[    8.437144] init: Parsing file /init.recovery.usb.rc...
+[    8.437424] init: Parsing file /init.recovery.service.rc...
+[    8.437640] init: Parsing file /init.recovery.vold_decrypt.rc...
+[    8.437735] init: Unable to read config file '/init.recovery.vold_decrypt.rc': open() failed: No such file or directory
+[    8.437869] init: /init.rc: 7: Could not import file '/init.recovery.vold_decrypt.rc': No such file or directory
+[    8.438004] init: Parsing file /init.recovery.qcom.rc...
+[    8.438361] init: Parsing file /system/etc/init...
+[    8.438452] init: Unable to read config file '/system/etc/init': open() failed: No such file or directory
+[    8.438596] init: Parsing file /product/etc/init...
+[    8.438691] init: Unable to read config file '/product/etc/init': open() failed: No such file or directory
+[    8.438826] init: Parsing file /odm/etc/init...
+[    8.438919] init: Unable to read config file '/odm/etc/init': open() failed: No such file or directory
+[    8.439054] init: Parsing file /vendor/etc/init...
+[    8.439196] init: Unable to read config file '/vendor/etc/init': open() failed: No such file or directory
+[    8.439413] init: processing action (early-init) from (/init.rc:10)
+[    8.440284] type=1400 audit(2319863.640:6): avc:  denied  { setcheckreqprot } for  pid=1 comm="init" scontext=u:r:init:s0 tcontext=u:object_r:kernel:s0 tclass=security permissive=1
+[    8.441162] init: starting service 'ueventd'...
+[    8.442090] init: processing action (wait_for_coldboot_done) from (<Builtin Action>:0)
+[    8.445519] ueventd: ueventd started!
+[    8.448644] selinux: SELinux: Loaded file_contexts
+[    8.448644] 
+[    8.448814] ueventd: Parsing file /ueventd.rc...
+[    8.449788] ueventd: Parsing file /vendor/ueventd.rc...
+[    8.449886] ueventd: Unable to read config file '/vendor/ueventd.rc': open() failed: No such file or directory
+[    8.450017] ueventd: Parsing file /odm/ueventd.rc...
+[    8.450156] ueventd: Unable to read config file '/odm/ueventd.rc': open() failed: No such file or directory
+[    8.450344] ueventd: Parsing file /ueventd.qcom.rc...
+[    8.452339] ueventd: [libfs_mgr]Error parsing mount_flags
+[    8.452477] ueventd: [libfs_mgr]fs_mgr_read_fstab(): failed to load fstab from : '/etc/recovery.fstab'
+[    8.452653] type=1400 audit(2319863.653:7): avc:  denied  { read } for  pid=213 comm="ueventd" name="compatible" dev="proc" ino=4026539891 scontext=u:r:ueventd:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+[    8.452843] type=1400 audit(2319863.653:8): avc:  denied  { open } for  pid=213 comm="ueventd" path="/proc/device-tree/firmware/android/compatible" dev="proc" ino=4026539891 scontext=u:r:ueventd:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+[    8.453032] type=1400 audit(2319863.653:9): avc:  denied  { getattr } for  pid=213 comm="ueventd" path="/proc/device-tree/firmware/android/compatible" dev="proc" ino=4026539891 scontext=u:r:ueventd:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+[    8.453770] ueventd: [libfs_mgr]Warning: unknown flag first_stage_mount
+[    8.648862] ueventd: Coldboot took 0.194 seconds
+[    8.654975] init: wait for '/dev/.coldboot_done' took 212ms
+[    8.655188] init: Command 'wait_for_coldboot_done' action=wait_for_coldboot_done (<Builtin Action>:0) took 212ms and succeeded
+[    8.655346] init: processing action (MixHwrngIntoLinuxRng) from (<Builtin Action>:0)
+[    8.657062] init: Mixed 512 bytes from /dev/hw_random into /dev/urandom
+[    8.657247] init: processing action (SetMmapRndBits) from (<Builtin Action>:0)
+[    8.657540] init: processing action (SetKptrRestrict) from (<Builtin Action>:0)
+[    8.657862] init: processing action (keychord_init) from (<Builtin Action>:0)
+[    8.658004] init: processing action (console_init) from (<Builtin Action>:0)
+[    8.658103] init: processing action (init) from (/init.rc:31)
+[    8.659670] init: processing action (init) from (/init.recovery.mksh.rc:1)
+[    8.659811] init: processing action (init) from (/init.recovery.qcom.rc:5)
+[    8.660152] type=1400 audit(2319863.860:10): avc:  denied  { setattr } for  pid=1 comm="init" name="capacity" dev="sysfs" ino=17891 scontext=u:r:init:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[    8.661122] init: processing action (StartBoringSslSelfTest) from (<Builtin Action>:0)
+[    8.661698] init: processing action (MixHwrngIntoLinuxRng) from (<Builtin Action>:0)
+[    8.663460] init: Mixed 512 bytes from /dev/hw_random into /dev/urandom
+[    8.663672] init: processing action (late-init) from (/init.rc:80)
+[    8.663968] init: processing action (queue_property_triggers) from (<Builtin Action>:0)
+[    8.664136] init: processing action (fs) from (/init.rc:51)
+[    8.668792] init: processing action (fs) from (/init.recovery.ldconfig.rc:1)
+[    8.668975] init: processing action (fs) from (/init.recovery.nano.rc:1)
+[    8.669119] init: processing action (fs) from (/init.recovery.usb.rc:1)
+[    8.669466] enable_store: android_usb: already disabled
+[    8.670888] init: processing action (fs) from (/init.recovery.qcom.rc:1)
+[    8.671012] init: wait for '/dev/block/platform/soc.0/7824900.sdhci' took 0ms
+[    8.671480] init: processing action (load_system_props_action) from (/init.rc:69)
+[    8.671633] init: Couldn't load property file '/system/build.prop': open() failed: No such file or directory: No such file or directory
+[    8.671777] init: Couldn't load property file '/odm/build.prop': open() failed: No such file or directory: No such file or directory
+[    8.671918] init: Couldn't load property file '/vendor/build.prop': open() failed: No such file or directory: No such file or directory
+[    8.672058] init: Couldn't load property file '/factory/factory.prop': open() failed: No such file or directory: No such file or directory
+[    8.672294] init: [libfs_mgr]Error parsing mount_flags
+[    8.672379] init: [libfs_mgr]fs_mgr_read_fstab(): failed to load fstab from : '/etc/recovery.fstab'
+[    8.673312] init: [libfs_mgr]Warning: unknown flag first_stage_mount
+[    8.673443] init: /recovery not specified in fstab
+[    8.673536] init: processing action (load_persist_props_action) from (/init.rc:73)
+[    8.673688] init: Couldn't load property file '/data/local.prop': open() failed: No such file or directory: No such file or directory
+[    8.674045] init: Could not load single persistent property file, trying legacy directory: Unable to read persistent property file: open() failed: No such file or directory
+[    8.674191] init: Unable to load legacy persistent properties: Unable to open persistent property directory "/data/property": No such file or directory
+[    8.674554] init: processing action (firmware_mounts_complete) from (/init.rc:76)
+[    8.674668] init: processing action (boot) from (/init.rc:57)
+[    8.675638] init: starting service 'set_permissive'...
+[    8.676409] init: starting service 'recovery'...
+[    8.677217] init: starting service 'vm_bms'...
+[    8.677998] init: processing action (enable_property_trigger) from (<Builtin Action>:0)
+[    8.678218] init: processing action (ro.debuggable=1) from (/init.rc:116)
+[    8.678542] init: processing action (service.adb.root=1) from (/init.rc:122)
+[    8.679011] init: starting service 'adbd'...
+[    8.681375] init: Created socket '/dev/socket/adbd', mode 660, user 1000, group 1000
+[    8.694172] read descriptors
+[    8.694250] read descriptors
+[    8.694320] read strings
+[    8.694558] msm_hsusb msm_hsusb: CI13XXX_CONTROLLER_CONNECT_EVENT received
+[    8.698722] init: Untracked pid 218 exited with status 0
+[    8.716556] init: Service 'set_permissive' (pid 219) exited with status 0
+[    8.722770] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.722900] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=0,online = 0, current_limit = 0
+[    8.743057] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[    8.743956] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[    8.744801] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[    8.746393]  set CHG_ENABLE_BIT disable = 0
+[    8.751519] BMS: report_eoc: Unable to set 'STATUS' rc=-22
+[    8.751635] BMS: check_eoc_condition: Unable to report eoc rc=-22
+[    8.796954] msm_otg 78d9000.usb: Avail curr from USB = 100
+[    8.797279] android_work: android_work: did not send uevent (0 0 0000000000000000)
+[    8.798421] oppo_debug min_input_current:100,max_input_current:1500,set_current_reason =1
+[    8.799264] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[    8.799386] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=100,online = 1, current_limit = 100
+[    8.810944] selinux: avc:  denied  { set } for property=twrp.crash_counter pid=220 uid=0 gid=0 scontext=u:r:recovery:s0 tcontext=u:object_r:default_prop:s0 tclass=property_service permissive=1
+[    8.810944] 
+[    8.811481] init: processing action (ro.twrp.boot=1) from (/init.recovery.qcom.rc:46)
+[    8.811898] init: Command 'write /proc/boot_completed_prop 1' action=ro.twrp.boot=1 (/init.recovery.qcom.rc:47) took 0ms and failed: Unable to write to file '/proc/boot_completed_prop': open() failed: Permission denied
+[    8.812113] init: Recovering persistent properties from memory: Unable to read persistent property file: open() failed: No such file or directory
+[    8.812482] init: Could not store persistent property: Could not open temporary properties file: No such file or directory
+[    8.816432] BMS: report_eoc: Unable to set 'STATUS' rc=-22
+[    8.816554] BMS: check_eoc_condition: Unable to report eoc rc=-22
+[    8.819965] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[    8.820837] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[    8.821725] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[    8.823287]  set CHG_ENABLE_BIT disable = 0
+[    8.824010] synaptics-s3203: synaptics_ts_suspend: is called
+[    8.825579] synaptics-s3203: speedup_synaptics_resume is called
+[    8.828640] mdss_livedisplay_update_pcc: r=32768 g=32768 b=32768
+[    8.828612] opchg_check_lcd_on executed [    8.877305] glove mode disable
+[    8.878356] android_work: android_work: sent uevent USB_STATE=CONNECTED
+[    8.878458] synaptics-s3203: speedup_synaptics_resume:normal end!
+[    9.151883] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[    9.228183] android_usb gadget: high-speed config #1: 86000c8.android_usb
+[    9.228641] msm_otg 78d9000.usb: Avail curr from USB = 500
+[    9.230850] oppo_debug min_input_current:500,max_input_current:1500,set_current_reason =1
+[    9.232152] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[    9.232737] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=500,online = 1, current_limit = 500
+[    9.251855] BMS: report_eoc: Unable to set 'STATUS' rc=-22
+[    9.252411] BMS: check_eoc_condition: Unable to report eoc rc=-22
+[    9.257350] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[    9.259082] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[    9.261038] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[    9.263481]  set CHG_ENABLE_BIT disable = 0
+[    9.280653] android_work: android_work: sent uevent USB_STATE=CONFIGURED
+[    9.368674] opchg_aicl_point_set vindpm_vol:4520,vindpm_level:1
+[    9.388565] BMS: report_eoc: Unable to set 'STATUS' rc=-22
+[    9.388878] BMS: check_eoc_condition: Unable to report eoc rc=-22
+[    9.777364] EXT4-fs (mmcblk0p27): mounted filesystem with ordered data mode. Opts: 
+[    9.777865] SELinux:  Context u:object_r:persist_file:s0 is not valid (left unmapped).
+[    9.834960] EXT4-fs (mmcblk0p38): mounted filesystem with ordered data mode. Opts: 
+[    9.835714] SELinux:  Context u:object_r:system_data_root_file:s0 is not valid (left unmapped).
+[    9.860822] EXT4-fs (mmcblk0p26): mounted filesystem with ordered data mode. Opts: 
+[    9.868107] SELinux:  Context u:object_r:media_userdir_file:s0 is not valid (left unmapped).
+[    9.907374] EXT4-fs (mmcblk0p38): mounted filesystem with ordered data mode. Opts: 
+[    9.935198] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[    9.935270] mdss_fb_compat_ioctl: unsupported ioctl
+[    9.965428] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[    9.984600] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[    9.997269] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[   10.011197] EXT4-fs (mmcblk0p27): mounted filesystem with ordered data mode. Opts: 
+[   10.018277] SELinux:  Context u:object_r:mainline_supplicant_data_file:s0 is not valid (left unmapped).
+[   10.020677] SELinux:  Context u:object_r:nfc_logs_data_file:s0 is not valid (left unmapped).
+[   10.021230] SELinux:  Context u:object_r:location_data_file:s0 is not valid (left unmapped).
+[   10.022384] SELinux:  Context u:object_r:accessibility_trace_data_file:s0 is not valid (left unmapped).
+[   10.023037] SELinux:  Context u:object_r:perfetto_configs_data_file:s0 is not valid (left unmapped).
+[   10.023997] SELinux:  Context u:object_r:user_profile_root_file:s0 is not valid (left unmapped).
+[   10.024674] SELinux:  Context u:object_r:user_profile_root_file:s0:c512,c768 is not valid (left unmapped).
+[   10.026220] SELinux:  Context u:object_r:credstore_data_file:s0 is not valid (left unmapped).
+[   10.027280] SELinux:  Context u:object_r:apex_rollback_data_file:s0 is not valid (left unmapped).
+[   10.028694] SELinux:  Context u:object_r:display_vendor_data_file:s0 is not valid (left unmapped).
+[   10.030153] SELinux:  Context u:object_r:snapshotctl_log_data_file:s0 is not valid (left unmapped).
+[   10.033450] SELinux:  Context u:object_r:emergency_data_file:s0 is not valid (left unmapped).
+[   10.036601] SELinux:  Context u:object_r:connectivityblob_data_file:s0 is not valid (left unmapped).
+[   10.037383] SELinux:  Context u:object_r:bootanim_data_file:s0 is not valid (left unmapped).
+[   10.039012] SELinux:  Context u:object_r:virtualizationservice_data_file:s0 is not valid (left unmapped).
+[   10.040637] SELinux:  Context u:object_r:odsign_data_file:s0 is not valid (left unmapped).
+[   10.041335] SELinux:  Context u:object_r:odsign_metrics_file:s0 is not valid (left unmapped).
+[   10.049751] SELinux:  Context u:object_r:profcollectd_data_file:s0 is not valid (left unmapped).
+[   10.052536] SELinux:  Context u:object_r:appcompat_data_file:s0 is not valid (left unmapped).
+[   10.057663] SELinux:  Context u:object_r:radio_core_data_file:s0 is not valid (left unmapped).
+[   10.059699] SELinux:  Context u:object_r:perfetto_traces_bugreport_data_file:s0 is not valid (left unmapped).
+[   10.060372] SELinux:  Context u:object_r:perfetto_traces_profiling_data_file:s0 is not valid (left unmapped).
+[   10.064604] SELinux:  Context u:object_r:apex_module_data_file:s0 is not valid (left unmapped).
+[   10.065129] SELinux:  Context u:object_r:apex_tethering_data_file:s0 is not valid (left unmapped).
+[   10.066561] SELinux:  Context u:object_r:apex_art_data_file:s0 is not valid (left unmapped).
+[   10.071896] SELinux:  Context u:object_r:apex_art_staging_data_file:s0 is not valid (left unmapped).
+[   10.072724] SELinux:  Context u:object_r:apex_uwb_data_file:s0 is not valid (left unmapped).
+[   10.073892] SELinux:  Context u:object_r:apex_system_server_data_file:s0 is not valid (left unmapped).
+[   10.077622] SELinux:  Context u:object_r:apex_virt_data_file:s0 is not valid (left unmapped).
+[   10.085284] SELinux:  Context u:object_r:stats_config_data_file:s0 is not valid (left unmapped).
+[   10.086929] SELinux:  Context u:object_r:uprobestats_configs_data_file:s0 is not valid (left unmapped).
+[   10.088439] SELinux:  Context u:object_r:odrefresh_data_file:s0 is not valid (left unmapped).
+[   10.089302] SELinux:  Context u:object_r:prereboot_data_file:s0 is not valid (left unmapped).
+[   10.092796] SELinux:  Context u:object_r:system_userdir_file:s0 is not valid (left unmapped).
+[   10.094321] SELinux:  Context u:object_r:apex_data_file:s0 is not valid (left unmapped).
+[   10.096068] SELinux:  Context u:object_r:apex_ota_reserved_file:s0 is not valid (left unmapped).
+[   10.100459] SELinux:  Context u:object_r:staging_data_file:s0 is not valid (left unmapped).
+[   10.104066] SELinux:  Context u:object_r:apk_metadata_file:s0 is not valid (left unmapped).
+[   10.111535] SELinux:  Context u:object_r:font_data_file:s0 is not valid (left unmapped).
+[   10.112367] SELinux:  Context u:object_r:vendor_userdir_file:s0 is not valid (left unmapped).
+[   10.113264] SELinux:  Context u:object_r:face_vendor_data_file:s0 is not valid (left unmapped).
+[   10.114504] SELinux:  Context u:object_r:time_data_file:s0 is not valid (left unmapped).
+[   10.115428] SELinux:  Context u:object_r:wifi_vendor_data_file:s0 is not valid (left unmapped).
+[   10.117814] SELinux:  Context u:object_r:vendor_tombstone_data_file:s0 is not valid (left unmapped).
+[   10.122011] SELinux:  Context u:object_r:gsi_persistent_data_file:s0 is not valid (left unmapped).
+[   10.125781] SELinux:  Context u:object_r:server_configurable_flags_data_file:s0 is not valid (left unmapped).
+[   10.126360] SELinux:  Context u:object_r:gsi_data_file:s0 is not valid (left unmapped).
+[   10.127685] SELinux:  Context u:object_r:ota_image_data_file:s0 is not valid (left unmapped).
+[   10.133932] SELinux:  Context u:object_r:sdk_sandbox_system_data_file:s0 is not valid (left unmapped).
+[   10.135225] SELinux:  Context u:object_r:rollback_data_file:s0 is not valid (left unmapped).
+[   10.147987] SELinux:  Context u:object_r:adbroot_data_file:s0 is not valid (left unmapped).
+[   10.148629] SELinux:  Context u:object_r:environ_system_data_file:s0 is not valid (left unmapped).
+[   10.150299] SELinux:  Context u:object_r:dropbox_data_file:s0 is not valid (left unmapped).
+[   10.151525] SELinux:  Context u:object_r:shutdown_checkpoints_system_data_file:s0 is not valid (left unmapped).
+[   10.156270] SELinux:  Context u:object_r:shell_test_data_file:s0 is not valid (left unmapped).
+[   11.209772] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[   11.209894] mdss_fb_compat_ioctl: unsupported ioctl
+[   11.411007] selinux: avc:  denied  { set } for property=sys.usb.config pid=220 uid=0 gid=0 scontext=u:r:recovery:s0 tcontext=u:object_r:system_radio_prop:s0 tclass=property_service permissive=1
+[   11.411007] 
+[   11.411276] init: processing action (sys.usb.config=none) from (/init.recovery.usb.rc:11)
+[   11.411894] Error: returning -19 value
+[   11.413800] init: processing action (sys.usb.config=mtp,adb) from (/init.recovery.usb.rc:20)
+[   11.414494] mtp_bind_config
+[   11.414607] msm_hsusb msm_hsusb: CI13XXX_CONTROLLER_CONNECT_EVENT received
+[   11.417729] msm_otg 78d9000.usb: Avail curr from USB = 2
+[   11.417874] msm_hsusb msm_hsusb: CI13XXX_CONTROLLER_SUSPEND_EVENT received
+[   11.418014] android_work: android_work: did not send uevent (1 1 0000000000000000)
+[   11.419378] oppo_debug min_input_current:2,max_input_current:1500,set_current_reason =1
+[   11.420771] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[   11.420936] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=2,online = 1, current_limit = 2
+[   11.438485] BMS: report_eoc: Unable to set 'STATUS' rc=-22
+[   11.438559] BMS: check_eoc_condition: Unable to report eoc rc=-22
+[   11.442067] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[   11.442923] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[   11.443826] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[   11.445485]  set CHG_ENABLE_BIT disable = 0
+[   11.516876] msm_hsusb msm_hsusb: CI13XXX_CONTROLLER_RESUME_EVENT received
+[   11.517028] msm_otg 78d9000.usb: Avail curr from USB = 100
+[   11.517179] android_work: android_work: sent uevent USB_STATE=DISCONNECTED
+[   11.518549] oppo_debug min_input_current:100,max_input_current:1500,set_current_reason =1
+[   11.519385] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[   11.519505] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=100,online = 1, current_limit = 100
+[   11.536405] BMS: report_eoc: Unable to set 'STATUS' rc=-22
+[   11.536522] BMS: check_eoc_condition: Unable to report eoc rc=-22
+[   11.539774] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[   11.540641] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[   11.541525] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[   11.543122]  set CHG_ENABLE_BIT disable = 0
+[   11.598339] android_work: android_work: sent uevent USB_STATE=CONNECTED
+[   11.621907] android_usb gadget: high-speed config #1: 86000c8.android_usb
+[   11.622068] msm_otg 78d9000.usb: Avail curr from USB = 500
+[   11.623431] oppo_debug min_input_current:500,max_input_current:1500,set_current_reason =1
+[   11.624305] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[   11.624425] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=500,online = 1, current_limit = 500
+[   11.641277] BMS: report_eoc: Unable to set 'STATUS' rc=-22
+[   11.641341] BMS: check_eoc_condition: Unable to report eoc rc=-22
+[   11.644718] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[   11.645603] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[   11.646438] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[   11.648083]  set CHG_ENABLE_BIT disable = 0
+[   11.673810] android_work: android_work: sent uevent USB_STATE=CONFIGURED
+[   12.217301] audit_printk_skb: 912 callbacks suppressed
+[   12.217621] type=1400 audit(2319867.020:315): avc:  denied  { write } for  pid=262 comm="recovery" name="mtp_usb" dev="tmpfs" ino=6867 scontext=u:r:recovery:s0 tcontext=u:object_r:mtp_device:s0 tclass=chr_file permissive=1
+[   12.218559] type=1400 audit(2319867.020:316): avc:  denied  { open } for  pid=262 comm="recovery" path="/dev/mtp_usb" dev="tmpfs" ino=6867 scontext=u:r:recovery:s0 tcontext=u:object_r:mtp_device:s0 tclass=chr_file permissive=1
+[   12.219378] mtp_open
+[   12.220588] type=1400 audit(2319867.020:317): avc:  denied  { read } for  pid=262 comm="recovery" name="mtp_usb" dev="tmpfs" ino=6867 scontext=u:r:recovery:s0 tcontext=u:object_r:mtp_device:s0 tclass=chr_file permissive=1
+[   12.221416] mtp_open
+[   12.221758] mtp_release
+[   12.397242] sample_work_func ps rboot sample start
+[   12.397559] apds9921_sensor_regulator_power_on, on = 1
+[   12.420567] apds9921_init_client.
+[   12.421823] chip APDS-9921.
+[   12.438651] sample_work_func ps = 74 
+[   12.522002] sample_work_func ps = 78 
+[   12.605347] sample_work_func ps = 79 
+[   12.688643] sample_work_func ps = 77 
+[   12.772019] sample_work_func ps = 77 
+[   12.855334] sample_work_func ps = 76 
+[   12.938655] sample_work_func ps = 76 
+[   13.022014] sample_work_func ps = 76 
+[   13.022360] mtp_open
+[   13.105369] sample_work_func ps = 76 
+[   13.188674] sample_work_func ps = 77 
+[   13.271039] apds9921_sensor_regulator_power_on, on = 0
+[   13.271363] sample_work_func ps_min:74 
+[   14.394566] oppo_charging_status	batt_temp=363,batt_vol=4355,batt_soc=100,chg_current=-450,chg_vol=4926, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=2,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=99,ocv=4287,auth=1
+[   19.394590] oppo_charging_status	batt_temp=364,batt_vol=4356,batt_soc=100,chg_current=-450,chg_vol=4928, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=3,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=98,ocv=4287,auth=1
+[   24.394577] oppo_charging_status	batt_temp=364,batt_vol=4358,batt_soc=100,chg_current=-450,chg_vol=4930, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=4,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=97,ocv=4287,auth=1
+[   28.781194] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[   28.781323] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=500,online = 1, current_limit = 500
+[   28.801316] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[   28.802201] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[   28.803085] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[   28.804678]  set CHG_ENABLE_BIT disable = 0
+[   29.394040] oppo_charging_status	batt_temp=364,batt_vol=4358,batt_soc=100,chg_current=-450,chg_vol=4930, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=5,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=96,ocv=4287,auth=1
+[   34.394759] oppo_charging_status	batt_temp=364,batt_vol=4358,batt_soc=100,chg_current=-450,chg_vol=4930, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=6,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=95,ocv=4287,auth=1
+[   54.836059] type=1400 audit(2319909.636:318): avc:  denied  { read } for  pid=221 comm="vm_bms" name="voltage_ocv" dev="sysfs" ino=17887 scontext=u:r:init:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[   54.837009] type=1400 audit(2319909.636:319): avc:  denied  { open } for  pid=221 comm="vm_bms" path="/sys/devices/soc.0/qpnp-vm-bms-9/power_supply/bms/voltage_ocv" dev="sysfs" ino=17887 scontext=u:r:init:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+[   54.876426] type=1400 audit(2319909.676:320): avc:  denied  { write } for  pid=221 comm="vm_bms" name="current_now" dev="sysfs" ino=17888 scontext=u:r:init:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+
+[   72.858255] opchg_check_lcd_off executed synaptics-s3203: synaptics_ts_suspend: is called
+[   74.376433] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[   94.394661] oppo_charging_status	batt_temp=364,batt_vol=4361,batt_soc=100,chg_current=-450,chg_vol=4982, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=18,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=95,ocv=4288,auth=1
+[  154.394630] oppo_charging_status	batt_temp=363,batt_vol=4361,batt_soc=100,chg_current=-450,chg_vol=4994, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=30,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=95,ocv=4291,auth=1
+[  186.920596] INFO: task mdss_dsi_event:111 blocked for more than 90 seconds.
+[  186.921162] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  186.921466] mdss_dsi_event  D ffffffc000085890     0   111      2 0x00000000
+[  186.922581] Call trace:
+[  186.922906] [<ffffffc000085890>] __switch_to+0x70/0x7c
+[  186.923473] [<ffffffc000b8ca48>] __schedule+0x410/0x5e0
+[  186.923853] [<ffffffc000b8cc70>] schedule+0x58/0x60
+[  186.924423] [<ffffffc000321ec4>] dsi_event_thread+0x100/0x410
+[  186.924735] [<ffffffc0000b4a18>] kthread+0xb4/0xbc
+[  214.391482] oppo_charging_status	batt_temp=361,batt_vol=4361,batt_soc=100,chg_current=-450,chg_vol=4984, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=42,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=95,ocv=4292,auth=1
+[  248.045321] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[  248.045448] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=500,online = 1, current_limit = 500
+[  248.063969] oppo_charging_status	batt_temp=360,batt_vol=4361,batt_soc=100,chg_current=-450,chg_vol=4986, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=48,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=96,ocv=4294,auth=1
+[  248.065725] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[  248.066612] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[  248.067498] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[  248.069094]  set CHG_ENABLE_BIT disable = 0
+[  276.923922] INFO: task mdss_dsi_event:111 blocked for more than 90 seconds.
+[  276.924245] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  276.924793] mdss_dsi_event  D ffffffc000085890     0   111      2 0x00000000
+[  276.925655] Call trace:
+[  276.926225] [<ffffffc000085890>] __switch_to+0x70/0x7c
+[  276.926548] [<ffffffc000b8ca48>] __schedule+0x410/0x5e0
+[  276.927177] [<ffffffc000b8cc70>] schedule+0x58/0x60
+[  276.927502] [<ffffffc000321ec4>] dsi_event_thread+0x100/0x410
+[  276.928057] [<ffffffc0000b4a18>] kthread+0xb4/0xbc
+[  304.403992] oppo_charging_status	batt_temp=358,batt_vol=4361,batt_soc=100,chg_current=-450,chg_vol=5010, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=0,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=60,		bat_temp_status=6,charging_status= 1,charger_status=3,chip->is_charging=1,soc_cal=96,ocv=4295,auth=1
+[  345.396632] mdss_livedisplay_update_pcc: r=32768 g=32768 b=32768
+[  345.397920] synaptics-s3203: speedup_synaptics_resume is called
+[  345.450531] glove mode disable
+[  345.451603] synaptics-s3203: speedup_synaptics_resume:normal end!
+[  345.053631] opchg_check_lcd_on executed 
+[  346.431579] type=1400 audit(2320201.233:321): avc:  denied  { write } for  pid=220 comm="recovery" name="enable" dev="sysfs" ino=16629 scontext=u:r:recovery:s0 tcontext=u:object_r:sysfs_vibrator:s0 tclass=file permissive=1
+[  346.431842] type=1400 audit(2320201.233:322): avc:  denied  { open } for  pid=220 comm="recovery" path="/sys/devices/virtual/timed_output/vibrator/enable" dev="sysfs" ino=16629 scontext=u:r:recovery:s0 tcontext=u:object_r:sysfs_vibrator:s0 tclass=file permissive=1
+[  346.432055] type=1400 audit(2320201.233:323): avc:  denied  { getattr } for  pid=220 comm="recovery" path="/sys/devices/virtual/timed_output/vibrator/enable" dev="sysfs" ino=16629 scontext=u:r:recovery:s0 tcontext=u:object_r:sysfs_vibrator:s0 tclass=file permissive=1
+[  347.698605] type=1400 audit(2320202.500:324): avc:  denied  { remove_name } for  pid=220 comm="recovery" name="system" dev="rootfs" ino=6423 scontext=u:r:recovery:s0 tcontext=u:object_r:rootfs:s0 tclass=dir permissive=1
+[  347.698801] type=1400 audit(2320202.500:325): avc:  denied  { rmdir } for  pid=220 comm="recovery" name="system" dev="rootfs" ino=6423 scontext=u:r:recovery:s0 tcontext=u:object_r:rootfs:s0 tclass=dir permissive=1
+[  347.732938] type=1400 audit(2320202.533:326): avc:  denied  { create } for  pid=269 comm="recovery" name="twadbfifo" scontext=u:r:recovery:s0 tcontext=u:object_r:tmpfs:s0 tclass=fifo_file permissive=1
+[  347.733078] type=1400 audit(2320202.533:327): avc:  denied  { read } for  pid=220 comm="recovery" name="mmcblk0p24" dev="sysfs" ino=18457 scontext=u:r:recovery:s0 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=1
+[  347.733122] type=1400 audit(2320202.533:328): avc:  denied  { read } for  pid=269 comm="recovery" name="twadbfifo" dev="tmpfs" ino=2882 scontext=u:r:recovery:s0 tcontext=u:object_r:tmpfs:s0 tclass=fifo_file permissive=1
+[  347.733147] type=1400 audit(2320202.533:329): avc:  denied  { open } for  pid=269 comm="recovery" path="/tmp/twadbfifo" dev="tmpfs" ino=2882 scontext=u:r:recovery:s0 tcontext=u:object_r:tmpfs:s0 tclass=fifo_file permissive=1
+[  347.733548] type=1400 audit(2320202.533:330): avc:  denied  { open } for  pid=220 comm="recovery" path="/sys/devices/soc.0/7824900.sdhci/mmc_host/mmc0/mmc0:0001/block/mmcblk0/mmcblk0p24" dev="sysfs" ino=18457 scontext=u:r:recovery:s0 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=1
+[  347.911934] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[  347.943979] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[  351.638188] audit_printk_skb: 3 callbacks suppressed
+[  351.638275] type=1400 audit(2320206.440:332): avc:  denied  { ioctl } for  pid=263 comm="recovery" path="/dev/mtp_usb" dev="tmpfs" ino=6867 ioctlcmd=4d03 scontext=u:r:recovery:s0 tcontext=u:object_r:mtp_device:s0 tclass=chr_file permissive=1
+[  351.672371] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[  351.672496] mdss_fb_compat_ioctl: unsupported ioctl
+[  351.697892] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[  351.697900] mdss_fb_compat_ioctl: unsupported ioctl
+[  356.765026] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[  356.765113] mdss_fb_compat_ioctl: unsupported ioctl
+[  356.821450] EXT4-fs (mmcblk0p38): mounted filesystem with ordered data mode. Opts: 
+[  356.823270] type=1400 audit(2320211.623:333): avc:  denied  { write } for  pid=273 comm="recovery" name="/" dev="mmcblk0p38" ino=2 scontext=u:r:recovery:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+[  356.823293] type=1400 audit(2320211.623:334): avc:  denied  { add_name } for  pid=273 comm="recovery" name="media" scontext=u:r:recovery:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+[  356.823321] type=1400 audit(2320211.623:335): avc:  denied  { create } for  pid=273 comm="recovery" name="media" scontext=u:r:recovery:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+[  356.823955] type=1400 audit(2320211.626:336): avc:  denied  { relabelfrom } for  pid=273 comm="recovery" name="media" dev="mmcblk0p38" ino=519169 scontext=u:r:recovery:s0 tcontext=u:object_r:system_data_file:s0 tclass=dir permissive=1
+[  356.824012] type=1400 audit(2320211.626:337): avc:  denied  { relabelto } for  pid=273 comm="recovery" name="media" dev="mmcblk0p38" ino=519169 scontext=u:r:recovery:s0 tcontext=u:object_r:media_rw_data_file:s0 tclass=dir permissive=1
+[  356.824064] type=1400 audit(2320211.626:338): avc:  denied  { setattr } for  pid=273 comm="recovery" name="media" dev="mmcblk0p38" ino=519169 scontext=u:r:recovery:s0 tcontext=u:object_r:media_rw_data_file:s0 tclass=dir permissive=1
+[  356.854191] EXT4-fs (mmcblk0p38): mounted filesystem with ordered data mode. Opts: 
+[  356.869483] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[  356.869558] mdss_fb_compat_ioctl: unsupported ioctl
+[  356.905407] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[  356.922585] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[  356.938826] EXT4-fs (mmcblk0p27): mounted filesystem with ordered data mode. Opts: 
+[  356.945588] type=1400 audit(2320211.746:339): avc:  denied  { write } for  pid=273 comm="recovery" name="fstab" dev="rootfs" ino=6909 scontext=u:r:recovery:s0 tcontext=u:object_r:rootfs:s0 tclass=file permissive=1
+[  364.390870] oppo_charging_status	batt_temp=357,batt_vol=4305,batt_soc=100,chg_current=-450,chg_vol=5044, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x0,chip->batt_pre_full=1,chip->batt_full=0,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=72,		bat_temp_status=6,charging_status= 1,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4296,auth=1
+[  366.927295] INFO: task mdss_dsi_event:111 blocked for more than 90 seconds.
+[  366.927895] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  366.928200] mdss_dsi_event  D ffffffc000085890     0   111      2 0x00000000
+[  366.929306] Call trace:
+[  366.929630] [<ffffffc000085890>] __switch_to+0x70/0x7c
+[  366.930193] [<ffffffc000b8ca48>] __schedule+0x410/0x5e0
+[  366.930632] [<ffffffc000b8cc70>] schedule+0x58/0x60
+[  366.931198] [<ffffffc000321ec4>] dsi_event_thread+0x100/0x410
+[  366.931514] [<ffffffc0000b4a18>] kthread+0xb4/0xbc
+[  392.928382] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[  392.928459] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=500,online = 1, current_limit = 500
+[  392.941673] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[  392.942533] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[  392.943395] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[  392.944991]  set CHG_ENABLE_BIT disable = 0
+[  419.387956] oppo_charging_status	batt_temp=356,batt_vol=4297,batt_soc=100,chg_current=-450,chg_vol=5070, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4296,auth=1
+[  420.479215] opchg_check_lcd_off executed synaptics-s3203: synaptics_ts_suspend: is called
+[  424.372212] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[  456.930607] INFO: task mdss_dsi_event:111 blocked for more than 90 seconds.
+[  456.931168] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  456.931472] mdss_dsi_event  D ffffffc000085890     0   111      2 0x00000000
+[  456.932586] Call trace:
+[  456.932911] [<ffffffc000085890>] __switch_to+0x70/0x7c
+[  456.933475] [<ffffffc000b8ca48>] __schedule+0x410/0x5e0
+[  456.933853] [<ffffffc000b8cc70>] schedule+0x58/0x60
+[  456.934425] [<ffffffc000321ec4>] dsi_event_thread+0x100/0x410
+[  456.934739] [<ffffffc0000b4a18>] kthread+0xb4/0xbc
+[  479.387644] oppo_charging_status	batt_temp=355,batt_vol=4293,batt_soc=100,chg_current=-450,chg_vol=5094, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4296,auth=1
+[  539.387740] oppo_charging_status	batt_temp=354,batt_vol=4291,batt_soc=100,chg_current=-450,chg_vol=5090, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4296,auth=1
+[  546.933806] INFO: task mdss_dsi_event:111 blocked for more than 90 seconds.
+[  546.934366] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  546.934913] mdss_dsi_event  D ffffffc000085890     0   111      2 0x00000000
+[  546.935779] Call trace:
+[  546.936350] [<ffffffc000085890>] __switch_to+0x70/0x7c
+[  546.936669] [<ffffffc000b8ca48>] __schedule+0x410/0x5e0
+[  546.936979] [<ffffffc000b8cc70>] schedule+0x58/0x60
+[  546.937612] [<ffffffc000321ec4>] dsi_event_thread+0x100/0x410
+[  546.937932] [<ffffffc0000b4a18>] kthread+0xb4/0xbc
+[  599.387603] oppo_charging_status	batt_temp=353,batt_vol=4291,batt_soc=100,chg_current=-450,chg_vol=5090, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4296,auth=1
+[  636.937208] INFO: task mdss_dsi_event:111 blocked for more than 90 seconds.
+[  636.937527] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  636.938076] mdss_dsi_event  D ffffffc000085890     0   111      2 0x00000000
+[  636.939178] Call trace:
+[  636.939502] [<ffffffc000085890>] __switch_to+0x70/0x7c
+[  636.939820] [<ffffffc000b8ca48>] __schedule+0x410/0x5e0
+[  636.940443] [<ffffffc000b8cc70>] schedule+0x58/0x60
+[  636.940767] [<ffffffc000321ec4>] dsi_event_thread+0x100/0x410
+[  636.941319] [<ffffffc0000b4a18>] kthread+0xb4/0xbc
+[  659.387619] oppo_charging_status	batt_temp=351,batt_vol=4290,batt_soc=100,chg_current=-450,chg_vol=5092, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4296,auth=1
+[  719.387664] oppo_charging_status	batt_temp=350,batt_vol=4290,batt_soc=100,chg_current=-450,chg_vol=5090, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4296,auth=1
+[  726.940442] INFO: task mdss_dsi_event:111 blocked for more than 90 seconds.
+[  726.941004] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  726.941303] mdss_dsi_event  D ffffffc000085890     0   111      2 0x00000000
+[  726.942419] Call trace:
+[  726.942743] [<ffffffc000085890>] __switch_to+0x70/0x7c
+[  726.943305] [<ffffffc000b8ca48>] __schedule+0x410/0x5e0
+[  726.943686] [<ffffffc000b8cc70>] schedule+0x58/0x60
+[  726.944008] [<ffffffc000321ec4>] dsi_event_thread+0x100/0x410
+[  726.944561] [<ffffffc0000b4a18>] kthread+0xb4/0xbc
+[  779.387866] oppo_charging_status	batt_temp=348,batt_vol=4288,batt_soc=100,chg_current=-450,chg_vol=5092, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4296,auth=1
+[  816.943768] INFO: task mdss_dsi_event:111 blocked for more than 90 seconds.
+[  816.944322] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  816.944875] mdss_dsi_event  D ffffffc000085890     0   111      2 0x00000000
+[  816.945748] Call trace:
+[  816.946072] [<ffffffc000085890>] __switch_to+0x70/0x7c
+[  816.946640] [<ffffffc000b8ca48>] __schedule+0x410/0x5e0
+[  816.947024] [<ffffffc000b8cc70>] schedule+0x58/0x60
+[  816.947718] [<ffffffc000321ec4>] dsi_event_thread+0x100/0x410
+[  816.948040] [<ffffffc0000b4a18>] kthread+0xb4/0xbc
+[  839.387843] oppo_charging_status	batt_temp=347,batt_vol=4288,batt_soc=100,chg_current=-450,chg_vol=5092, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4296,auth=1
+[  899.387822] oppo_charging_status	batt_temp=345,batt_vol=4288,batt_soc=100,chg_current=-450,chg_vol=5094, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4295,auth=1
+[  906.947186] INFO: task mdss_dsi_event:111 blocked for more than 90 seconds.
+[  906.947506] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  906.948052] mdss_dsi_event  D ffffffc000085890     0   111      2 0x00000000
+[  906.949164] Call trace:
+[  906.949489] [<ffffffc000085890>] __switch_to+0x70/0x7c
+[  906.949808] [<ffffffc000b8ca48>] __schedule+0x410/0x5e0
+[  906.950502] [<ffffffc000b8cc70>] schedule+0x58/0x60
+[  906.950830] [<ffffffc000321ec4>] dsi_event_thread+0x100/0x410
+[  906.951385] [<ffffffc0000b4a18>] kthread+0xb4/0xbc
+[  959.387593] oppo_charging_status	batt_temp=345,batt_vol=4288,batt_soc=100,chg_current=-450,chg_vol=5094, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4295,auth=1
+[  996.950516] INFO: task mdss_dsi_event:111 blocked for more than 90 seconds.
+[  996.951080] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  996.951379] mdss_dsi_event  D ffffffc000085890     0   111      2 0x00000000
+[  996.952490] Call trace:
+[  996.952812] [<ffffffc000085890>] __switch_to+0x70/0x7c
+[  996.953377] [<ffffffc000b8ca48>] __schedule+0x410/0x5e0
+[  996.953759] [<ffffffc000b8cc70>] schedule+0x58/0x60
+[  996.954086] [<ffffffc000321ec4>] dsi_event_thread+0x100/0x410
+[  996.954643] [<ffffffc0000b4a18>] kthread+0xb4/0xbc
+[ 1019.387807] oppo_charging_status	batt_temp=344,batt_vol=4288,batt_soc=100,chg_current=-450,chg_vol=5094, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4295,auth=1
+[ 1079.387789] oppo_charging_status	batt_temp=343,batt_vol=4287,batt_soc=100,chg_current=-450,chg_vol=5096, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4295,auth=1
+[ 1139.387524] oppo_charging_status	batt_temp=342,batt_vol=4287,batt_soc=100,chg_current=-450,chg_vol=5092, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4295,auth=1
+[ 1199.387760] oppo_charging_status	batt_temp=341,batt_vol=4287,batt_soc=100,chg_current=-450,chg_vol=5090, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4294,auth=1
+[ 1259.387756] oppo_charging_status	batt_temp=341,batt_vol=4286,batt_soc=100,chg_current=-450,chg_vol=5092, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4294,auth=1
+[ 1319.387753] oppo_charging_status	batt_temp=340,batt_vol=4286,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4294,auth=1
+[ 1379.387734] oppo_charging_status	batt_temp=339,batt_vol=4286,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4294,auth=1
+[ 1439.387496] oppo_charging_status	batt_temp=339,batt_vol=4286,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=96,ocv=4294,auth=1
+[ 1455.247665] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[ 1455.247793] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=500,online = 1, current_limit = 500
+[ 1455.264024] oppo_charging_status	batt_temp=339,batt_vol=4285,batt_soc=100,chg_current=-450,chg_vol=5082, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4293,auth=1
+[ 1455.265684] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[ 1455.266546] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[ 1455.267427] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[ 1455.269022]  set CHG_ENABLE_BIT disable = 0
+[ 1514.387700] oppo_charging_status	batt_temp=338,batt_vol=4286,batt_soc=100,chg_current=-450,chg_vol=5098, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4293,auth=1
+[ 1574.387694] oppo_charging_status	batt_temp=338,batt_vol=4285,batt_soc=100,chg_current=-450,chg_vol=5096, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4293,auth=1
+[ 1634.387667] oppo_charging_status	batt_temp=338,batt_vol=4285,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4293,auth=1
+[ 1694.387657] oppo_charging_status	batt_temp=337,batt_vol=4285,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4293,auth=1
+[ 1754.387651] oppo_charging_status	batt_temp=337,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4292,auth=1
+[ 1814.387656] oppo_charging_status	batt_temp=336,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5096, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4292,auth=1
+[ 1874.391480] oppo_charging_status	batt_temp=336,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5098, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4292,auth=1
+[ 1934.387628] oppo_charging_status	batt_temp=336,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4292,auth=1
+[ 1994.387624] oppo_charging_status	batt_temp=335,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4292,auth=1
+[ 2054.387594] oppo_charging_status	batt_temp=335,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5096, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4292,auth=1
+[ 2114.387393] oppo_charging_status	batt_temp=335,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4291,auth=1
+[ 2174.387342] oppo_charging_status	batt_temp=335,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5096, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4291,auth=1
+[ 2234.388582] oppo_charging_status	batt_temp=334,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5098, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4291,auth=1
+[ 2294.387561] oppo_charging_status	batt_temp=334,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5098, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4291,auth=1
+[ 2354.387564] oppo_charging_status	batt_temp=334,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5098, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4291,auth=1
+[ 2414.387572] oppo_charging_status	batt_temp=334,batt_vol=4283,batt_soc=100,chg_current=-450,chg_vol=5102, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4290,auth=1
+[ 2474.387527] oppo_charging_status	batt_temp=333,batt_vol=4283,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4290,auth=1
+[ 2534.387224] oppo_charging_status	batt_temp=333,batt_vol=4284,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4290,auth=1
+[ 2594.387244] oppo_charging_status	batt_temp=333,batt_vol=4283,batt_soc=100,chg_current=-450,chg_vol=5102, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4290,auth=1
+[ 2654.387523] oppo_charging_status	batt_temp=333,batt_vol=4283,batt_soc=100,chg_current=-450,chg_vol=5096, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4290,auth=1
+[ 2714.387239] oppo_charging_status	batt_temp=333,batt_vol=4283,batt_soc=100,chg_current=-450,chg_vol=5098, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4289,auth=1
+[ 2774.387191] oppo_charging_status	batt_temp=333,batt_vol=4283,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4289,auth=1
+[ 2834.388653] oppo_charging_status	batt_temp=333,batt_vol=4283,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4289,auth=1
+[ 2894.387443] oppo_charging_status	batt_temp=333,batt_vol=4283,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4289,auth=1
+[ 2954.387456] oppo_charging_status	batt_temp=333,batt_vol=4283,batt_soc=100,chg_current=-450,chg_vol=5098, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4289,auth=1
+[ 3014.387452] oppo_charging_status	batt_temp=333,batt_vol=4282,batt_soc=100,chg_current=-450,chg_vol=5098, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4289,auth=1
+[ 3074.387410] oppo_charging_status	batt_temp=332,batt_vol=4283,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4289,auth=1
+[ 3134.387393] oppo_charging_status	batt_temp=332,batt_vol=4282,batt_soc=100,chg_current=-450,chg_vol=5098, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4288,auth=1
+[ 3194.387110] oppo_charging_status	batt_temp=332,batt_vol=4282,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4288,auth=1
+[ 3254.387073] oppo_charging_status	batt_temp=332,batt_vol=4282,batt_soc=100,chg_current=-450,chg_vol=5102, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4288,auth=1
+[ 3314.388354] oppo_charging_status	batt_temp=332,batt_vol=4282,batt_soc=100,chg_current=-450,chg_vol=5098, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4288,auth=1
+[ 3374.387354] oppo_charging_status	batt_temp=332,batt_vol=4282,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4288,auth=1
+[ 3434.387328] oppo_charging_status	batt_temp=332,batt_vol=4282,batt_soc=100,chg_current=-450,chg_vol=5100, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4288,auth=1
+[ 3481.011841] type=1400 audit(2323335.813:340): avc:  denied  { create } for  pid=262 comm="recovery" name="lineage-22.2-20260816_082617-UNOFFICIAL-A37.zip" scontext=u:r:recovery:s0 tcontext=u:object_r:media_rw_data_file:s0 tclass=file permissive=1
+[ 3481.196028] type=1400 audit(2323335.997:341): avc:  denied  { read write open } for  pid=262 comm="recovery" path="/data/media/0/lineage-22.2-20260816_082617-UNOFFICIAL-A37.zip" dev="mmcblk0p38" ino=519171 scontext=u:r:recovery:s0 tcontext=u:object_r:media_rw_data_file:s0 tclass=file permissive=1
+[ 3481.197453] type=1400 audit(2323336.000:342): avc:  denied  { setattr } for  pid=262 comm="recovery" name="lineage-22.2-20260816_082617-UNOFFICIAL-A37.zip" dev="mmcblk0p38" ino=519171 scontext=u:r:recovery:s0 tcontext=u:object_r:media_rw_data_file:s0 tclass=file permissive=1
+[ 3481.200022] type=1400 audit(2323336.003:343): avc:  denied  { use } for  pid=44 comm="kworker/u8:2" path="/data/media/0/lineage-22.2-20260816_082617-UNOFFICIAL-A37.zip" dev="mmcblk0p38" ino=519171 scontext=u:r:kernel:s0 tcontext=u:r:recovery:s0 tclass=fd permissive=1
+[ 3494.386170] oppo_charging_status	batt_temp=332,batt_vol=4281,batt_soc=100,chg_current=-450,chg_vol=5032, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4287,auth=1
+[ 3544.002760] mdss_livedisplay_update_pcc: r=32768 g=32768 b=32768
+[ 3544.004034] synaptics-s3203: speedup_synaptics_resume is called
+[ 3544.056553] glove mode disable
+[ 3544.057614] synaptics-s3203: speedup_synaptics_resume:normal end!
+[ 3543.666324] opchg_check_lcd_on executed [ 3544.819914] synaptics-s3203: Synaptics:Down[0  404 1486   49]
+[ 3548.554009] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[ 3548.554013] mdss_fb_compat_ioctl: unsupported ioctl
+[ 3548.854194] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: discard
+[ 3549.069653] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[ 3549.069779] mdss_fb_compat_ioctl: unsupported ioctl
+[ 3549.087349] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[ 3549.087352] mdss_fb_compat_ioctl: unsupported ioctl
+[ 3549.248087] type=1400 audit(2323404.050:344): avc:  denied  { relabelfrom } for  pid=342 comm="chcon" name="hosts" dev="tmpfs" ino=7099 scontext=u:r:recovery:s0 tcontext=u:object_r:tmpfs:s0 tclass=file permissive=1
+[ 3549.248121] type=1400 audit(2323404.050:345): avc:  denied  { relabelto } for  pid=342 comm="chcon" name="hosts" dev="tmpfs" ino=7099 scontext=u:r:recovery:s0 tcontext=u:object_r:system_file:s0 tclass=file permissive=1
+[ 3549.261591] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[ 3549.261719] mdss_fb_compat_ioctl: unsupported ioctl
+[ 3554.385885] oppo_charging_status	batt_temp=333,batt_vol=4281,batt_soc=100,chg_current=-450,chg_vol=4928, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=0,		bat_temp_status=6,charging_status= 4,charger_status=1,chip->is_charging=1,soc_cal=95,ocv=4287,auth=1
+
+[ 3609.296882] opchg_check_lcd_off executed synaptics-s3203: synaptics_ts_suspend: is called
+[ 3609.370725] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:500 set input current is end 
+[ 3614.373314] opchg_aicl_point_set vindpm_vol:4520,vindpm_level:1
+[ 3614.388517] oppo_charging_status	batt_temp=336,batt_vol=4352,batt_soc=100,chg_current=-450,chg_vol=4916, is_factory_mode=1,fastcharger_sign= 0,		chip->batterynotify=0x80,chip->batt_pre_full=1,chip->batt_full=1,chg_type=4,usb_online= 1,chg_time_out=0,chg_total_time=1,		bat_temp_status=6,charging_status= 4,charger_status=3,chip->is_charging=1,soc_cal=95,ocv=4287,auth=1
+[ 3646.607846] mdss_livedisplay_update_pcc: r=32768 g=32768 b=32768
+[ 3646.608381] synaptics-s3203: speedup_synaptics_resume is called
+[ 3646.659877] glove mode disable
+[ 3646.660986] synaptics-s3203: speedup_synaptics_resume:normal end!
+[ 3646.262581] opchg_check_lcd_on executed 
+[ 3647.828792] qpnp_cblpwr_irq usbin-valid triggered: 0
+[ 3647.828976] opchg_usbin_valid_irq_handler opchg_chip->driver_id=3,opchg_chip->chg_present=1,usb_present=0
+[ 3647.829750] bq24196_get_otg_enable read OTG enable bit =27
+[ 3647.831897] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[ 3647.832859] msm_otg 78d9000.usb: Avail curr from USB = 2
+[ 3647.832938] msm_hsusb msm_hsusb: CI13XXX_CONTROLLER_SUSPEND_EVENT received
+[ 3647.833102] android_work: android_work: sent uevent USB_STATE=SUSPENDED
+[ 3647.834396] opcharger-charger 4-006b: bq24196_set_temrchg_current value=0
+[ 3647.834587] oppo_debug min_input_current:2,max_input_current:1500,set_current_reason =1
+[ 3647.836798] opcharger-charger 4-006b: bq24196_chg_uv charger is out updating usb_psy present=0,chg_vol=3808
+[ 3647.836914] msm_otg 78d9000.usb: Avail curr from USB = 0
+[ 3647.837105] msm_hsusb msm_hsusb: CI13XXX_CONTROLLER_DISCONNECT_EVENT received
+[ 3647.837436] mtp_release
+[ 3647.837468] Error: returning -19 value
+[ 3647.837645] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[ 3647.837682] android_work: android_work: sent uevent USB_STATE=DISCONNECTED
+[ 3647.837828] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=2,online = 1, current_limit = 2
+[ 3647.841655] msm_bam_device_lpm_ok: Going to LPM now
+[ 3647.844548] msm_otg 78d9000.usb: USB in low power mode
+[ 3647.860903] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[ 3647.861807] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[ 3647.862693] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[ 3647.864274]  set CHG_ENABLE_BIT disable = 0
+[ 3647.868492] oppo_debug min_input_current:0,max_input_current:1500,set_current_reason =1
+[ 3647.869353] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[ 3647.869481] opcharger-charger 4-006b: opchg_external_power_changed set charger input current=0,online = 0, current_limit = 0
+[ 3647.892434] bq24196_set_input_chg_current no aicl 500ma,iusbin_mA:100 set input current is end 
+[ 3647.893320] opcharger-charger 4-006b: oppo set charger_timeout val = 2
+[ 3647.894147] opcharger-charger 4-006b: bq24196_set_float_voltage value=216
+[ 3647.895771]  set CHG_ENABLE_BIT disable = 0
+[ 3648.637728] mtp_open
+[ 3648.637902] mtp_release
+[ 3649.438086] mtp_open
+[ 3649.438217] mtp_release
+[ 3650.238394] mtp_open
+[ 3650.238520] mtp_release
+[ 3651.038763] mtp_open
+[ 3651.038892] mtp_release
+[ 3651.839089] mtp_open
+[ 3651.839224] mtp_release
+[ 3652.639421] mtp_open
+[ 3652.639607] mtp_release
+[ 3653.439838] mtp_open
+[ 3653.439967] mtp_release
+[ 3654.240154] mtp_open
+[ 3654.240291] mtp_release
+[ 3654.788895] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[ 3654.788970] mdss_fb_compat_ioctl: unsupported ioctl
+[ 3654.904831] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: discard
+[ 3655.030649] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[ 3655.030773] mdss_fb_compat_ioctl: unsupported ioctl
+[ 3655.040560] mtp_open
+[ 3655.040697] mtp_release
+[ 3655.046252] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[ 3655.046409] mdss_fb_compat_ioctl: unsupported ioctl
+[ 3655.132110] type=1400 audit(2323509.933:346): avc:  denied  { write } for  pid=380 comm="cp" name="hosts" dev="mmcblk0p24" ino=808 scontext=u:r:recovery:s0 tcontext=u:object_r:system_file:s0 tclass=file permissive=1
+[ 3655.141429] type=1400 audit(2323509.943:347): avc:  denied  { setattr } for  pid=380 comm="cp" name="hosts" dev="mmcblk0p24" ino=808 scontext=u:r:recovery:s0 tcontext=u:object_r:system_file:s0 tclass=file permissive=1
+[ 3655.182305] type=1400 audit(2323509.983:348): avc:  denied  { relabelfrom } for  pid=384 comm="chcon" name="hosts" dev="mmcblk0p24" ino=808 scontext=u:r:recovery:s0 tcontext=u:object_r:system_file:s0 tclass=file permissive=1
+[ 3655.195528] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[ 3655.195602] mdss_fb_compat_ioctl: unsupported ioctl
+[ 3655.339127] type=1400 audit(2323510.140:349): avc:  denied  { unlink } for  pid=392 comm="rm" name="hosts" dev="tmpfs" ino=7099 scontext=u:r:recovery:s0 tcontext=u:object_r:system_file:s0 tclass=file permissive=1
+[ 3655.840886] mtp_open
+[ 3655.841019] mtp_release
+[ 3656.641254] mtp_open
+[ 3656.641303] mtp_release
+[ 3656.954782] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[ 3656.970219] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[ 3656.986755] EXT4-fs (mmcblk0p27): mounted filesystem with ordered data mode. Opts: 
+[ 3657.441416] mtp_open
+[ 3657.441465] mtp_release
+[ 3658.241572] mtp_open
+[ 3658.241618] mtp_release
+[ 3659.041731] mtp_open
+[ 3659.041788] mtp_release
+[ 3659.841897] mtp_open
+[ 3659.842015] mtp_release
+[ 3660.642214] mtp_open
+[ 3660.642387] mtp_release
+[ 3661.442883] mtp_open
+[ 3661.443349] mtp_release
+[ 3662.108696] EXT4-fs (mmcblk0p24): mounted filesystem without journal. Opts: 
+[ 3662.123324] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[ 3662.123396] mdss_fb_compat_ioctl: unsupported ioctl
+[ 3662.243558] mtp_open
+[ 3662.243699] mtp_release
+[ 3662.305471] mdss_fb_do_ioctl: unsupported ioctl (5401)
+[ 3662.305595] mdss_fb_compat_ioctl: unsupported ioctl
+[ 3662.491396] init: Received sys.powerctl='reboot,' from pid: 220 (/sbin/recovery)
+[ 3662.491596] init: Clear action queue and start shutdown trigger
+[ 3662.491716] init: processing action (shutdown_done) from (<Builtin Action>:0)
+[ 3662.491866] init: Reboot start, reason: reboot,, rebootTarget: 
+[ 3662.492184] init: Recovering persistent properties from memory: Unable to read persistent property file: open() failed: No such file or directory
+[ 3662.492619] init: Could not store persistent property: Could not open temporary properties file: No such file or directory
+[ 3662.499977] init: Shutdown timeout: 0 ms
+[ 3662.500091] init: Sending signal 9 to service 'vm_bms' (pid 221) process group...
+[ 3662.505872] libprocessgroup: Successfully killed process cgroup uid 0 pid 221 in 5ms
+[ 3662.506118] init: Sending signal 9 to service 'recovery' (pid 220) process group...
+[ 3662.512531] mdss_mdp_overlay_release: Unable to unset pipe(s) ndx=0x8 unset=0x0
+[ 3662.720560] libprocessgroup: Failed to kill process cgroup uid 0 pid 220 in 214ms, 1 processes remain
+[ 3662.721322] init: Sending signal 9 to service 'ueventd' (pid 213) process group...
+[ 3662.730066] libprocessgroup: Successfully killed process cgroup uid 0 pid 213 in 7ms
+[ 3662.731604] init: Service 'ueventd' (pid 213) received signal 9
+[ 3662.732440] init: Service 'recovery' (pid 220) exited with status 0
+[ 3662.733342] init: Sending signal 9 to service 'recovery' (pid 220) process group...
+[ 3662.817503] opchg_check_lcd_off executed [ 3662.952548] libprocessgroup: Failed to kill process cgroup uid 0 pid 220 in 218ms, 1 processes remain
+[ 3662.955460] init: Service 'vm_bms' (pid 221) received signal 9
+[ 3662.956811] init: Untracked pid 251 exited with status 0
+[ 3662.957806] init: Untracked pid 406 exited with status 0
+[ 3662.958493] init: Untracked pid 416 exited with status 0
+[ 3662.959418] init: vold not running, skipping vold shutdown
+[ 3662.960614] init: Sending signal 9 to service 'adbd' (pid 222) process group...
+[ 3662.962715] Error: returning -512 value
+[ 3662.968584] libprocessgroup: Successfully killed process cgroup uid 0 pid 222 in 6ms
+[ 3662.972353] init: Unmounting /dev/block/bootdevice/by-name/userdata:/sdcard opts rw,seclabel,relatime,data=ordered
+[ 3662.973359] init: Umounted /dev/block/bootdevice/by-name/userdata:/sdcard opts rw,seclabel,relatime,data=ordered
+[ 3662.974064] init: Unmounting /dev/block/bootdevice/by-name/userdata:/data opts rw,seclabel,relatime,data=ordered
+[ 3663.367346] init: Umounted /dev/block/bootdevice/by-name/userdata:/data opts rw,seclabel,relatime,data=ordered
+[ 3663.367491] init: Unmounting /dev/block/bootdevice/by-name/cache:/cache opts rw,seclabel,relatime,data=ordered
+[ 3663.382664] init: Umounted /dev/block/bootdevice/by-name/cache:/cache opts rw,seclabel,relatime,data=ordered
+[ 3663.484357] init: powerctl_shutdown_time_ms:992:0
+[ 3663.484959] init: Reboot ending, jumping to kernel
+[ 3663.486824] mdss_fb_release_all: try to close unopened fb 1! from init
+[ 3663.487213] mdss_fb_release_all: try to close unopened fb 0! from init
+[ 3663.489311] Restarting system with command ''.
+[ 3663.489527] Going down for restart now
+
+No errors detected

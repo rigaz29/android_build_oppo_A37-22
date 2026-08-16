@@ -1,0 +1,1 @@
+lineage_A37-userdebug 15 BP1A.250505.005 eng.rigaz2 test-keys

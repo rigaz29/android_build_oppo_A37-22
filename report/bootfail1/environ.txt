@@ -1,0 +1,14 @@
+== ukuran classpath (byte)
+wc: /data/system/environ/classpath: No such file or directory
+
+== ls -laZ /data/system/environ/
+total 24
+drwx------ 2 system system u:object_r:environ_system_data_file:s0  4096 1970-01-27 19:45 .
+drwxrwxr-x 7 system system u:object_r:system_data_file:s0          4096 1970-01-27 19:45 ..
+-rw------- 1 system system u:object_r:environ_system_data_file:s0  4439 1970-01-27 19:45 classpath.tmp
+
+== isi /data/system/environ/classpath
+cat: /data/system/environ/classpath: No such file or directory
+
+== /data/system (ada tidaknya induknya)
+drwxrwxr-x 7 system system u:object_r:system_data_file:s0  4096 1970-01-27 19:45 /data/system
