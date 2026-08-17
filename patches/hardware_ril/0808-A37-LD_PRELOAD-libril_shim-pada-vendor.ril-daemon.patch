@@ -1,0 +1,32 @@
+From 57628206eccf0095b1bb536ff9b502b5f685088a Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Mon, 17 Aug 2026 15:04:14 +0000
+Subject: [PATCH] A37: LD_PRELOAD libril_shim pada vendor.ril-daemon
+
+---
+ rild/rild.rc | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/rild/rild.rc b/rild/rild.rc
+index f6beb54..1d7e552 100644
+--- a/rild/rild.rc
++++ b/rild/rild.rc
+@@ -3,3 +3,15 @@ service vendor.ril-daemon /vendor/bin/hw/rild
+     user radio
+     group radio cache inet misc audio log readproc wakelock
+     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
++    # A37: libril-qc-qmi-1.so menuntut android::AudioSystem::setErrorCallback(void(*)(int)),
++    # simbol yang sudah lama dicabut dari Android. libril_shim.so menyediakannya
++    # (nm: _ZN7android11AudioSystem16setErrorCallbackEPFviE) tapi tidak pernah dimuat:
++    # TARGET_LD_SHIM_LIBS di BoardConfig.mk sepenuhnya MATI di 22 -- tidak ada kode di
++    # vendor/lineage maupun build/make yang memprosesnya, dan LD_SHIM_LIBS sudah tidak
++    # ada di bionic/linker.
++    #
++    # Akibatnya rild gagal dlopen dan mati SETIAP kali dijalankan. Terukur di perangkat:
++    # vendor.ril-daemon dan ril-daemon2 masing-masing 14 kali start dalam 3 menit uptime
++    # (satu spawn tiap ~6 detik), dengan CPU sibuk ~30% pada perangkat idle dan waktu
++    # kernel 2,4x waktu user. Itu sumber baterai boros yang terukur, bukan dugaan.
++    setenv LD_PRELOAD /vendor/lib/libril_shim.so
+-- 
+2.43.0
+
