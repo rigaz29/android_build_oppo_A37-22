@@ -1,0 +1,33 @@
+From fa89898c24ae4795b9e8c142bffdd10cb5e08a95 Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Mon, 17 Aug 2026 00:24:11 +0000
+Subject: [PATCH] A37: LD_PRELOAD libshim_camera pada cameraserver
+
+Change-Id: I6ff47a1ea4f92238e7e9b83e1cba6e70e09eb65a
+---
+ camera/cameraserver/cameraserver.rc | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/camera/cameraserver/cameraserver.rc b/camera/cameraserver/cameraserver.rc
+index 63fa2b08f2..6b0da08787 100644
+--- a/camera/cameraserver/cameraserver.rc
++++ b/camera/cameraserver/cameraserver.rc
+@@ -8,3 +8,15 @@ service cameraserver /system/bin/cameraserver
+     capabilities SYS_NICE
+     onrestart class_restart cameraWatchdog
+     interface aidl android.frameworks.cameraservice.service.ICameraService/default
++    # A37: camera.vendor.msm8916.so menuntut android::CameraParameters::KEY_TRACK_ENABLE,
++    # anggota statis yang sudah dicabut dari Android. libshim_camera.so menyediakannya,
++    # tapi tidak pernah dimuat: TARGET_LD_SHIM_LIBS sepenuhnya mati di 22 -- tidak ada
++    # kode di vendor/lineage maupun build/make yang memprosesnya, dan LD_SHIM_LIBS sudah
++    # tidak ada di bionic/linker.
++    #
++    # Tanpa ini: "Could not load /vendor/lib/hw/camera.vendor.msm8916.so ... dlopen failed"
++    # -> "failed to open vendor camera module" -> nol kamera terdeteksi.
++    #
++    # Diuji langsung di perangkat lewat adb: dengan LD_PRELOAD, modul termuat dan
++    # mm-camera-intf melaporkan KEDUA kamera (index 0 facing 0, index 1 facing 1).
++    setenv LD_PRELOAD /system/lib/libshim_camera.so
+-- 
+2.43.0
+
