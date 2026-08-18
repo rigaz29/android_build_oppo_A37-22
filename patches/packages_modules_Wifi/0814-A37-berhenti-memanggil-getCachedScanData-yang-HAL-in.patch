@@ -1,0 +1,68 @@
+From 34f060d7e171e26e257c5b65d4be04b4b15a2053 Mon Sep 17 00:00:00 2001
+From: rigaz29 <ryanbagas27@gmail.com>
+Date: Tue, 18 Aug 2026 13:53:41 +0000
+Subject: [PATCH] A37: berhenti memanggil getCachedScanData yang HAL ini tidak
+ dukung
+
+HAL Wi-Fi legacy msm8916 melaporkan versi servis >= 2 sehingga lolos penjaga
+isServiceVersionAtLeast(2), tetapi menolak panggilannya dengan
+ERROR_NOT_SUPPORTED (kode 4 pada WifiStatusCode.aidl). Penolakan itu permanen,
+bukan sesekali.
+
+Tanpa penanda ini setiap panggilan berulang melakukan perjalanan binder,
+melempar ServiceSpecificException, lalu mencatat error. Terukur di perangkat:
+0,35 kali per detik terus-menerus.
+
+Kode ERROR_NOT_SUPPORTED kini diingat sekali lalu panggilan berikutnya langsung
+mengembalikan null. Kode error lain tetap ditangani seperti semula, sehingga
+kegagalan sementara tidak ikut mematikan fitur ini selamanya.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Change-Id: Idfea9bc4b60297f19e5f6fdffa65f52dc0f54425
+---
+ .../server/wifi/hal/WifiStaIfaceAidlImpl.java    | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/service/java/com/android/server/wifi/hal/WifiStaIfaceAidlImpl.java b/service/java/com/android/server/wifi/hal/WifiStaIfaceAidlImpl.java
+index 583c63709d..c6e31d5e04 100644
+--- a/service/java/com/android/server/wifi/hal/WifiStaIfaceAidlImpl.java
++++ b/service/java/com/android/server/wifi/hal/WifiStaIfaceAidlImpl.java
+@@ -392,6 +392,15 @@ public class WifiStaIfaceAidlImpl implements IWifiStaIface {
+     public WifiScanner.ScanData getCachedScanData() {
+         final String methodStr = "getCachedScanData";
+         synchronized (mLock) {
++            // A37: HAL Wi-Fi legacy msm8916 melaporkan versi servis >= 2 sehingga lolos
++            // penjaga isServiceVersionAtLeast(2) di bawah, tetapi menolak panggilannya
++            // dengan ERROR_NOT_SUPPORTED (kode 4). Penolakan itu PERMANEN, bukan sesekali.
++            //
++            // Tanpa penanda ini setiap panggilan berulang melakukan perjalanan binder,
++            // melempar ServiceSpecificException, lalu mencatat error. Terukur di
++            // perangkat: 0,35 kali per detik terus-menerus.
++            if (mCachedScanDataNotSupported) return null;
++
+             try {
+                 if (!isServiceVersionAtLeast(2)
+                         || !checkIfaceAndLogFailure(methodStr)) return null;
+@@ -400,12 +409,19 @@ public class WifiStaIfaceAidlImpl implements IWifiStaIface {
+             } catch (RemoteException e) {
+                 handleRemoteException(e, methodStr);
+             } catch (ServiceSpecificException e) {
++                // A37: catat sekali lalu berhenti mencoba.
++                if (e.errorCode == WifiStatusCode.ERROR_NOT_SUPPORTED) {
++                    mCachedScanDataNotSupported = true;
++                }
+                 handleServiceSpecificException(e, methodStr);
+             }
+             return null;
+         }
+     }
+ 
++    /** A37: HAL ini sudah terbukti tidak mendukung getCachedScanData. */
++    private boolean mCachedScanDataNotSupported = false;
++
+ 
+     /**
+      * See comments for {@link IWifiStaIface#getLinkLayerStats()}
+-- 
+2.43.0
+
